@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33423.256
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetDestroyer", "PlanetDestroyer\PlanetDestroyer\PlanetDestroyer.csproj", "{E4C5ED2D-F015-4A7C-B83F-CD8E7EB6C1BB}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "PlanetDestroyerContent", "PlanetDestroyer\PlanetDestroyerContent\PlanetDestroyerContent.contentproj", "{A8983166-1206-461C-93C5-8AEE40DA4615}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4C5ED2D-F015-4A7C-B83F-CD8E7EB6C1BB}.Debug|x86.ActiveCfg = Debug|x86
+		{E4C5ED2D-F015-4A7C-B83F-CD8E7EB6C1BB}.Debug|x86.Build.0 = Debug|x86
+		{E4C5ED2D-F015-4A7C-B83F-CD8E7EB6C1BB}.Release|x86.ActiveCfg = Release|x86
+		{E4C5ED2D-F015-4A7C-B83F-CD8E7EB6C1BB}.Release|x86.Build.0 = Release|x86
+		{A8983166-1206-461C-93C5-8AEE40DA4615}.Debug|x86.ActiveCfg = Debug|x86
+		{A8983166-1206-461C-93C5-8AEE40DA4615}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {147AB74D-16EE-434C-8F2C-A59687FA4A88}
+	EndGlobalSection
+EndGlobal
