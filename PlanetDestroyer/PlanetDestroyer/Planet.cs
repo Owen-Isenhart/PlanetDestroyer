@@ -13,7 +13,11 @@ namespace PlanetDestroyer
 {
     class Planet
     {
-
+        public int Health;
+        public Planet(int index) //index increases linearly, as does the amount of hits to blow up the planet
+        {
+            Health = 100 * index;
+        }
 
         public void Update()
         {

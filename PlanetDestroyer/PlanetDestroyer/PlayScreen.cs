@@ -13,5 +13,17 @@ namespace PlanetDestroyer
 {
     class PlayScreen
     {
+        public PlayScreen()
+        {
+
+        }
+        public void Update()
+        {
+
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+
+        }
     }
 }

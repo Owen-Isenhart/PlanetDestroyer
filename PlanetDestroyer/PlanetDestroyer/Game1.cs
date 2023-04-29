@@ -20,12 +20,19 @@ namespace PlanetDestroyer
         SpriteBatch spriteBatch;
 
         public static int screenW, screenH;
+        public static KeyboardState kb, oldKB;
+        public static MouseState mouse, oldMouse;
         
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width-5;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height-80;
+            Window.AllowUserResizing = true;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -37,6 +44,12 @@ namespace PlanetDestroyer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            mouse = oldMouse = Mouse.GetState();
+            kb = oldKB = Keyboard.GetState();
+            screenW = GraphicsDevice.Viewport.Width;
+            screenH = GraphicsDevice.Viewport.Height;
+            var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(this.Window.Handle);
+            form.Location = new System.Drawing.Point(-7, 0);
 
             base.Initialize();
         }
@@ -70,7 +83,7 @@ namespace PlanetDestroyer
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
 
             // TODO: Add your update logic here
@@ -84,7 +97,7 @@ namespace PlanetDestroyer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(5, 1, 8));
 
             // TODO: Add your drawing code here
 
