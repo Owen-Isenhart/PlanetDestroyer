@@ -22,7 +22,13 @@ namespace PlanetDestroyer
         public static int screenW, screenH;
         public static KeyboardState kb, oldKB;
         public static MouseState mouse, oldMouse;
-        
+        public static Rectangle mouseRect;
+
+        public static List<Rectangle> planetRects;
+        public static List<Texture2D> planetTextures;
+
+        public static List<Rectangle> explosionRects;
+        public static List<Texture2D> explosionTextures;
 
         public Game1()
         {
@@ -46,6 +52,7 @@ namespace PlanetDestroyer
             // TODO: Add your initialization logic here
             mouse = oldMouse = Mouse.GetState();
             kb = oldKB = Keyboard.GetState();
+            mouseRect = new Rectangle(mouse.X - 1, mouse.Y - 1, 2, 2);
             screenW = GraphicsDevice.Viewport.Width;
             screenH = GraphicsDevice.Viewport.Height;
             var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(this.Window.Handle);

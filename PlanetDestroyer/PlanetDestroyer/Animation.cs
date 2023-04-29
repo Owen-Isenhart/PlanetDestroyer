@@ -26,18 +26,28 @@ namespace PlanetDestroyer
             frameRects = sourceRects;
             anim = state;
         }
+        public void Reset(string state, List<Rectangle> sourceRects)
+        {
+            framesInbetween = 60;
+            frameIndex = 0;
+            repeat = false;
+            finished = false;
+            frameRects = sourceRects;
+            anim = state;
+        }
         public void Update()
         {
             if (framesInbetween == 0 && !finished)
             {
                 frameIndex++;
                 if (frameIndex == frameRects.Count)
+                {
                     frameIndex = 0;
-                if (repeat)
-                    framesInbetween = 60;
-                else
-                    finished = true;
-                    
+                    if (repeat)
+                        framesInbetween = 60;
+                    else
+                        finished = true;
+                }     
             }
         }
     }

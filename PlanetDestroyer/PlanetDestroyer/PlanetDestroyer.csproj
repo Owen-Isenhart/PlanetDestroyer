@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Achievement.cs" />
     <Compile Include="Animation.cs" />
+    <Compile Include="Explosion.cs" />
     <Compile Include="Money.cs" />
     <Compile Include="Planet.cs" />
     <Compile Include="PlayScreen.cs" />
