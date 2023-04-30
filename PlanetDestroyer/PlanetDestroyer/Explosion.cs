@@ -18,7 +18,19 @@ namespace PlanetDestroyer
         public string type; 
         public Explosion(Rectangle pos, string i) : base("linear", Game1.explosionRects[i])
         {
-            rect = new Rectangle(pos.X, pos.Y, Game1.screenW / 30, Game1.screenH / 30);
+            int size;
+            if (i.Equals("small"))
+            {
+                size = 30;
+                rect = new Rectangle(pos.X + pos.Width / 2 - Game1.screenW / size / 2, pos.Y + pos.Height / 2 - Game1.screenH / size / 2, Game1.screenW / size, Game1.screenH / size);
+            }
+            else if (i.Equals("large"))
+            {
+                size = 2;
+                rect = new Rectangle(pos.X + pos.Width/2 - Game1.screenW / size / 2 - 10, pos.Y + pos.Height/2 - Game1.screenH / size / 2, Game1.screenW / size, Game1.screenH / size);
+            }
+            else size = 30;
+            
             angle = (float)Math.Atan2(Game1.screenH / 2 - pos.Y, Game1.screenW / 2 - pos.X);
             type = i;
         }

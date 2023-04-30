@@ -78,6 +78,7 @@ namespace PlanetDestroyer
             gd = GraphicsDevice;
             explosionRects = new Dictionary<string, List<Rectangle>>();
             explosionRects["small"] = loadExplosions("small") ;
+            explosionRects["large"] = loadExplosions("large");
             planetGrit = rnd.Next(5, 100);
             base.Initialize();
         }
@@ -101,6 +102,23 @@ namespace PlanetDestroyer
                 temp.Add(new Rectangle(1050, 285, 140, 100));
                 temp.Add(new Rectangle(1200, 285, 130, 100));
                 temp.Add(new Rectangle(1340, 285, 150, 100));
+            }
+            else if (type.Equals("large"))
+            {
+                temp.Add(new Rectangle(40, 450, 130, 230));
+                temp.Add(new Rectangle(180, 450, 170, 230));
+                temp.Add(new Rectangle(380, 450, 260, 230));
+                temp.Add(new Rectangle(650, 450, 230, 230));
+                temp.Add(new Rectangle(900, 450, 200, 230));
+                temp.Add(new Rectangle(1110, 450, 200, 230));
+                temp.Add(new Rectangle(1330, 450, 220, 230));
+                temp.Add(new Rectangle(1560, 450, 230, 230));
+                temp.Add(new Rectangle(1330, 665, 210, 230));
+
+            }
+            else if (type.Equals("sideways"))
+            {
+
             }
             return temp;
         }
@@ -186,10 +204,14 @@ namespace PlanetDestroyer
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             planet.Draw(spriteBatch);
-            spriteBatch.DrawString(fonts[3], temp + "\n" + planet.Darken(temp) + "\n" + planet.Darken(planet.Darken(temp)), new Vector2(10, 10), Color.Black);
+            //spriteBatch.DrawString(fonts[3], temp + "\n" + planet.Darken(temp) + "\n" + planet.Darken(planet.Darken(temp)), new Vector2(10, 10), Color.Black);
             //spriteBatch.Draw(pixel, mouseRect, Color.Black);
-            int i = 50;
-
+            int i = 1;
+            //foreach (Rectangle rect in explosionRects["large"])
+            //{
+            //    spriteBatch.Draw(explosionsSheet, new Rectangle(i * 100, 20, 100, 100), rect, Color.White);
+            //    i++;
+            //}
             
             spriteBatch.End();
             base.Draw(gameTime);

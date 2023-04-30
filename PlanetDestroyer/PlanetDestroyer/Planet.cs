@@ -13,7 +13,7 @@ namespace PlanetDestroyer
 {
     public class Planet
     {
-        public int Health, index, time;
+        public int Health, index, time, buffer;
         public Rectangle rect;
         public List<Explosion> explosions; //from clicking
         public string text;
@@ -23,10 +23,11 @@ namespace PlanetDestroyer
         {
             index = i;
             Health = 1 * index;
+            buffer = 5;
             int size = Game1.screenW / 5;
             rect = new Rectangle(Game1.screenW / 2 - size / 2, Game1.screenH / 2 - size / 2, size, size);
             explosions = new List<Explosion>();
-            time = 180;
+            time = 80;
             text = Health + " Hits";
             textSize = Game1.healthFont.MeasureString(text);
             Game1.planetGrit = Game1.rnd.Next(5, 100);
@@ -42,8 +43,8 @@ namespace PlanetDestroyer
         {
             index++;
             Health = 1 * index;
-            time = 180;
-            explosions.Clear();
+            time = 80;
+            //explosions.Clear();
             text = Health + " Hits";
             textSize = Game1.healthFont.MeasureString(text);
             Game1.planetGrit = Game1.rnd.Next(5, 100);
@@ -169,11 +170,15 @@ namespace PlanetDestroyer
 
                 else
                 {
-                    if (time > 120 && time % 2 == 0)
+                    if (time > 20 && time % 2 == 0)
                         rect.X -= 3;
-                    else if (time > 120 && time % 2 == 1)
+                    else if (time > 20 && time % 2 == 1)
                         rect.X += 3;
-
+                    else if (time == 20)
+                    {
+                        explosions.Add(new Explosion(rect, "large"));
+                        explosions[explosions.Count - 1].framesInbetween = 9;
+                    }
                     time--;
                 }
             }
@@ -183,10 +188,11 @@ namespace PlanetDestroyer
                 else text = Health + " Hits";
                 textSize = Game1.healthFont.MeasureString(text);
 
-                if (IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
+                if (Game1.mouseRect.Intersects(rect) && IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                 {
                     Health--;
                     explosions.Add(new Explosion(new Rectangle(Game1.mouseRect.X - 30, Game1.mouseRect.Y - 20, 40, 40), "small"));
+                    //ClickAnimation();
                 }
             }
 
@@ -199,17 +205,31 @@ namespace PlanetDestroyer
                     i--;
                 }
             }
-                
+            //if (buffer != 5)
+                //ClickAnimation();
+        }
+        public void ClickAnimation()
+        {
+            rect.Width -= buffer; rect.Height -= buffer;
+            buffer--;
+            if (buffer == 0)
+            {
+                int size = Game1.screenW / 5;
+                rect = new Rectangle(Game1.screenW / 2 - size / 2, Game1.screenH / 2 - size / 2, size, size);
+                buffer = 5;
+            }
         }
         static bool IntersectsPixel(Rectangle hitbox1, Rectangle hitbox2, Texture2D texture2)
         {
+            if (!hitbox1.Intersects(hitbox2))
+                return false;
             Color[] colorData2 = new Color[texture2.Width * texture2.Height];
             texture2.GetData(colorData2);
 
             int top = Math.Max(hitbox1.Top, hitbox2.Top);
             int left = Math.Max(hitbox1.Left, hitbox2.Left);
 
-            if (hitbox1.Bottom < hitbox2.Bottom && hitbox1.Right < hitbox2.Right && hitbox1.Left > hitbox2.Left && hitbox1.Top > hitbox2.Top && colorData2[(left - hitbox2.Left) + (top - hitbox2.Top) * texture2.Width] != Color.Transparent)
+            if (colorData2[(left - hitbox2.Left) + (top - hitbox2.Top) * texture2.Width] != Color.Transparent) 
                 return true;
 
             return false;
