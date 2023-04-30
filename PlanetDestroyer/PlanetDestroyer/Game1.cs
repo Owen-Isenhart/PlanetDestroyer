@@ -167,6 +167,7 @@ namespace PlanetDestroyer
             {
                 planetGrit = rnd.Next(5, 100);
                 temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
+                
                 planetTexture = planet.PlanetTextureGeneration();
             }
                 
@@ -185,6 +186,7 @@ namespace PlanetDestroyer
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             planet.Draw(spriteBatch);
+            spriteBatch.DrawString(fonts[3], temp + "\n" + planet.Darken(temp) + "\n" + planet.Darken(planet.Darken(temp)), new Vector2(10, 10), Color.Black);
             //spriteBatch.Draw(pixel, mouseRect, Color.Black);
             int i = 50;
 

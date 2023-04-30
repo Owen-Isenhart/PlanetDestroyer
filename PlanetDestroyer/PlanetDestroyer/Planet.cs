@@ -22,23 +22,37 @@ namespace PlanetDestroyer
         public Planet(int i) //index increases linearly, as does the amount of hits to blow up the planet
         {
             index = i;
-            Health = 100 * index;
+            Health = 1 * index;
             int size = Game1.screenW / 5;
             rect = new Rectangle(Game1.screenW / 2 - size / 2, Game1.screenH / 2 - size / 2, size, size);
             explosions = new List<Explosion>();
             time = 180;
             text = Health + " Hits";
             textSize = Game1.healthFont.MeasureString(text);
+            Game1.planetGrit = Game1.rnd.Next(5, 100);
+            Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
+            while (Darken(Game1.temp) == Color.Black || Darken(Darken(Game1.temp)) == Color.Black)
+            {
+                Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
+            }
+            Game1.planetTexture = PlanetTextureGeneration();
         }
 
         public void Reset()
         {
             index++;
-            Health = 100 * index;
+            Health = 1 * index;
             time = 180;
             explosions.Clear();
             text = Health + " Hits";
             textSize = Game1.healthFont.MeasureString(text);
+            Game1.planetGrit = Game1.rnd.Next(5, 100);
+            Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
+            while (Darken(Game1.temp) == Color.Black || Darken(Darken(Game1.temp)) == Color.Black)
+            {
+                Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
+            }
+            Game1.planetTexture = PlanetTextureGeneration();
         }
         public Texture2D PlanetTextureGeneration()
         {
@@ -90,7 +104,7 @@ namespace PlanetDestroyer
                     pixel++;
                 }
 
-                if (data[pixel] != Color.Black && data[pixel] != Color.Transparent && (data[pixel + 1] == Color.Black || data[pixel - 400] == Color.Black || data[pixel + 400] == Color.Black) && Game1.rnd.Next(0, Game1.planetGrit) == 0)
+                if (data[pixel] != Color.Black && data[pixel] != Color.Transparent && (data[pixel + 1] == Color.Black || data[pixel - 400] == Color.Black || data[pixel + 400] == Color.Black) && Game1.rnd.Next(0, Game1.planetGrit-1) == 0)
                 {
                     if (tempData[pixel] == Color.White)
                         data[pixel] = darkenedTemp;
@@ -145,35 +159,35 @@ namespace PlanetDestroyer
 
             if (Health <= 0)
             {
+                text = Health + " Hits";
+                textSize = Game1.healthFont.MeasureString(text);
                 if (time == 0)
+                {
                     Reset();
+
+                }
+
                 else
                 {
                     if (time > 120 && time % 2 == 0)
                         rect.X -= 3;
                     else if (time > 120 && time % 2 == 1)
                         rect.X += 3;
-                    if (time == 120)
-                        explosions.Add(new Explosion(rect, "big"));
 
                     time--;
                 }
             }
-            else if (Health == 1)
-            {
-                textSize = Game1.healthFont.MeasureString(text);
-                text = Health + " Hit";
-            }
             else
             {
+                if (Health == 1) text = Health + " Hit";
+                else text = Health + " Hits";
                 textSize = Game1.healthFont.MeasureString(text);
-                text = Health + " Hits";
-            }
-                
-            if (IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
-            {
-                Health--;
-                explosions.Add(new Explosion(new Rectangle(Game1.mouseRect.X-30, Game1.mouseRect.Y-20, 40, 40), "small"));
+
+                if (IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
+                {
+                    Health--;
+                    explosions.Add(new Explosion(new Rectangle(Game1.mouseRect.X - 30, Game1.mouseRect.Y - 20, 40, 40), "small"));
+                }
             }
 
             for (int i = 0; i < explosions.Count; i++)
@@ -202,12 +216,9 @@ namespace PlanetDestroyer
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (Health > 0)
-            {
-                spriteBatch.Draw(Game1.planetTexture, rect, Color.White);
-                spriteBatch.DrawString(Game1.healthFont, text, new Vector2(rect.X - (textSize.X - rect.Width)/2, rect.Y - textSize.Y), Color.Black);
-            }
-  
+            spriteBatch.Draw(Game1.planetTexture, rect, Color.White);
+            spriteBatch.DrawString(Game1.healthFont, text, new Vector2(rect.X - (textSize.X - rect.Width) / 2, rect.Y - textSize.Y), Color.Black);
+
             foreach (Explosion explosion in explosions)
                 explosion.Draw(spriteBatch);
         }
