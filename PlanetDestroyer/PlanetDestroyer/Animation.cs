@@ -19,7 +19,7 @@ namespace PlanetDestroyer
         public string anim;
         public Animation(string state, List<Rectangle> sourceRects)
         {
-            framesInbetween = 60;
+            framesInbetween = 3;
             frameIndex = 0;
             repeat = false;
             finished = false;
@@ -28,7 +28,7 @@ namespace PlanetDestroyer
         }
         public void Reset(string state, List<Rectangle> sourceRects)
         {
-            framesInbetween = 60;
+            framesInbetween = 3;
             frameIndex = 0;
             repeat = false;
             finished = false;
@@ -40,15 +40,16 @@ namespace PlanetDestroyer
             if (framesInbetween == 0 && !finished)
             {
                 frameIndex++;
+                framesInbetween = 3;
                 if (frameIndex == frameRects.Count)
                 {
                     frameIndex = 0;
-                    if (repeat)
-                        framesInbetween = 60;
-                    else
+                    if (!repeat)
                         finished = true;
-                }     
+                }
             }
+            else
+                framesInbetween--;
         }
     }
 }

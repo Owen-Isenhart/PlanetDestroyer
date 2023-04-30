@@ -154,7 +154,7 @@ namespace PlanetDestroyer
                     else if (time > 120 && time % 2 == 1)
                         rect.X += 3;
                     if (time == 120)
-                        explosions.Add(new Explosion(rect, 2));
+                        explosions.Add(new Explosion(rect, "big"));
 
                     time--;
                 }
@@ -173,11 +173,19 @@ namespace PlanetDestroyer
             if (Game1.mouseRect.Intersects(rect) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
             {
                 Health--;
-                explosions.Add(new Explosion(Game1.mouseRect, 0));
+                explosions.Add(new Explosion(new Rectangle(Game1.mouseRect.X-30, Game1.mouseRect.Y-20, 40, 40), "small"));
             }
 
-            foreach (Explosion explosion in explosions)
-                explosion.Update();
+            for (int i = 0; i < explosions.Count; i++)
+            {
+                explosions[i].Update();
+                if (explosions[i].finished)
+                {
+                    explosions.RemoveAt(i);
+                    i--;
+                }
+            }
+                
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -187,9 +195,7 @@ namespace PlanetDestroyer
                 spriteBatch.Draw(Game1.planetTexture, rect, Color.White);
                 spriteBatch.DrawString(Game1.healthFont, text, new Vector2(rect.X - (textSize.X - rect.Width)/2, rect.Y - textSize.Y), Color.Black);
             }
-                
-            else
-                   
+  
             foreach (Explosion explosion in explosions)
                 explosion.Draw(spriteBatch);
         }

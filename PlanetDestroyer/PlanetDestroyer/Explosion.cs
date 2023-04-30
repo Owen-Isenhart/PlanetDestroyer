@@ -15,12 +15,12 @@ namespace PlanetDestroyer
     {
         public Rectangle rect;
         public float angle;
-        public int index; // 0 for small, 1 for minor, 2 for large
-        public Explosion(Rectangle pos, int i) : base("linear", Game1.explosionRects)
+        public string type; 
+        public Explosion(Rectangle pos, string i) : base("linear", Game1.explosionRects[i])
         {
             rect = new Rectangle(pos.X, pos.Y, Game1.screenW / 30, Game1.screenH / 30);
             angle = (float)Math.Atan2(Game1.screenH / 2 - pos.Y, Game1.screenW / 2 - pos.X);
-            index = i;
+            type = i;
         }
         public void Update()
         {
@@ -28,7 +28,7 @@ namespace PlanetDestroyer
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Game1.explosionTextures[index], rect, Game1.explosionRects[frameIndex], Color.White, angle, new Vector2(Game1.explosionTextures[index].Width / 2, Game1.explosionTextures[index].Height / 2), SpriteEffects.None, 0);
+            spriteBatch.Draw(Game1.explosionsSheet, rect, Game1.explosionRects[type][frameIndex], Color.White);
         }
     }
 }

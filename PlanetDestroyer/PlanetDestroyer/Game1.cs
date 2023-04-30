@@ -27,8 +27,7 @@ namespace PlanetDestroyer
         public static List<Rectangle> planetRects;
         public static List<Texture2D> planetTextures;
 
-        public static List<Rectangle> explosionRects;
-        public static List<Texture2D> explosionTextures;
+        public static Dictionary<string, List<Rectangle>> explosionRects;
 
         public static Texture2D planetTemplate, planetTexture;
         public static Color temp;
@@ -41,6 +40,8 @@ namespace PlanetDestroyer
 
         public static SpriteFont healthFont;
         public List<SpriteFont> fonts;
+
+        public static Texture2D explosionsSheet;
 
         public Game1()
         {
@@ -75,7 +76,8 @@ namespace PlanetDestroyer
             temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
             time = 0;
             gd = GraphicsDevice;
-            
+            explosionRects = new Dictionary<string, List<Rectangle>>();
+            explosionRects["small"] = loadExplosions("small") ;
             planetGrit = rnd.Next(5, 100);
             base.Initialize();
         }
@@ -84,6 +86,24 @@ namespace PlanetDestroyer
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
+        /// 
+        public List<Rectangle> loadExplosions(string type)
+        {
+            List<Rectangle> temp = new List<Rectangle>();
+            if (type.Equals("small"))
+            {
+                temp.Add(new Rectangle(195, 285, 105, 100));
+                temp.Add(new Rectangle(295, 285, 115, 100));
+                temp.Add(new Rectangle(425, 285, 175, 100));
+                temp.Add(new Rectangle(600, 285, 120, 100));
+                temp.Add(new Rectangle(734, 285, 136, 100));
+                temp.Add(new Rectangle(880, 285, 150, 100));
+                temp.Add(new Rectangle(1050, 285, 140, 100));
+                temp.Add(new Rectangle(1200, 285, 130, 100));
+                temp.Add(new Rectangle(1340, 285, 150, 100));
+            }
+            return temp;
+        }
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -107,7 +127,7 @@ namespace PlanetDestroyer
             planet = new Planet(1);
             planetTexture = planet.PlanetTextureGeneration();
 
-            
+            explosionsSheet = Content.Load<Texture2D>("upscaledExplosions");
         }
 
         
@@ -165,7 +185,10 @@ namespace PlanetDestroyer
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             planet.Draw(spriteBatch);
-            spriteBatch.Draw(planetTexture, mouseRect, Color.Black);
+            //spriteBatch.Draw(planetTexture, mouseRect, Color.Black);
+            int i = 50;
+
+            
             spriteBatch.End();
             base.Draw(gameTime);
         }
