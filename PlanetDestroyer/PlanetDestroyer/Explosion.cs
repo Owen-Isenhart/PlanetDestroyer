@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    class Explosion : Animation
+    public class Explosion : Animation
     {
         public Rectangle rect;
         public float angle;

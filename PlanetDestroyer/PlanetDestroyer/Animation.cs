@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    class Animation
+    public class Animation
     {
         public int frameIndex, framesInbetween;
         public bool repeat, finished;
