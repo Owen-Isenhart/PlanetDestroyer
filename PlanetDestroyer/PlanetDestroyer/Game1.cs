@@ -30,6 +30,12 @@ namespace PlanetDestroyer
         public static List<Rectangle> explosionRects;
         public static List<Texture2D> explosionTextures;
 
+        public Texture2D planetTemplate, planetTexture;
+        public Color temp;
+        public static Random rnd;
+
+        public int time;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -38,6 +44,8 @@ namespace PlanetDestroyer
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width-5;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height-80;
             Window.AllowUserResizing = true;
+
+            this.IsMouseVisible = true;
             graphics.ApplyChanges();
         }
 
@@ -57,7 +65,9 @@ namespace PlanetDestroyer
             screenH = GraphicsDevice.Viewport.Height;
             var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(this.Window.Handle);
             form.Location = new System.Drawing.Point(-7, 0);
-
+            rnd = new Random();
+            temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
+            time = 0;
             base.Initialize();
         }
 
@@ -71,8 +81,119 @@ namespace PlanetDestroyer
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            planetTemplate = Content.Load<Texture2D>("upscaledBlankPlanet");
+            planetTexture = PlanetTextureGeneration();
         }
 
+        public Texture2D PlanetTextureGeneration()
+        {
+            Texture2D texture = new Texture2D(GraphicsDevice, 400, 400);
+            Color[] data = new Color[160000];
+            planetTemplate.GetData(data);
+            Color darkenedTemp = Darken(temp);
+            Color darkenedDarkenedTemp = Darken(darkenedTemp);
+            for (int pixel = 0; pixel < data.Count(); pixel++)
+            {
+                if (data[pixel] == Color.White)
+                {
+                    if (rnd.Next(0, 200) == 0)
+                        data[pixel] = darkenedTemp;
+                    else
+                        data[pixel] = temp;
+                }
+                else if (data[pixel] != Color.Transparent && data[pixel] != Color.Black)
+                {
+                    if (rnd.Next(0, 200) == 0)
+                        data[pixel] = darkenedDarkenedTemp;
+                    else
+                        data[pixel] = darkenedTemp;
+                }
+            }
+
+            //set the color
+            texture.SetData(data);
+            return texture;
+        }
+
+        public Texture2D UpdatePlanetTexture()
+        {
+            Color[] data = new Color[160000];
+            planetTexture.GetData(data);
+            Color[] tempData = new Color[160000];
+            planetTemplate.GetData(tempData);
+            List<int> alteredIndexes = new List<int>();
+            Color darkenedTemp = Darken(temp);
+            Color darkenedDarkenedTemp = Darken(darkenedTemp);
+            //int pixel = 0;
+            for (int pixel = 0; pixel < data.Count(); pixel++)
+            {
+                if (tempData[pixel] == Color.White)
+                {
+                    if ((data[pixel + 20] == Color.Transparent || data[pixel + 20] == Color.Black) && rnd.Next(0, 1000) == 0 && data[pixel] == temp)
+                        data[pixel] = darkenedTemp;
+                    else if (data[pixel + 398] != darkenedTemp && data[pixel + 398] != Color.Transparent && data[pixel + 398] != Color.Black && data[pixel] == darkenedTemp && !alteredIndexes.Contains(pixel))
+                    {
+                        data[pixel + 398] = darkenedTemp;
+                        alteredIndexes.Add(pixel + 398);
+                        data[pixel] = temp;
+                    }    
+                    else if (data[pixel + 398] != Color.Transparent && data[pixel + 398] != Color.Black && data[pixel] == darkenedTemp && !alteredIndexes.Contains(pixel))
+                    {
+                        data[pixel + 398] = darkenedDarkenedTemp;
+                        alteredIndexes.Add(pixel + 398);
+                        data[pixel] = temp;
+                    }
+                    //if (data[pixel + 398])
+                    
+                }
+                else if (tempData[pixel] != Color.Transparent && tempData[pixel] != Color.Black)
+                {
+                    if (data[pixel + 398] != Color.Transparent && data[pixel] == darkenedDarkenedTemp && !alteredIndexes.Contains(pixel))
+                    {
+                        if (data[pixel + 398] == Color.Black)
+                            data[pixel] = darkenedTemp;
+                        else
+                        {
+                            alteredIndexes.Add(pixel + 398);
+                            data[pixel + 398] = darkenedDarkenedTemp;
+                            data[pixel] = darkenedTemp;
+                        }
+                        
+                    }
+                        
+                    
+                }
+            }
+
+            //for (int pixel = 0; pixel < data.Count(); pixel++)
+            //{
+            //    if (tempData[pixel] == Color.White)
+            //    {
+            //        if (rnd.Next(0, 200) == 0)
+            //            data[pixel] = darkenedTemp;
+            //        else
+            //            data[pixel] = temp;
+            //    }
+            //    else if (tempData[pixel] != Color.Transparent && tempData[pixel] != Color.Black)
+            //    {
+            //        if (rnd.Next(0, 200) == 0)
+            //            data[pixel] = darkenedDarkenedTemp;
+            //        else
+            //            data[pixel] = darkenedTemp;
+            //    }
+            //}
+
+            //set the color
+            //planetTexture.un
+            //planetTexture = null;
+            Texture2D t = new Texture2D(GraphicsDevice, 400, 400);
+            t.SetData(data);
+            return t;
+        }
+        public Color Darken(Color c)
+        {
+            return new Color(c.R - 50, c.G - 50, c.B - 50);
+        }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
@@ -89,12 +210,16 @@ namespace PlanetDestroyer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            oldKB = kb;
+            kb = Keyboard.GetState();
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            if (time % 2 == 0)
+                planetTexture = UpdatePlanetTexture();
+            time++;
             base.Update(gameTime);
         }
 
@@ -104,10 +229,12 @@ namespace PlanetDestroyer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(5, 1, 8));
+            GraphicsDevice.Clear(Color.Gray);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            spriteBatch.Draw(planetTexture, new Rectangle(50, 50, 500, 500), Color.White);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
