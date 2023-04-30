@@ -170,7 +170,7 @@ namespace PlanetDestroyer
                 text = Health + " Hits";
             }
                 
-            if (Game1.mouseRect.Intersects(rect) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
+            if (IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
             {
                 Health--;
                 explosions.Add(new Explosion(new Rectangle(Game1.mouseRect.X-30, Game1.mouseRect.Y-20, 40, 40), "small"));
@@ -187,7 +187,19 @@ namespace PlanetDestroyer
             }
                 
         }
+        static bool IntersectsPixel(Rectangle hitbox1, Rectangle hitbox2, Texture2D texture2)
+        {
+            Color[] colorData2 = new Color[texture2.Width * texture2.Height];
+            texture2.GetData(colorData2);
 
+            int top = Math.Max(hitbox1.Top, hitbox2.Top);
+            int left = Math.Max(hitbox1.Left, hitbox2.Left);
+
+            if (hitbox1.Bottom < hitbox2.Bottom && hitbox1.Right < hitbox2.Right && hitbox1.Left > hitbox2.Left && hitbox1.Top > hitbox2.Top && colorData2[(left - hitbox2.Left) + (top - hitbox2.Top) * texture2.Width] != Color.Transparent)
+                return true;
+
+            return false;
+        }
         public void Draw(SpriteBatch spriteBatch)
         {
             if (Health > 0)

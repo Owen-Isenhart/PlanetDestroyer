@@ -29,7 +29,7 @@ namespace PlanetDestroyer
 
         public static Dictionary<string, List<Rectangle>> explosionRects;
 
-        public static Texture2D planetTemplate, planetTexture;
+        public static Texture2D planetTemplate, planetTexture, pixel;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
@@ -126,7 +126,7 @@ namespace PlanetDestroyer
 
             planet = new Planet(1);
             planetTexture = planet.PlanetTextureGeneration();
-
+            pixel = Content.Load<Texture2D>("pixel");
             explosionsSheet = Content.Load<Texture2D>("upscaledExplosions");
         }
 
@@ -185,7 +185,7 @@ namespace PlanetDestroyer
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             planet.Draw(spriteBatch);
-            //spriteBatch.Draw(planetTexture, mouseRect, Color.Black);
+            //spriteBatch.Draw(pixel, mouseRect, Color.Black);
             int i = 50;
 
             
