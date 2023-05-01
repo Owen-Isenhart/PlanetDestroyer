@@ -29,7 +29,7 @@ namespace PlanetDestroyer
 
         public static Dictionary<string, List<Rectangle>> explosionRects;
 
-        public static Texture2D planetTemplate, planetTexture, pixel, ship, whitePixel;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship, whitePixel, questionMark, checkMark;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
@@ -37,6 +37,8 @@ namespace PlanetDestroyer
         //public Planet planet;
         public PlayScreen playScreen;
         public Store store;
+        public Upgrades upgrades;
+        public AchievementsScreen achievements;
 
         public static int time, planetGrit;
 
@@ -147,14 +149,17 @@ namespace PlanetDestroyer
 
             //planet = new Planet(1);
             playScreen = new PlayScreen();
-
+            
             planetTexture = playScreen.planet.PlanetTextureGeneration();
             pixel = Content.Load<Texture2D>("pixel");
             whitePixel = Content.Load<Texture2D>("whitePixel");
             explosionsSheet = Content.Load<Texture2D>("upscaledExplosions");
             ship = Content.Load<Texture2D>("shipItem");
+            questionMark = Content.Load<Texture2D>("questionMark");
+            checkMark = Content.Load<Texture2D>("checkMark");
 
-            
+            upgrades = new Upgrades();
+            achievements = new AchievementsScreen();
             store = new Store();
         }
 
@@ -187,7 +192,8 @@ namespace PlanetDestroyer
             // TODO: Add your update logic here
             playScreen.Update();
             store.Update();
-
+            upgrades.Update();
+            achievements.Update();
 
             if (time % 2 == 0)
                 planetTexture = playScreen.planet.UpdatePlanetTexture();
@@ -215,14 +221,8 @@ namespace PlanetDestroyer
             spriteBatch.Begin();
             playScreen.Draw(spriteBatch);
             store.Draw(spriteBatch);
-            //spriteBatch.DrawString(fonts[3], temp + "\n" + planet.Darken(temp) + "\n" + planet.Darken(planet.Darken(temp)), new Vector2(10, 10), Color.Black);
-            //spriteBatch.Draw(pixel, mouseRect, Color.Black);
-            int i = 1;
-            //foreach (Rectangle rect in explosionRects["large"])
-            //{
-            //    spriteBatch.Draw(explosionsSheet, new Rectangle(i * 100, 20, 100, 100), rect, Color.White);
-            //    i++;
-            //}
+            upgrades.Draw(spriteBatch);
+            achievements.Draw(spriteBatch);
             
             spriteBatch.End();
             base.Draw(gameTime);

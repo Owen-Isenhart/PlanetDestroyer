@@ -11,11 +11,18 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    class Achievement
+    public class Achievement
     {
+        public string text;
+        public bool completed;
+        public int reward;
+
+        public Achievement(string t)
+        {
+            text = t;
+        }
         public void Update()
         {
-
         }
         public void Draw(SpriteBatch spriteBatch)
         {

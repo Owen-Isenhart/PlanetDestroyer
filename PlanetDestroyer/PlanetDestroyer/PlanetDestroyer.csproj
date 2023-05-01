@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Achievement.cs" />
+    <Compile Include="AchievementsScreen.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Explosion.cs" />
     <Compile Include="Money.cs" />
