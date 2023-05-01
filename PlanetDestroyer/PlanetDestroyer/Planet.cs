@@ -237,7 +237,7 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Game1.planetTexture, rect, Color.White);
-            spriteBatch.DrawString(Game1.healthFont, text, new Vector2(rect.X - (textSize.X - rect.Width) / 2, rect.Y - textSize.Y), Color.Black);
+            spriteBatch.DrawString(Game1.healthFont, text, new Vector2(rect.X - (textSize.X - rect.Width) / 2, rect.Y - textSize.Y), Color.White);
 
             foreach (Explosion explosion in explosions)
                 explosion.Draw(spriteBatch);

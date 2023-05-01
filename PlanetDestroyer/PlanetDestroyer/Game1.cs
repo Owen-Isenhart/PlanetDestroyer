@@ -29,17 +29,19 @@ namespace PlanetDestroyer
 
         public static Dictionary<string, List<Rectangle>> explosionRects;
 
-        public static Texture2D planetTemplate, planetTexture, pixel;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
 
-        public Planet planet;
+        //public Planet planet;
+        public PlayScreen playScreen;
+        public Store store;
 
         public static int time, planetGrit;
 
-        public static SpriteFont healthFont;
-        public List<SpriteFont> fonts;
+        public static SpriteFont healthFont, shopFont;
+        public static List<SpriteFont> fonts;
 
         public static Texture2D explosionsSheet;
 
@@ -80,6 +82,7 @@ namespace PlanetDestroyer
             explosionRects["small"] = loadExplosions("small") ;
             explosionRects["large"] = loadExplosions("large");
             planetGrit = rnd.Next(5, 100);
+            
             base.Initialize();
         }
 
@@ -129,7 +132,7 @@ namespace PlanetDestroyer
 
             // TODO: use this.Content to load your game content here
             planetTemplate = Content.Load<Texture2D>("upscaledBlankPlanet");
-            fonts = new List<SpriteFont> { Content.Load<SpriteFont>("planetFont1"), Content.Load<SpriteFont>("planetFont2"), Content.Load<SpriteFont>("planetFont3"), Content.Load<SpriteFont>("planetFont4"), Content.Load<SpriteFont>("planetFont5") };
+            fonts = new List<SpriteFont> { Content.Load<SpriteFont>("planetFont1"), Content.Load<SpriteFont>("planetFont2"), Content.Load<SpriteFont>("planetFont3"), Content.Load<SpriteFont>("planetFont4"), Content.Load<SpriteFont>("planetFont5"), Content.Load<SpriteFont>("shopFont1") };
             
             if (screenW >= 1080)
                 healthFont = fonts[0];
@@ -142,10 +145,16 @@ namespace PlanetDestroyer
             else if (screenW >= 680)
                 healthFont = fonts[4];
 
-            planet = new Planet(1);
-            planetTexture = planet.PlanetTextureGeneration();
+            //planet = new Planet(1);
+            playScreen = new PlayScreen();
+
+            planetTexture = playScreen.planet.PlanetTextureGeneration();
             pixel = Content.Load<Texture2D>("pixel");
             explosionsSheet = Content.Load<Texture2D>("upscaledExplosions");
+            ship = Content.Load<Texture2D>("shipItem");
+
+            
+            store = new Store();
         }
 
         
@@ -175,19 +184,19 @@ namespace PlanetDestroyer
                 this.Exit();
 
             // TODO: Add your update logic here
-            planet.Update();
+            playScreen.Update();
 
 
 
             if (time % 2 == 0)
-                planetTexture = planet.UpdatePlanetTexture();
-            if (kb.IsKeyDown(Keys.Space) && oldKB.IsKeyUp(Keys.Space))
-            {
-                planetGrit = rnd.Next(5, 100);
-                temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
+                planetTexture = playScreen.planet.UpdatePlanetTexture();
+            //if (kb.IsKeyDown(Keys.Space) && oldKB.IsKeyUp(Keys.Space))
+            //{
+            //    planetGrit = rnd.Next(5, 100);
+            //    temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
                 
-                planetTexture = planet.PlanetTextureGeneration();
-            }
+            //    planetTexture = planet.PlanetTextureGeneration();
+            //}
                 
             time++;
             base.Update(gameTime);
@@ -203,7 +212,8 @@ namespace PlanetDestroyer
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            planet.Draw(spriteBatch);
+            playScreen.Draw(spriteBatch);
+            store.Draw(spriteBatch);
             //spriteBatch.DrawString(fonts[3], temp + "\n" + planet.Darken(temp) + "\n" + planet.Darken(planet.Darken(temp)), new Vector2(10, 10), Color.Black);
             //spriteBatch.Draw(pixel, mouseRect, Color.Black);
             int i = 1;
