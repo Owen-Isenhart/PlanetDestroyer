@@ -24,12 +24,12 @@ namespace PlanetDestroyer
         public static MouseState mouse, oldMouse;
         public static Rectangle mouseRect;
 
-        public static List<Rectangle> planetRects;
-        public static List<Texture2D> planetTextures;
+        //public static List<Rectangle> planetRects;
+        //public static List<Texture2D> planetTextures;
 
         public static Dictionary<string, List<Rectangle>> explosionRects;
 
-        public static Texture2D planetTemplate, planetTexture, pixel, ship;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship, whitePixel;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
@@ -150,6 +150,7 @@ namespace PlanetDestroyer
 
             planetTexture = playScreen.planet.PlanetTextureGeneration();
             pixel = Content.Load<Texture2D>("pixel");
+            whitePixel = Content.Load<Texture2D>("whitePixel");
             explosionsSheet = Content.Load<Texture2D>("upscaledExplosions");
             ship = Content.Load<Texture2D>("shipItem");
 
@@ -185,7 +186,7 @@ namespace PlanetDestroyer
 
             // TODO: Add your update logic here
             playScreen.Update();
-
+            store.Update();
 
 
             if (time % 2 == 0)

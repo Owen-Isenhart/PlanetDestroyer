@@ -30,12 +30,14 @@ namespace PlanetDestroyer
             index = i;
             dps = (int)Math.Pow(index, 2);
             quantity = 0;
-            rectColor = Color.White;
+            rectColor = Color.White*.1f;
         }
         public void Update()
         {
+            Console.WriteLine(Game1.mouseRect + " " + rect);
             if (Game1.mouseRect.Intersects(rect))
             {
+                
                 rectColor = Color.LightGray * .5f;
                 if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && unlocked)
                 {
@@ -45,18 +47,18 @@ namespace PlanetDestroyer
             }
             else
             {
-                rectColor = Color.White;
+                rectColor = Color.White*.1f;
             }
         }
         public Vector2 textPosition()
         {
             int widthDiff = (int)(rect.Width - Game1.fonts[5].MeasureString(name).X);
-            return new Vector2(rect.X + widthDiff/2, rect.Y + rect.Height + 10);
+            return new Vector2(rect.X + widthDiff/2, rect.Y + rect.Height - Game1.fonts[5].MeasureString(name).Y - 5);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Game1.pixel, rect, rectColor);
-            spriteBatch.Draw(texture, rect, Color.White);
+            spriteBatch.Draw(Game1.whitePixel, rect, rectColor);
+            spriteBatch.Draw(texture, new Rectangle(rect.X + 10, rect.Y, rect.Width - 20, rect.Height - 20), Color.White);
             spriteBatch.DrawString(Game1.fonts[5], name, textPosition(), Color.White);
         }
     }

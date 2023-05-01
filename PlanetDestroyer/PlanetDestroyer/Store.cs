@@ -36,7 +36,7 @@ namespace PlanetDestroyer
             List<Rectangle> list = new List<Rectangle>();
             if (border.Width >= 320)
             {
-                int y = border.Height/23;
+                int y = border.Height/21;
                 //int x = 0;
                 for (int i = 0, x = 0; i < amnt; i++, x++)
                 {
@@ -46,7 +46,7 @@ namespace PlanetDestroyer
                         x = 0;
                     }
                     
-                    list.Add(new Rectangle(x * 150 + border.Width/8, y, 100, 100));
+                    list.Add(new Rectangle(x * 150 + border.Width/8, y, Game1.screenW/14, Game1.screenW/14));
                 }
             }
             return list;
@@ -60,7 +60,9 @@ namespace PlanetDestroyer
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            
             spriteBatch.Draw(Game1.pixel, border, Color.Black);
+            spriteBatch.DrawString(Game1.healthFont, "STORE", new Vector2(items.ElementAt(0).rect.X + Game1.healthFont.MeasureString("STORE").X/6, items.ElementAt(0).rect.Y - Game1.healthFont.MeasureString("STORE").Y), Color.White);
             foreach (StoreItem item in items)
             {
                 item.Draw(spriteBatch);
