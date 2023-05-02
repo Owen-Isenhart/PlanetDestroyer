@@ -38,7 +38,7 @@ namespace PlanetDestroyer
             if (Game1.mouseRect.Intersects(rect))
             {
                 
-                rectColor = Color.LightGray * .5f;
+                rectColor = Color.White * .3f;
                 if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && unlocked)
                 {
                     //create popup later

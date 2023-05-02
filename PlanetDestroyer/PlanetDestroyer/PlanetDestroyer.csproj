@@ -73,7 +73,6 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Achievement.cs" />
     <Compile Include="AchievementsScreen.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Explosion.cs" />
