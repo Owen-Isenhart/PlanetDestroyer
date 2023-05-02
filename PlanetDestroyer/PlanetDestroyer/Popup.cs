@@ -11,15 +11,19 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    class Popup
+    public class Popup
     {
-        public void Update()
+        public Rectangle popupRect;
+        public List<string> text;
+        public string orientation;
+        public bool shown;
+        public Popup()
         {
-
+            popupRect = new Rectangle(0, 0, 250, 150);
+            shown = false;
+            text = new List<string>();
+            orientation = "";
         }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
+        
     }
 }

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    public class StoreItem
+    public class StoreItem : Popup
     {
         public int price, dps, quantity, index;
         public bool unlocked;
@@ -19,7 +19,7 @@ namespace PlanetDestroyer
         public Rectangle rect;
         public Color rectColor;
         public Texture2D texture;
-        public StoreItem(string n, int i, Rectangle r, Texture2D tex)
+        public StoreItem(string n, int i, Rectangle r, Texture2D tex) : base()
         {
             name = n;
             texture = tex;

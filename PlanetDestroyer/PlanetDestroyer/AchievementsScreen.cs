@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    public class Achievement
+    public class Achievement : Popup
     {
         public string text;
         public bool completed;
@@ -19,7 +19,7 @@ namespace PlanetDestroyer
         public Rectangle rect;
         public Color rectColor;
 
-        public Achievement(string t, int index, Rectangle r)
+        public Achievement(string t, int index, Rectangle r) : base()
         {
             text = t;
             completed = false;
@@ -69,6 +69,7 @@ namespace PlanetDestroyer
         {
             //alternate planets destroyed, money collected, and things bought in shop
             List<Rectangle> rects = organizeRects(15);
+            //change this to a for loop
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[0]));
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[1]));
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[2]));
