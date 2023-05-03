@@ -99,9 +99,29 @@ namespace PlanetDestroyer
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, Game1.screenH / 2 + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             achievements = new HashSet<Achievement>();
-            rects = organizeRects(30);
+            rects = organizeRects(50);
             populateAchievements();
-            List<Texture2D> temp = Enumerable.Repeat(Game1.questionMark, rects.Count).ToList();
+            List<Texture2D> temp = new List<Texture2D>() ;
+            Texture2D tex = Game1.questionMark;
+            for (int i = 0; i < rects.Count; i++)
+            {
+                if (i % 5 == 0)
+                {
+                    if (tex == Game1.checkMark)
+                    {
+                        tex = Game1.questionMark;
+                    }
+                    
+                    else
+                    {
+                        tex = Game1.checkMark;
+                    }
+                    
+                }
+                    
+
+                temp.Add(tex);
+            }
             grid = new ScrollView(border, rects, temp);
         }
         public void populateAchievements()
@@ -139,6 +159,26 @@ namespace PlanetDestroyer
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[27]));
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[28]));
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[29]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[30]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[31]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[32]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[33]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[34]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[35]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[36]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[37]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[38]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[39]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[40]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[41]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[42]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[43]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[44]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[45]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[46]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[47]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[48]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[49]));
         }
         public List<Rectangle> organizeRects(int amnt)
         {

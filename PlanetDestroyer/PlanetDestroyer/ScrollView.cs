@@ -98,27 +98,42 @@ namespace PlanetDestroyer
         }
         public int finalShownIndex()
         {
-
+            
             int center = scrollbarRect.Center.Y;
             int full = rects[12].Y + rects[12].Height - rects[0].Y;
             int columns = rects.Count / 5;
             int cPerF = full / columns / 2;
-            for (int i = 0; i < columns * 2; i++)
+            int[] sections = new int[columns*2];
+            for (int i = 0; i < sections.Length; i++)
             {
-                if (Math.Abs(center - border.Y - cPerF) < 20)
-                    return 2 + i;
-                else
-                    cPerF += cPerF;
+                sections[i] = cPerF + border.Y;
+                cPerF += full / columns / 2;
             }
-            return 0;
+            int closestIndex = 0;
+            int min = Int32.MaxValue;
+            for (int i = 0; i < sections.Length; i++)
+            {
+                if (Math.Abs(center - sections[i]) < min)
+                {
+                    min = Math.Abs(center - sections[i]);
+                    closestIndex = i / 2 + 2;
+                    
+                }
+                
+            }
+            Console.WriteLine(closestIndex);
+            if (closestIndex > 3)
+                return closestIndex;
+            else
+                return 3;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int i = finalShownIndex() * 5 - 15; i < finalShownIndex()*5; i++)
+            for (int i = finalShownIndex() * 5 - 15, x = 0; i < finalShownIndex()*5; i++, x++)
             {
                 //if (rects)
-                spriteBatch.Draw(Game1.whitePixel, rects[i], colors[i]);
-                spriteBatch.Draw(textures[i], rects[i], Color.White);
+                spriteBatch.Draw(Game1.whitePixel, rects[x], colors[i]);
+                spriteBatch.Draw(textures[i], rects[x], Color.White);
             }
             if (hoveringBorder || clickingBar)
                 spriteBatch.Draw(Game1.whitePixel, scrollbarRect, Color.White);
