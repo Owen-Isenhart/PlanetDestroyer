@@ -18,9 +18,10 @@ namespace PlanetDestroyer
         public Dictionary<int, Rectangle> rects;
         public Dictionary<int, Texture2D> textures;
         public Dictionary<int, Color> colors;
+        public Dictionary<int, Popup> popups;
         public bool hoveringBorder, clickingBar;
         public int hoveringIndex;
-
+        public int lastRow;
 
         public ScrollView(Rectangle b, List<Rectangle> r, List<Texture2D> t)
         {
@@ -28,11 +29,13 @@ namespace PlanetDestroyer
             rects = new Dictionary<int, Rectangle>();
             textures = new Dictionary<int, Texture2D>();
             colors = new Dictionary<int, Color>();
+            popups = new Dictionary<int, Popup>();
             for (int i = 0; i < r.Count; i++)
             {
                 rects.Add(i, r[i]);
                 textures.Add(i, t[i]);
                 colors.Add(i, Color.White * .1f);
+                popups.Add(i, new Popup());
             }
             hoveringIndex = -1;
             hoveringBorder = false;
@@ -42,6 +45,30 @@ namespace PlanetDestroyer
             int columns = rects.Count / 5;
             int cPerF = full / columns;
             scrollbarRect = new Rectangle(border.X + border.Width, border.Y, 8, 3*cPerF)  ;
+            lastRow = 3;
+        }
+        public void calculatePopup(string direction, int index)
+        {
+            if (direction.Equals("left"))
+            {
+                popups[index].popupRect.X = rects[index].X - popups[index].popupRect.Width - 10;
+                popups[index].popupRect.Y = Game1.mouse.Y - popups[index].popupRect.Height / 2;
+            }
+            else if (direction.Equals("right"))
+            {
+                popups[index].popupRect.X = rects[index].X - popups[index].popupRect.Width - 10;
+                popups[index].popupRect.Y = Game1.mouse.Y - popups[index].popupRect.Height / 2;
+            }
+            //else if (direction.Equals("up"))
+            //{
+            //    popupRect.X = rect.X - popupRect.Width - 10;
+            //    popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
+            //}
+            //else if (direction.Equals("down"))
+            //{
+            //    popupRect.X = rect.X - popupRect.Width - 10;
+            //    popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
+            //}
         }
         public void Update()
         {
@@ -71,9 +98,9 @@ namespace PlanetDestroyer
                     }
                 }
 
-                for (int i = 0; i < rects.Count; i++)
+                for (int i = lastRow * 5 - 15, x = 0; i < lastRow*5; i++, x++)
                 {
-                    if (Game1.mouseRect.Intersects(rects[i]))
+                    if (Game1.mouseRect.Intersects(rects[x]))
                     {
                         colors[i] = Color.White * .3f;
                         hoveringIndex = i;
@@ -95,6 +122,7 @@ namespace PlanetDestroyer
                 hoveringIndex = -1;
                 
             }
+            lastRow = finalShownIndex();
         }
         public int finalShownIndex()
         {
@@ -123,18 +151,47 @@ namespace PlanetDestroyer
             }
             Console.WriteLine(closestIndex);
             if (closestIndex > 3)
+            {
+                updateRects(closestIndex);
                 return closestIndex;
+            }
+
             else
+            {
+                updateRects(3);
                 return 3;
+            }
+                
+        }
+        public void updateRects(int index)
+        {
+            //if (index != 3)
+            //    Console.WriteLine();
+            //index *= 5;
+            //for (int i = index - 15, x = 0; i < index; i++, x++)
+            //{
+            //    rects[i] = rects[x];
+               
+            //}
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int i = finalShownIndex() * 5 - 15, x = 0; i < finalShownIndex()*5; i++, x++)
+            //int index = finalShownIndex() * 5;
+            for (int i = lastRow * 5 - 15, x = 0; i < lastRow * 5; i++, x++)
             {
                 //if (rects)
                 spriteBatch.Draw(Game1.whitePixel, rects[x], colors[i]);
                 spriteBatch.Draw(textures[i], rects[x], Color.White);
+                
             }
+
+            for (int i = lastRow * 5 - 15, x = 0; i < lastRow * 5; i++, x++)
+            {
+                if (popups[i].shown)
+                    spriteBatch.Draw(Game1.whitePixel, popups[x].popupRect, Color.White * .7f);
+
+            }
+            
             if (hoveringBorder || clickingBar)
                 spriteBatch.Draw(Game1.whitePixel, scrollbarRect, Color.White);
         }

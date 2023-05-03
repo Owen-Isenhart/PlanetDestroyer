@@ -46,29 +46,7 @@ namespace PlanetDestroyer
                 shown = false;
             }
         }
-        public void calculatePopup(string direction)
-        {
-            if (direction.Equals("left"))
-            {
-                popupRect.X = rect.X - popupRect.Width - 10;
-                popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
-            }
-            else if (direction.Equals("right"))
-            {
-                popupRect.X = rect.X - popupRect.Width - 10;
-                popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
-            }
-            else if (direction.Equals("up"))
-            {
-                popupRect.X = rect.X - popupRect.Width - 10;
-                popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
-            }
-            else if (direction.Equals("down"))
-            {
-                popupRect.X = rect.X - popupRect.Width - 10;
-                popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
-            }
-        }
+        
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Game1.whitePixel, rect, rectColor);
@@ -91,14 +69,14 @@ namespace PlanetDestroyer
     public class AchievementsScreen
     {
         public Rectangle border;
-        public HashSet<Achievement> achievements;
+        //public HashSet<Achievement> achievements;
         public List<Rectangle> rects;
         public ScrollView grid;
         //public 
         public AchievementsScreen()
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, Game1.screenH / 2 + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
-            achievements = new HashSet<Achievement>();
+            //achievements = new HashSet<Achievement>();
             rects = organizeRects(50);
             populateAchievements();
             List<Texture2D> temp = new List<Texture2D>() ;
@@ -129,58 +107,13 @@ namespace PlanetDestroyer
             //alternate planets destroyed, money collected, and things bought in shop
             //List<Rectangle> rects = organizeRects(15);
             //change this to a for loop
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[0]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[1]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[2]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[3]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[4]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[5]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[6]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[7]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[8]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[9]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[10]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[11])); 
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[12]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[13]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[14]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[15]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[16]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[17]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[18]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[19]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[20]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[21]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[22]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[23]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[24]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[25]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[26]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[27]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[28]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[29]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[30]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[31]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[32]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[33]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[34]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[35]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[36]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[37]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[38]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[39]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[40]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[41]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[42]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[43]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[44]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[45]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[46]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[47]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[48]));
-            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[49]));
+            //for (int i = 0; i < rects.Count; i++)
+            //{
+                //achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[i]));
+            //}
+            
         }
-        public List<Rectangle> organizeRects(int amnt)
+        public List<Rectangle> organizeRects(int amnt) //have to change this to reset after 3 rows
         {
             List<Rectangle> list = new List<Rectangle>();
             if (border.Width >= 320)
@@ -218,8 +151,17 @@ namespace PlanetDestroyer
             //0, 3, 6 are planet achievements
             //1, 4, 7 are money achievements
             //2, 5, 8 are shop achievement
-            for (int i = 0; i < achievements.Count; i++)
+            for (int i = grid.lastRow * 5 - 15, x = 0; i < grid.lastRow * 5; i++, x++)
             {
+                if (grid.hoveringIndex == i)
+                {
+                    grid.popups[i].shown = true;
+                    grid.calculatePopup("right", x);
+                }
+                else
+                {
+                    grid.popups[i].shown = false;
+                }
                 if (i % 3 == 0) //planet
                 {
 
@@ -232,9 +174,9 @@ namespace PlanetDestroyer
                 {
 
                 }
-                if (achievements.ElementAt(i).shown)
-                    achievements.ElementAt(i).calculatePopup("right");
-                achievements.ElementAt(i).Update();
+                //if (achievements.ElementAt(i).shown)
+                //    achievements.ElementAt(i).calculatePopup("right");
+                //achievements.ElementAt(i).Update();
             }
         }
         public Vector2 textPosition()
@@ -251,7 +193,7 @@ namespace PlanetDestroyer
             //    achievement.Draw(spriteBatch);
             //}
 
-            //spriteBatch.DrawString(Game1.fonts[4], "ACHIEVEMENTS", textPosition(), Color.White);
+            spriteBatch.DrawString(Game1.fonts[4], "ACHIEVEMENTS", textPosition(), Color.White);
         }
     }
 }
