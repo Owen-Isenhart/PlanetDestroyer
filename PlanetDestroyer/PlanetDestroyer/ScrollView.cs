@@ -38,16 +38,19 @@ namespace PlanetDestroyer
             hoveringBorder = false;
             clickingBar = false;
             border = new Rectangle(rects[0].X, rects[0].Y, rects[rects.Count-1].X + rects[0].Width - rects[0].X, rects[12].Y + rects[0].Height - rects[0].Y);
-            scrollbarRect = new Rectangle(border.X + border.Width - 4, border.Y, 8, (rects[12].Y+rects[12].Height - rects[0].Y) - ((rects.Count/5 - 3) * (b.Width / 8 + 10 + rects[0].Height))/3);
+            int full = rects[12].Y + rects[12].Height - rects[0].Y;
+            int columns = rects.Count / 5;
+            int cPerF = full / columns;
+            scrollbarRect = new Rectangle(border.X + border.Width, border.Y, 8, 3*cPerF)  ;
         }
         public void Update()
         {
-            if (Game1.mouseRect.Intersects(bigBorder) || Game1.mouseRect.Intersects(scrollbarRect))
+            if (Game1.mouseRect.Intersects(border) || Game1.mouseRect.Intersects(scrollbarRect))
                 hoveringBorder = true;
             else
                 hoveringBorder = false;
 
-            if (hoveringBorder)
+            if (hoveringBorder || clickingBar)
             {
                 if (Game1.mouseRect.Intersects(scrollbarRect) && !clickingBar && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                 {
@@ -62,7 +65,7 @@ namespace PlanetDestroyer
                 if (clickingBar)
                 {
                     int diff = Game1.mouse.Y - Game1.oldMouse.Y;
-                    if (scrollbarRect.Y + diff >= border.Y && scrollbarRect.Y + diff <= border.Y + border.Height)
+                    if (scrollbarRect.Y + diff >= border.Y && scrollbarRect.Y + scrollbarRect.Height + diff <= border.Y + border.Height)
                     {
                         scrollbarRect.Y += diff;
                     }
@@ -95,17 +98,29 @@ namespace PlanetDestroyer
         }
         public int finalShownIndex()
         {
-            return 1; 
+
+            int center = scrollbarRect.Center.Y;
+            int full = rects[12].Y + rects[12].Height - rects[0].Y;
+            int columns = rects.Count / 5;
+            int cPerF = full / columns / 2;
+            for (int i = 0; i < columns * 2; i++)
+            {
+                if (Math.Abs(center - border.Y - cPerF) < 20)
+                    return 2 + i;
+                else
+                    cPerF += cPerF;
+            }
+            return 0;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < rects.Count; i++)
+            for (int i = finalShownIndex() * 5 - 15; i < finalShownIndex()*5; i++)
             {
                 //if (rects)
                 spriteBatch.Draw(Game1.whitePixel, rects[i], colors[i]);
                 spriteBatch.Draw(textures[i], rects[i], Color.White);
             }
-            if (hoveringBorder)
+            if (hoveringBorder || clickingBar)
                 spriteBatch.Draw(Game1.whitePixel, scrollbarRect, Color.White);
         }
     }
