@@ -30,7 +30,7 @@ namespace PlanetDestroyer
             time = 80;
             text = Health + " Hits";
             textSize = Game1.healthFont.MeasureString(text);
-            Game1.planetGrit = Game1.rnd.Next(5, 100);
+            Game1.planetGrit = Game1.rnd.Next(5, 50);
             Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
             while (Darken(Game1.temp) == Color.Black || Darken(Darken(Game1.temp)) == Color.Black)
             {
@@ -47,7 +47,7 @@ namespace PlanetDestroyer
             //explosions.Clear();
             text = Health + " Hits";
             textSize = Game1.healthFont.MeasureString(text);
-            Game1.planetGrit = Game1.rnd.Next(5, 100);
+            Game1.planetGrit = Game1.rnd.Next(5, 50);
             Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
             while (Darken(Game1.temp) == Color.Black || Darken(Darken(Game1.temp)) == Color.Black)
             {
@@ -105,7 +105,7 @@ namespace PlanetDestroyer
                     pixel++;
                 }
 
-                if (data[pixel] != Color.Black && data[pixel] != Color.Transparent && (data[pixel + 1] == Color.Black || data[pixel - 400] == Color.Black || data[pixel + 400] == Color.Black) && Game1.rnd.Next(0, Game1.planetGrit-1) == 0)
+                if (data[pixel] != Color.Black && data[pixel] != Color.Transparent && (data[pixel + 1] == Color.Black || data[pixel - 400] == Color.Black || data[pixel + 400] == Color.Black) && Game1.rnd.Next(0, (int)(Game1.planetGrit/1.8)) == 0)
                 {
                     if (tempData[pixel] == Color.White)
                         data[pixel] = darkenedTemp;

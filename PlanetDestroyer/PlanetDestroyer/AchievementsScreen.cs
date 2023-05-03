@@ -18,6 +18,7 @@ namespace PlanetDestroyer
         public int reward;
         public Rectangle rect;
         public Color rectColor;
+        
 
         public Achievement(string t, int index, Rectangle r) : base()
         {
@@ -26,19 +27,46 @@ namespace PlanetDestroyer
             reward = index * 100;
             rect = r;
             rectColor = Color.White * .1f;
+            
         }
         public void Update()
         {
-            Console.WriteLine(Game1.mouseRect + " " + rect);
+            //Console.WriteLine(Game1.mouseRect + " " + rect);
             if (Game1.mouseRect.Intersects(rect))
             {
 
                 rectColor = Color.White * .3f;
-
+                shown = true;
+                //calculatePopup();
+                //popupRect.X = Game1.mouse.X
             }
             else
             {
                 rectColor = Color.White * .1f;
+                shown = false;
+            }
+        }
+        public void calculatePopup(string direction)
+        {
+            if (direction.Equals("left"))
+            {
+                popupRect.X = rect.X - popupRect.Width - 10;
+                popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
+            }
+            else if (direction.Equals("right"))
+            {
+                popupRect.X = rect.X - popupRect.Width - 10;
+                popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
+            }
+            else if (direction.Equals("up"))
+            {
+                popupRect.X = rect.X - popupRect.Width - 10;
+                popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
+            }
+            else if (direction.Equals("down"))
+            {
+                popupRect.X = rect.X - popupRect.Width - 10;
+                popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
             }
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -52,23 +80,34 @@ namespace PlanetDestroyer
             {
                 spriteBatch.Draw(Game1.questionMark, rect, Color.White);
             }
+            
+        }
+        public void DrawPopup(SpriteBatch spriteBatch)
+        {
+            if (shown)
+                spriteBatch.Draw(Game1.whitePixel, popupRect, Color.White * .7f);
         }
     }
     public class AchievementsScreen
     {
         public Rectangle border;
         public HashSet<Achievement> achievements;
+        public List<Rectangle> rects;
+        public ScrollView grid;
         //public 
         public AchievementsScreen()
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, Game1.screenH / 2 + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             achievements = new HashSet<Achievement>();
+            rects = organizeRects(30);
             populateAchievements();
+            List<Texture2D> temp = Enumerable.Repeat(Game1.questionMark, rects.Count).ToList();
+            grid = new ScrollView(border, rects, temp);
         }
         public void populateAchievements()
         {
             //alternate planets destroyed, money collected, and things bought in shop
-            List<Rectangle> rects = organizeRects(15);
+            //List<Rectangle> rects = organizeRects(15);
             //change this to a for loop
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[0]));
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[1]));
@@ -85,6 +124,21 @@ namespace PlanetDestroyer
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[12]));
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[13]));
             achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[14]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[15]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[16]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[17]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[18]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[19]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[20]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[21]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[22]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[23]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[24]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[25]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[26]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[27]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[28]));
+            achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[29]));
         }
         public List<Rectangle> organizeRects(int amnt)
         {
@@ -106,9 +160,21 @@ namespace PlanetDestroyer
             }
             return list;
         }
+        public string calculateOrientation(int i)
+        {
+            if (i % 5 == 0)
+            {
+                return "right";
+            }
+            if (i % 5 == 4)
+            {
+                return "left";
+            }
+            return "";
+        }
         public void Update()
         {
-            
+            grid.Update();
             //0, 3, 6 are planet achievements
             //1, 4, 7 are money achievements
             //2, 5, 8 are shop achievement
@@ -126,6 +192,8 @@ namespace PlanetDestroyer
                 {
 
                 }
+                if (achievements.ElementAt(i).shown)
+                    achievements.ElementAt(i).calculatePopup("right");
                 achievements.ElementAt(i).Update();
             }
         }
@@ -137,12 +205,13 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Game1.pixel, border, Color.White);
-            foreach (Achievement achievement in achievements)
-            {
-                achievement.Draw(spriteBatch);
-            }
+            grid.Draw(spriteBatch);
+            //foreach (Achievement achievement in achievements)
+            //{
+            //    achievement.Draw(spriteBatch);
+            //}
 
-            spriteBatch.DrawString(Game1.fonts[4], "ACHIEVEMENTS", textPosition(), Color.White);
+            //spriteBatch.DrawString(Game1.fonts[4], "ACHIEVEMENTS", textPosition(), Color.White);
         }
     }
 }
