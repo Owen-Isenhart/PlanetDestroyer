@@ -36,6 +36,7 @@ namespace PlanetDestroyer
                 textures.Add(i, t[i]);
                 colors.Add(i, Color.White * .1f);
                 popups.Add(i, new Popup());
+                popups[i].text = (i+1) + "";
             }
             hoveringIndex = -1;
             hoveringBorder = false;
@@ -130,12 +131,12 @@ namespace PlanetDestroyer
             int center = scrollbarRect.Center.Y;
             int full = rects[12].Y + rects[12].Height - rects[0].Y;
             int columns = rects.Count / 5;
-            int cPerF = full / columns / 2;
-            int[] sections = new int[columns*2];
+            double cPerF = (double)full / (double)columns / 2;
+            double[] sections = new double[columns*2];
             for (int i = 0; i < sections.Length; i++)
             {
                 sections[i] = cPerF + border.Y;
-                cPerF += full / columns / 2;
+                cPerF +=(double)full / (double)columns / 2;
             }
             int closestIndex = 0;
             int min = Int32.MaxValue;
@@ -143,7 +144,7 @@ namespace PlanetDestroyer
             {
                 if (Math.Abs(center - sections[i]) < min)
                 {
-                    min = Math.Abs(center - sections[i]);
+                    min = (int)Math.Abs(center - sections[i]);
                     closestIndex = i / 2 + 2;
                     
                 }
@@ -188,7 +189,11 @@ namespace PlanetDestroyer
             for (int i = lastRow * 5 - 15, x = 0; i < lastRow * 5; i++, x++)
             {
                 if (popups[i].shown)
+                {
                     spriteBatch.Draw(Game1.whitePixel, popups[x].popupRect, Color.White * .7f);
+                    spriteBatch.DrawString(Game1.shopFont, popups[i].text, new Vector2(popups[x].popupRect.X, popups[x].popupRect.Y + 10), Color.Black);
+                }
+                    
 
             }
             

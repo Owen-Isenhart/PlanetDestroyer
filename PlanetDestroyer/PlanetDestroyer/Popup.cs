@@ -14,14 +14,14 @@ namespace PlanetDestroyer
     public class Popup
     {
         public Rectangle popupRect;
-        public List<string> text;
+        public string text;
         public string orientation;
         public bool shown;
         public Popup()
         {
             popupRect = new Rectangle(0, 0, 250, 150);
             shown = false;
-            text = new List<string>();
+            text = "";
             orientation = "";
         }
         

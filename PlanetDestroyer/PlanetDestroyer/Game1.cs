@@ -157,7 +157,7 @@ namespace PlanetDestroyer
             ship = Content.Load<Texture2D>("shipItem");
             questionMark = Content.Load<Texture2D>("questionMark");
             checkMark = Content.Load<Texture2D>("checkMark");
-
+            shopFont = Content.Load<SpriteFont>("shopFont1");
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             store = new Store();

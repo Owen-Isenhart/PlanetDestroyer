@@ -77,7 +77,7 @@ namespace PlanetDestroyer
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, Game1.screenH / 2 + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             //achievements = new HashSet<Achievement>();
-            rects = organizeRects(50);
+            rects = organizeRects(200);
             populateAchievements();
             List<Texture2D> temp = new List<Texture2D>() ;
             Texture2D tex = Game1.questionMark;
