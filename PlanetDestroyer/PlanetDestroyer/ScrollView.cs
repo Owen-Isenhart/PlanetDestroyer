@@ -22,9 +22,11 @@ namespace PlanetDestroyer
         public bool hoveringBorder, clickingBar;
         public int hoveringIndex;
         public int lastRow;
+        public int cols;
 
-        public ScrollView(Rectangle b, List<Rectangle> r, List<Texture2D> t)
+        public ScrollView(Rectangle b, List<Rectangle> r, List<Texture2D> t, int c)
         {
+            cols = c;
             bigBorder = b;
             rects = new Dictionary<int, Rectangle>();
             textures = new Dictionary<int, Texture2D>();
@@ -41,9 +43,9 @@ namespace PlanetDestroyer
             hoveringIndex = -1;
             hoveringBorder = false;
             clickingBar = false;
-            border = new Rectangle(rects[0].X, rects[0].Y, rects[rects.Count-1].X + rects[0].Width - rects[0].X, rects[12].Y + rects[0].Height - rects[0].Y);
-            int full = rects[12].Y + rects[12].Height - rects[0].Y;
-            int columns = rects.Count / 5;
+            border = new Rectangle(rects[0].X, rects[0].Y, rects[cols-1].X + rects[0].Width - rects[0].X, rects[cols * 3 - 1].Y + rects[0].Height - rects[0].Y);
+            int full = rects[cols*3 - 1].Y + rects[cols * 3 - 1].Height - rects[0].Y;
+            int columns = rects.Count / cols;
             int cPerF = full / columns;
             scrollbarRect = new Rectangle(border.X + border.Width, border.Y, 8, 3*cPerF)  ;
             lastRow = 3;
@@ -52,7 +54,8 @@ namespace PlanetDestroyer
         {
             if (direction.Equals("left"))
             {
-                popups[index].popupRect.X = rects[index].X - popups[index].popupRect.Width - 10;
+                
+                popups[index].popupRect.X = rects[index].X + rects[index].Width + scrollbarRect.Width + 10;
                 popups[index].popupRect.Y = Game1.mouse.Y - popups[index].popupRect.Height / 2;
             }
             else if (direction.Equals("right"))
@@ -99,7 +102,7 @@ namespace PlanetDestroyer
                     }
                 }
 
-                for (int i = lastRow * 5 - 15, x = 0; i < lastRow*5; i++, x++)
+                for (int i = lastRow * cols - cols*3, x = 0; i < lastRow*cols; i++, x++)
                 {
                     if (Game1.mouseRect.Intersects(rects[x]))
                     {
@@ -129,8 +132,8 @@ namespace PlanetDestroyer
         {
             
             int center = scrollbarRect.Center.Y;
-            int full = rects[12].Y + rects[12].Height - rects[0].Y;
-            int columns = rects.Count / 5;
+            int full = rects[cols * 3 - 1].Y + rects[cols * 3 - 1].Height - rects[0].Y;
+            int columns = rects.Count / cols;
             double cPerF = (double)full / (double)columns / 2;
             double[] sections = new double[columns*2];
             for (int i = 0; i < sections.Length; i++)
@@ -178,7 +181,7 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             //int index = finalShownIndex() * 5;
-            for (int i = lastRow * 5 - 15, x = 0; i < lastRow * 5; i++, x++)
+            for (int i = lastRow * cols - cols*3, x = 0; i < lastRow * cols; i++, x++)
             {
                 //if (rects)
                 spriteBatch.Draw(Game1.whitePixel, rects[x], colors[i]);
@@ -186,7 +189,7 @@ namespace PlanetDestroyer
                 
             }
 
-            for (int i = lastRow * 5 - 15, x = 0; i < lastRow * 5; i++, x++)
+            for (int i = lastRow * cols - cols*3, x = 0; i < lastRow * cols; i++, x++)
             {
                 if (popups[i].shown)
                 {

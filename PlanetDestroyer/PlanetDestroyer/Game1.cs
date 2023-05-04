@@ -154,7 +154,7 @@ namespace PlanetDestroyer
             pixel = Content.Load<Texture2D>("pixel");
             whitePixel = Content.Load<Texture2D>("whitePixel");
             explosionsSheet = Content.Load<Texture2D>("upscaledExplosions");
-            ship = Content.Load<Texture2D>("shipItem");
+            ship = Content.Load<Texture2D>("spaceShip");
             questionMark = Content.Load<Texture2D>("questionMark");
             checkMark = Content.Load<Texture2D>("checkMark");
             shopFont = Content.Load<SpriteFont>("shopFont1");

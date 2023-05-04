@@ -11,61 +11,61 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    public class Achievement : Popup
-    {
-        public string text;
-        public bool completed;
-        public int reward;
-        public Rectangle rect;
-        public Color rectColor;
+    //public class Achievement : Popup
+    //{
+    //    public string text;
+    //    public bool completed;
+    //    public int reward;
+    //    public Rectangle rect;
+    //    public Color rectColor;
         
 
-        public Achievement(string t, int index, Rectangle r) : base()
-        {
-            text = t;
-            completed = false;
-            reward = index * 100;
-            rect = r;
-            rectColor = Color.White * .1f;
+    //    public Achievement(string t, int index, Rectangle r) : base()
+    //    {
+    //        text = t;
+    //        completed = false;
+    //        reward = index * 100;
+    //        rect = r;
+    //        rectColor = Color.White * .1f;
             
-        }
-        public void Update()
-        {
-            //Console.WriteLine(Game1.mouseRect + " " + rect);
-            if (Game1.mouseRect.Intersects(rect))
-            {
+    //    }
+    //    public void Update()
+    //    {
+    //        //Console.WriteLine(Game1.mouseRect + " " + rect);
+    //        if (Game1.mouseRect.Intersects(rect))
+    //        {
 
-                rectColor = Color.White * .3f;
-                shown = true;
-                //calculatePopup();
-                //popupRect.X = Game1.mouse.X
-            }
-            else
-            {
-                rectColor = Color.White * .1f;
-                shown = false;
-            }
-        }
+    //            rectColor = Color.White * .3f;
+    //            shown = true;
+    //            //calculatePopup();
+    //            //popupRect.X = Game1.mouse.X
+    //        }
+    //        else
+    //        {
+    //            rectColor = Color.White * .1f;
+    //            shown = false;
+    //        }
+    //    }
         
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(Game1.whitePixel, rect, rectColor);
-            if (completed)
-            {
-                spriteBatch.Draw(Game1.checkMark, rect, Color.White);
-            }
-            else
-            {
-                spriteBatch.Draw(Game1.questionMark, rect, Color.White);
-            }
+    //    public void Draw(SpriteBatch spriteBatch)
+    //    {
+    //        spriteBatch.Draw(Game1.whitePixel, rect, rectColor);
+    //        if (completed)
+    //        {
+    //            spriteBatch.Draw(Game1.checkMark, rect, Color.White);
+    //        }
+    //        else
+    //        {
+    //            spriteBatch.Draw(Game1.questionMark, rect, Color.White);
+    //        }
             
-        }
-        public void DrawPopup(SpriteBatch spriteBatch)
-        {
-            if (shown)
-                spriteBatch.Draw(Game1.whitePixel, popupRect, Color.White * .7f);
-        }
-    }
+    //    }
+    //    public void DrawPopup(SpriteBatch spriteBatch)
+    //    {
+    //        if (shown)
+    //            spriteBatch.Draw(Game1.whitePixel, popupRect, Color.White * .7f);
+    //    }
+    //}
     public class AchievementsScreen
     {
         public Rectangle border;
@@ -77,7 +77,7 @@ namespace PlanetDestroyer
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, Game1.screenH / 2 + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             //achievements = new HashSet<Achievement>();
-            rects = organizeRects(200);
+            rects = organizeRects(60);
             populateAchievements();
             List<Texture2D> temp = new List<Texture2D>() ;
             Texture2D tex = Game1.questionMark;
@@ -100,7 +100,7 @@ namespace PlanetDestroyer
 
                 temp.Add(tex);
             }
-            grid = new ScrollView(border, rects, temp);
+            grid = new ScrollView(border, rects, temp, 5);
         }
         public void populateAchievements()
         {
@@ -128,7 +128,7 @@ namespace PlanetDestroyer
                         x = 0;
                     }
 
-                    list.Add(new Rectangle(border.X + x * border.Width / 7 + (int)(border.Width / 6.5), y, border.Width / 8, border.Width / 8));
+                    list.Add(new Rectangle(border.X + (int)(1.15*x * border.Width / 8) + (int)(border.Width / 6.5), y, border.Width / 8, border.Width / 8));
                 }
             }
             return list;
