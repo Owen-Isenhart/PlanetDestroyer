@@ -76,10 +76,7 @@ namespace PlanetDestroyer
         }
         public void Update()
         {
-            if (Game1.mouseRect.Intersects(border) || Game1.mouseRect.Intersects(scrollbarRect))
-                hoveringBorder = true;
-            else
-                hoveringBorder = false;
+            
 
             if (hoveringBorder || clickingBar)
             {
@@ -126,6 +123,12 @@ namespace PlanetDestroyer
                 hoveringIndex = -1;
                 
             }
+
+            if (Game1.mouseRect.Intersects(border) || Game1.mouseRect.Intersects(scrollbarRect))
+                hoveringBorder = true;
+            else
+                hoveringBorder = false;
+
             lastRow = finalShownIndex();
         }
         public int finalShownIndex()
