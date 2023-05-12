@@ -17,13 +17,14 @@ namespace PlanetDestroyer
         public string name;
         public float angleX, angleY;
         public bool subX, subY;
-        public Rectangle rect;
+        public Rectangle rect, intersectRect;
         public Texture2D texture;
         public StoreItem(string n, int i, Rectangle r, Texture2D tex) : base("delayed-linear", Game1.itemRects)
         {
             name = n;
             texture = tex;
             rect = r;
+            intersectRect = new Rectangle(r.X, r.Y, 1, 1);
             index = i;
             dps = (int)Math.Pow(index, 2);
             quantity = 0;
@@ -81,13 +82,15 @@ namespace PlanetDestroyer
             //dist += (int)(dist * Math.Cos(angle));
             rect.X -= (int)(dist * Math.Cos(angleX)) / 50;
             rect.Y += (int)(dist * Math.Sin(angleY)) / 130;
+            intersectRect.X = rect.Center.X;
+            intersectRect.Y = rect.Center.Y;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             if (subY)
                 spriteBatch.Draw(texture, rect, Game1.itemRects[frameIndex], Color.White);
-            else if (!Game1.playScreen.planet.rect.Intersects(rect))
+            else if (!Game1.playScreen.planet.rect.Intersects(intersectRect))
             {
                 spriteBatch.Draw(texture, rect, Game1.itemRects[frameIndex], Color.White);
 

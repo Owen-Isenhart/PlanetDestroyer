@@ -16,12 +16,13 @@ namespace PlanetDestroyer
         public Rectangle border;
         public List<StoreItem> items;
         public ScrollView grid;
+        public int totalDmg;
         
         public Store()
         {
             border = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH);
             items = new List<StoreItem>();
-            
+            totalDmg = 0;
             List<Rectangle> t = organizeRects(21);
             List<Texture2D> temp = new List<Texture2D>();
             Texture2D tex = Game1.questionMark;
@@ -76,10 +77,20 @@ namespace PlanetDestroyer
             }
             return list;
         }
+        public void DamagePlanet()
+        {
+            totalDmg = 0;
+            foreach (StoreItem item in items)
+            {
+                totalDmg += item.dps;
+            }
+            Game1.playScreen.planet.Health -= (double)totalDmg/60;
+        }
         public void Update()
         {
             grid.Update();
-            
+            //if (Game1.time % 60 == 0)
+                DamagePlanet();
             for (int i = grid.lastRow * 3 - 9, x = 0; i < grid.lastRow * 3; i++, x++)
             {
                 if (grid.hoveringIndex == i)

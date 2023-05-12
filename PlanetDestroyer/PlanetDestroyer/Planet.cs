@@ -13,7 +13,8 @@ namespace PlanetDestroyer
 {
     public class Planet
     {
-        public int Health, index, time, buffer;
+        public double Health;
+        public int index, time, buffer;
         public Rectangle rect;
         public List<Explosion> explosions; //from clicking
         public string text;
@@ -22,7 +23,7 @@ namespace PlanetDestroyer
         public Planet(int i) //index increases linearly, as does the amount of hits to blow up the planet
         {
             index = i;
-            Health = 1 * index;
+            Health = 100 * index;
             buffer = 5;
             int size = Game1.screenW / 5;
             rect = new Rectangle(Game1.screenW / 2 - size / 2, Game1.screenH / 3 - size / 3, size, size);
@@ -42,10 +43,10 @@ namespace PlanetDestroyer
         public void Reset()
         {
             index++;
-            Health = 1 * index;
+            Health = 100 * index;
             time = 80;
             //explosions.Clear();
-            text = Health + " Hits";
+            text = Math.Round(Health) + " Hits";
             textSize = Game1.healthFont.MeasureString(text);
             Game1.planetGrit = Game1.rnd.Next(5, 50);
             Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
@@ -160,7 +161,8 @@ namespace PlanetDestroyer
 
             if (Health <= 0)
             {
-                text = Health + " Hits";
+                Health = 0;
+                text = Math.Round(Health) + " Hits";
                 textSize = Game1.healthFont.MeasureString(text);
                 if (time == 0)
                 {
@@ -184,8 +186,8 @@ namespace PlanetDestroyer
             }
             else
             {
-                if (Health == 1) text = Health + " Hit";
-                else text = Health + " Hits";
+                if (Math.Round(Health) == 1) text = Math.Round(Health) + " Hit";
+                else text = Math.Round(Health) + " Hits";
                 textSize = Game1.healthFont.MeasureString(text);
 
                 if (Game1.mouseRect.Intersects(rect) && IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
