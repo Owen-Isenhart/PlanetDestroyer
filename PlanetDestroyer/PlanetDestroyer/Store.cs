@@ -100,7 +100,7 @@ namespace PlanetDestroyer
 
                     if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                     {
-                        items.Add(new StoreItem("ship", 1, calculateInitRect(1), Game1.whitePixel));
+                        items.Add(new StoreItem("ship", x+1, calculateInitRect(1), Game1.whitePixel));
                     }
                 }
                 else
