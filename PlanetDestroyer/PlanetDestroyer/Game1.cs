@@ -28,6 +28,7 @@ namespace PlanetDestroyer
         //public static List<Texture2D> planetTextures;
 
         public static Dictionary<string, List<Rectangle>> explosionRects;
+        public static List<Rectangle> itemRects;
 
         public static Texture2D planetTemplate, planetTexture, pixel, ship, whitePixel, questionMark, checkMark;
         public static Color temp;
@@ -35,7 +36,7 @@ namespace PlanetDestroyer
         public static GraphicsDevice gd;
 
         //public Planet planet;
-        public PlayScreen playScreen;
+        public static PlayScreen playScreen;
         public Store store;
         public Upgrades upgrades;
         public AchievementsScreen achievements;
@@ -84,7 +85,8 @@ namespace PlanetDestroyer
             explosionRects["small"] = loadExplosions("small") ;
             explosionRects["large"] = loadExplosions("large");
             planetGrit = rnd.Next(5, 100);
-            
+            itemRects = new List<Rectangle>();
+            itemRects.Add(new Rectangle(0, 0, 1, 1));
             base.Initialize();
         }
 

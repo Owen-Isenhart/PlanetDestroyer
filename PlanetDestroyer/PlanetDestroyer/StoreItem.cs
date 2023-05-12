@@ -11,55 +11,87 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    public class StoreItem : Popup
+    public class StoreItem : Animation
     {
-        public int price, dps, quantity, index;
-        public bool unlocked;
+        public int price, dps, quantity, index, dist;
         public string name;
+        public float angleX, angleY;
+        public bool subX, subY;
         public Rectangle rect;
-        public Color rectColor;
         public Texture2D texture;
-        public StoreItem(string n, int i, Rectangle r, Texture2D tex) : base()
+        public StoreItem(string n, int i, Rectangle r, Texture2D tex) : base("delayed-linear", Game1.itemRects)
         {
             name = n;
             texture = tex;
-            unlocked = true;
-            if (index != 1)
-                unlocked = false;
             rect = r;
             index = i;
             dps = (int)Math.Pow(index, 2);
             quantity = 0;
-            rectColor = Color.White*.1f;
+            repeat = true;
+            angleY = 0;
+            angleX = (float)Math.PI;
+            subX = true;
+            subY = true;
+            dist = (int)(Game1.playScreen.planet.rect.Width*1.3);
+            //dist = Game1.playScreen.planet.rect.Center.X - rect.Right;
         }
+        
         public void Update()
         {
-            Console.WriteLine(Game1.mouseRect + " " + rect);
-            if (Game1.mouseRect.Intersects(rect))
+            if (subX)
             {
+                angleX -= (float)Math.PI / 90;
+            }
+            
+            else
+            {
+                angleX += (float)Math.PI / 90;
+            }
                 
-                rectColor = Color.White * .3f;
-                if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && unlocked)
-                {
-                    //create popup later
-                    quantity++;
-                }
+            if (subY)
+            {
+                angleY -= (float)Math.PI / 90;
+
             }
             else
             {
-                rectColor = Color.White*.1f;
+                angleY += (float)Math.PI / 90;
+
             }
+
+            if (angleX >= Math.PI) 
+            {
+                subX = true;
+
+            } 
+            else if (angleX <= 0)
+            {
+                subX = false;
+            }
+            if (angleY >= Math.PI / 2)
+            {
+                subY = true;
+            } 
+            else if (angleY <= -Math.PI / 2)
+            {
+                subY = false;
+            }
+
+            Console.WriteLine(subY);
+            //dist += (int)(dist * Math.Cos(angle));
+            rect.X -= (int)(dist * Math.Cos(angleX)) / 50;
+            rect.Y += (int)(dist * Math.Sin(angleY)) / 130;
         }
-        public Vector2 textPosition()
-        {
-            int widthDiff = (int)(rect.Width - Game1.fonts[5].MeasureString(name).X);
-            return new Vector2(rect.X + widthDiff/2, rect.Y + rect.Height - Game1.fonts[5].MeasureString(name).Y - 5);
-        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Game1.whitePixel, rect, rectColor);
-            spriteBatch.Draw(texture, new Rectangle(rect.X + 10, rect.Y, rect.Width - 20, rect.Height - 20), Color.White);
-            spriteBatch.DrawString(Game1.fonts[5], name, textPosition(), Color.White);
+            if (subY)
+                spriteBatch.Draw(texture, rect, Game1.itemRects[frameIndex], Color.White);
+            else if (!Game1.playScreen.planet.rect.Intersects(rect))
+            {
+                spriteBatch.Draw(texture, rect, Game1.itemRects[frameIndex], Color.White);
+
+            }
         }
     }
 }

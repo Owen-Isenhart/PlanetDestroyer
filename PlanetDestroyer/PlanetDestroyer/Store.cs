@@ -14,13 +14,13 @@ namespace PlanetDestroyer
     public class Store
     {
         public Rectangle border;
-        public HashSet<StoreItem> items;
+        public List<StoreItem> items;
         public ScrollView grid;
         
         public Store()
         {
             border = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH);
-            items = new HashSet<StoreItem>();
+            items = new List<StoreItem>();
             
             List<Rectangle> t = organizeRects(21);
             List<Texture2D> temp = new List<Texture2D>();
@@ -46,34 +46,18 @@ namespace PlanetDestroyer
             }
             grid = new ScrollView(border, t, temp, 3);
         }
+        public Rectangle calculateInitRect(int i)
+        {
+            return new Rectangle(Game1.playScreen.planet.rect.Center.X, Game1.playScreen.planet.rect.Center.Y+25, 25, 25);
+        }
         public void populateStore()
         {
             List<Rectangle> rects = organizeRects(5);
-            items.Add(new StoreItem("Small Ship", 1, rects[0], Game1.ship));
-            items.Add(new StoreItem("Small Ship", 1, rects[1], Game1.ship));
-            items.Add(new StoreItem("Small Ship", 1, rects[2], Game1.ship));
-            items.Add(new StoreItem("Small Ship", 1, rects[3], Game1.ship));
-            items.Add(new StoreItem("Small Ship", 1, rects[4], Game1.ship));
+            
         }
         public List<Rectangle> organizeRects(int amnt)
         {
-            //List<Rectangle> list = new List<Rectangle>();
-            //if (border.Width >= 320)
-            //{
-            //    int y = border.Y + 25;
-            //    //int x = 0;
-            //    for (int i = 0, x = 0; i < amnt; i++, x++)
-            //    {
-            //        if (i % 3 == 0)
-            //        {
-            //            y += 110 + border.Height / 23;
-            //            x = 0;
-            //        }
-
-            //        list.Add(new Rectangle(x * 150 + border.Width/8, y, Game1.screenW/22, Game1.screenW/22));
-            //    }
-            //}
-            //return list;
+            
             List<Rectangle> list = new List<Rectangle>();
             if (border.Width >= 320)
             {
@@ -95,12 +79,18 @@ namespace PlanetDestroyer
         public void Update()
         {
             grid.Update();
+            
             for (int i = grid.lastRow * 3 - 9, x = 0; i < grid.lastRow * 3; i++, x++)
             {
                 if (grid.hoveringIndex == i)
                 {
                     grid.popups[i].shown = true;
                     grid.calculatePopup("left", x);
+
+                    if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
+                    {
+                        items.Add(new StoreItem("ship", 1, calculateInitRect(1), Game1.whitePixel));
+                    }
                 }
                 else
                 {
@@ -129,6 +119,12 @@ namespace PlanetDestroyer
             spriteBatch.Draw(Game1.pixel, border, Color.Black);
             spriteBatch.DrawString(Game1.fonts[2], "STORE", new Vector2(border.Width/2 - Game1.fonts[2].MeasureString("STORE").X/2, grid.rects[0].Y - (int)(Game1.healthFont.MeasureString("STORE").Y/1.3)), Color.White);
             grid.Draw(spriteBatch);
+
+            foreach (StoreItem item in items)
+            {
+                item.Update();
+                item.Draw(spriteBatch);
+            }
         }
     }
 }
