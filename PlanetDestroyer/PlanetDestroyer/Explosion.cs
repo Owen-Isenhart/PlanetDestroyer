@@ -16,7 +16,7 @@ namespace PlanetDestroyer
         public Rectangle rect;
         public float angle;
         public string type; 
-        public Explosion(Rectangle pos, string i) : base("linear", Game1.explosionRects[i])
+        public Explosion(Rectangle pos, string i) : base("linear", 3, Game1.explosionRects[i])
         {
             int size;
             if (i.Equals("small"))

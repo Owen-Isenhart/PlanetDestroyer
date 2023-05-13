@@ -13,13 +13,14 @@ namespace PlanetDestroyer
 {
     public class Animation
     {
-        public int frameIndex, framesInbetween;
+        public int frameIndex, framesInbetween, ogFrames;
         public bool repeat, finished;
         public List<Rectangle> frameRects;
         public string anim;
-        public Animation(string state, List<Rectangle> sourceRects)
+        public Animation(string state, int f, List<Rectangle> sourceRects)
         {
-            framesInbetween = 3;
+            framesInbetween = f;
+            ogFrames = f;
             frameIndex = 0;
             repeat = false;
             finished = false;
@@ -28,7 +29,7 @@ namespace PlanetDestroyer
         }
         public void Reset(string state, List<Rectangle> sourceRects)
         {
-            framesInbetween = 3;
+            framesInbetween = ogFrames;
             frameIndex = 0;
             repeat = false;
             finished = false;
@@ -40,7 +41,7 @@ namespace PlanetDestroyer
             if (framesInbetween == 0 && !finished)
             {
                 frameIndex++;
-                framesInbetween = 3;
+                framesInbetween = ogFrames;
                 if (frameIndex == frameRects.Count)
                 {
                     frameIndex = 0;

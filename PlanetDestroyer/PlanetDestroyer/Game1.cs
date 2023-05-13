@@ -30,7 +30,7 @@ namespace PlanetDestroyer
         public static Dictionary<string, List<Rectangle>> explosionRects;
         public static List<Rectangle> itemRects;
 
-        public static Texture2D planetTemplate, planetTexture, pixel, ship, whitePixel, questionMark, checkMark;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship, whitePixel, questionMark, checkMark, shipSheet;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
@@ -81,12 +81,24 @@ namespace PlanetDestroyer
             temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
             time = 0;
             gd = GraphicsDevice;
+            itemRects = new List<Rectangle>();
+            int y = 0;
+            for (int i = 0, x= 0; i < 7; i ++, x++)
+            {
+                if (i != 0 && i != 6)
+                    itemRects.Add(new Rectangle(x * 450, y, 450, 450));
+                if (x == 2)
+                {
+                    x = -1;
+                    y += 450;
+                }
+            }
             explosionRects = new Dictionary<string, List<Rectangle>>();
             explosionRects["small"] = loadExplosions("small") ;
             explosionRects["large"] = loadExplosions("large");
             planetGrit = rnd.Next(5, 100);
-            itemRects = new List<Rectangle>();
-            itemRects.Add(new Rectangle(0, 0, 1, 1));
+            //itemRects = new List<Rectangle>();
+            //itemRects.Add(new Rectangle(0, 0, 1, 1));
             base.Initialize();
         }
 
@@ -160,6 +172,7 @@ namespace PlanetDestroyer
             questionMark = Content.Load<Texture2D>("questionMark");
             checkMark = Content.Load<Texture2D>("checkMark");
             shopFont = Content.Load<SpriteFont>("shopFont1");
+            shipSheet = Content.Load<Texture2D>("New Piskel (1)");
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             store = new Store();

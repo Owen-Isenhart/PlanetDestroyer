@@ -49,7 +49,7 @@ namespace PlanetDestroyer
         }
         public Rectangle calculateInitRect(int i)
         {
-            return new Rectangle(Game1.playScreen.planet.rect.Center.X, Game1.playScreen.planet.rect.Center.Y+25, 25, 25);
+            return new Rectangle(Game1.playScreen.planet.rect.Center.X-40, Game1.playScreen.planet.rect.Center.Y+25, 80, 80);
         }
         public void populateStore()
         {
@@ -100,7 +100,7 @@ namespace PlanetDestroyer
 
                     if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                     {
-                        items.Add(new StoreItem("ship", x+1, calculateInitRect(1), Game1.whitePixel));
+                        items.Add(new StoreItem("ship", x+1, calculateInitRect(1), Game1.shipSheet));
                     }
                 }
                 else
