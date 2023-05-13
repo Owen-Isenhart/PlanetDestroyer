@@ -173,9 +173,9 @@ namespace PlanetDestroyer
                 else
                 {
                     if (time > 20 && time % 2 == 0)
-                        rect.X -= 3;
+                        rect.X -= 5;
                     else if (time > 20 && time % 2 == 1)
-                        rect.X += 3;
+                        rect.X += 5;
                     else if (time == 20)
                     {
                         explosions.Add(new Explosion(rect, "large"));

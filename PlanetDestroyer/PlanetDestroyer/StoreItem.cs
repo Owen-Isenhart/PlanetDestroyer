@@ -19,6 +19,7 @@ namespace PlanetDestroyer
         public bool subX, subY;
         public Rectangle rect, intersectRect;
         public Texture2D texture;
+        public Color color;
         public StoreItem(string n, int i, Rectangle r, Texture2D tex) : base("delayed-linear", 25, Game1.itemRects)
         {
             name = n;
@@ -26,7 +27,7 @@ namespace PlanetDestroyer
             rect = r;
             intersectRect = new Rectangle(r.X, r.Y, 1, 1);
             index = i;
-            dps = (int)Math.Pow(index, 2);
+            dps = (int)Math.Pow(index+1, 2);
             quantity = 0;
             //repeat = true;
             angleY = 0;
@@ -37,6 +38,7 @@ namespace PlanetDestroyer
             //dist = Game1.playScreen.planet.rect.Center.X - rect.Right;
             frameIndex = 2;
             framesInbetween = 13;
+            color = new Color(255, 255 - (index / 3) * 50, 255 - (index / 3) * 50);
         }
         
         public void Update()
@@ -92,10 +94,10 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             if (subY)
-                spriteBatch.Draw(texture, rect, Game1.itemRects[frameIndex], Color.White);
+                spriteBatch.Draw(texture, rect, Game1.itemRects[frameIndex], color);
             else if (!Game1.playScreen.planet.rect.Intersects(intersectRect))
             {
-                spriteBatch.Draw(texture, rect, Game1.itemRects[frameIndex], Color.White);
+                spriteBatch.Draw(texture, rect, Game1.itemRects[frameIndex], color);
 
             }
             else

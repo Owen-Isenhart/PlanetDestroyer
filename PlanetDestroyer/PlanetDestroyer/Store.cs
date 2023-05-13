@@ -15,6 +15,7 @@ namespace PlanetDestroyer
     {
         public Rectangle border;
         public List<StoreItem> items;
+        public List<int> indexes;
         public ScrollView grid;
         public int totalDmg;
         
@@ -22,6 +23,7 @@ namespace PlanetDestroyer
         {
             border = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH);
             items = new List<StoreItem>();
+            indexes = new List<int>();
             totalDmg = 0;
             List<Rectangle> t = organizeRects(21);
             List<Texture2D> temp = new List<Texture2D>();
@@ -63,7 +65,6 @@ namespace PlanetDestroyer
             if (border.Width >= 320)
             {
                 int y = border.Y + (int)(Game1.fonts[2].MeasureString("STORE").Y/1.3);
-                //int x = 0;
                 for (int i = 0, x = 0; i < amnt; i++, x++)
                 {
                     if (i % 3 == 0)
@@ -86,11 +87,11 @@ namespace PlanetDestroyer
             }
             Game1.playScreen.planet.Health -= (double)totalDmg/60;
         }
+
         public void Update()
         {
             grid.Update();
-            //if (Game1.time % 60 == 0)
-                DamagePlanet();
+            DamagePlanet();
             for (int i = grid.lastRow * 3 - 9, x = 0; i < grid.lastRow * 3; i++, x++)
             {
                 if (grid.hoveringIndex == i)
@@ -101,7 +102,8 @@ namespace PlanetDestroyer
                     if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                     {
                         int temp = i / 3;
-                        items.Add(new StoreItem("ship", i+1, calculateInitRect(temp), Game1.shipSheet));
+                        items.Add(new StoreItem("ship", i, calculateInitRect(temp), Game1.shipSheet));
+                        items = items.OrderByDescending(o => o.index).ToList(); //to get correct overlapping when drawn
                     }
                 }
                 else
@@ -120,9 +122,7 @@ namespace PlanetDestroyer
                 {
 
                 }
-                //if (achievements.ElementAt(i).shown)
-                //    achievements.ElementAt(i).calculatePopup("right");
-                //achievements.ElementAt(i).Update();
+
             }
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -137,6 +137,7 @@ namespace PlanetDestroyer
                 item.Update();
                 item.Draw(spriteBatch);
             }
+
         }
     }
 }
