@@ -19,7 +19,7 @@ namespace PlanetDestroyer
         public bool subX, subY;
         public Rectangle rect, intersectRect;
         public Texture2D texture;
-        public StoreItem(string n, int i, Rectangle r, Texture2D tex) : base("delayed-linear", 31, Game1.itemRects)
+        public StoreItem(string n, int i, Rectangle r, Texture2D tex) : base("delayed-linear", 25, Game1.itemRects)
         {
             name = n;
             texture = tex;
@@ -28,7 +28,7 @@ namespace PlanetDestroyer
             index = i;
             dps = (int)Math.Pow(index, 2);
             quantity = 0;
-            repeat = true;
+            //repeat = true;
             angleY = 0;
             angleX = (float)Math.PI;
             subX = true;
@@ -36,6 +36,7 @@ namespace PlanetDestroyer
             dist = (int)(Game1.playScreen.planet.rect.Width*1.3);
             //dist = Game1.playScreen.planet.rect.Center.X - rect.Right;
             frameIndex = 2;
+            framesInbetween = 13;
         }
         
         public void Update()
@@ -98,7 +99,10 @@ namespace PlanetDestroyer
 
             }
             else
-                frameIndex = 0;
+            {
+                base.Reset("delayed-linear", Game1.itemRects);
+            }
+                //frameIndex = 0;
         }
     }
 }

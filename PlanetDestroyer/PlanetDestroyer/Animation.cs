@@ -44,12 +44,18 @@ namespace PlanetDestroyer
                 framesInbetween = ogFrames;
                 if (frameIndex == frameRects.Count)
                 {
-                    frameIndex = 0;
+                    
                     if (!repeat)
+                    {
+                        frameIndex--;
                         finished = true;
+                    }
+                        
+                    else
+                        frameIndex = 0;
                 }
             }
-            else
+            else if (!finished)
                 framesInbetween--;
         }
     }
