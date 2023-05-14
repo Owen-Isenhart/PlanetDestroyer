@@ -27,31 +27,32 @@ namespace PlanetDestroyer
             totalDmg = 0;
             List<Rectangle> t = organizeRects(21);
             List<Texture2D> temp = new List<Texture2D>();
-            Texture2D tex = Game1.questionMark;
+            List<Color> colors = new List<Color>();
+            Texture2D tex = Game1.shipSheet;
             for (int i = 0; i < t.Count; i++)
             {
-                if (i % 3 == 0)
-                {
-                    if (tex == Game1.ship)
-                    {
-                        tex = Game1.questionMark;
-                    }
+                //if (i % 3 == 0)
+                //{
+                //    if (tex == Game1.ship)
+                //    {
+                //        tex = Game1.questionMark;
+                //    }
 
-                    else
-                    {
-                        tex = Game1.ship;
-                    }
+                //    else
+                //    {
+                //        tex = Game1.ship;
+                //    }
 
-                }
+                //}
 
-
+                colors.Add(new Color(255, 255 - (i / 3) * 50, 255 - (i / 3) * 50));
                 temp.Add(tex);
             }
-            grid = new ScrollView(border, t, temp, 3);
+            grid = new ScrollView(border, Game1.itemRects[0], t, temp, colors, 3);
         }
         public Rectangle calculateInitRect(int i)
         {
-            return new Rectangle(Game1.playScreen.planet.rect.Center.X-40, Game1.playScreen.planet.rect.Center.Y+(i * 25), 80, 80);
+            return new Rectangle(Game1.playScreen.planet.rect.Center.X-40, Game1.playScreen.planet.rect.Center.Y+(i * 25), Game1.screenW / 25, Game1.screenW / 25);
         }
         public void populateStore()
         {

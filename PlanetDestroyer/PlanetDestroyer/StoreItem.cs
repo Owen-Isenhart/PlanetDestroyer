@@ -43,50 +43,35 @@ namespace PlanetDestroyer
         
         public void Update()
         {
-            base.Update();
+            base.Update(); 
+            /* 
+            Essentially, this just models the items movement using a sine and cosine wave
+            dist is just a pre-established constant determined by the size of the screen
+            the rectangles position just changes by using the changing angles, sine/cosine respectively, and the dist constant
+             */
             if (subX)
-            {
                 angleX -= (float)Math.PI / 90;
-            }
-            
             else
-            {
                 angleX += (float)Math.PI / 90;
-            }
-                
-            if (subY)
-            {
-                angleY -= (float)Math.PI / 90;
 
-            }
+            if (subY)
+                angleY -= (float)Math.PI / 90;
             else
-            {
                 angleY += (float)Math.PI / 90;
 
-            }
-
             if (angleX >= Math.PI) 
-            {
                 subX = true;
-
-            } 
             else if (angleX <= 0)
-            {
                 subX = false;
-            }
+            
             if (angleY >= Math.PI / 2)
-            {
-                subY = true;
-            } 
+                subY = true;            
             else if (angleY <= -Math.PI / 2)
-            {
                 subY = false;
-            }
-
-            Console.WriteLine(subY);
-            //dist += (int)(dist * Math.Cos(angle));
+            
             rect.X -= (int)(dist * Math.Cos(angleX)) / 50;
             rect.Y += (int)(dist * Math.Sin(angleY)) / 130;
+
             intersectRect.X = rect.Center.X;
             intersectRect.Y = rect.Center.Y;
         }

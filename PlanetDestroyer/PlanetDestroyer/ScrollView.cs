@@ -15,28 +15,33 @@ namespace PlanetDestroyer
     {
         public Rectangle bigBorder;
         public Rectangle border, scrollbarRect;
+        public Rectangle? sourceRect;
         public Dictionary<int, Rectangle> rects;
         public Dictionary<int, Texture2D> textures;
         public Dictionary<int, Color> colors;
+        public Dictionary<int, Color> itemColors;
         public Dictionary<int, Popup> popups;
         public bool hoveringBorder, clickingBar;
         public int hoveringIndex;
         public int lastRow;
         public int cols;
 
-        public ScrollView(Rectangle b, List<Rectangle> r, List<Texture2D> t, int c)
+        public ScrollView(Rectangle b, Rectangle? source, List<Rectangle> r, List<Texture2D> t, List<Color> iColor, int c)
         {
+            sourceRect = source;
             cols = c;
             bigBorder = b;
             rects = new Dictionary<int, Rectangle>();
             textures = new Dictionary<int, Texture2D>();
             colors = new Dictionary<int, Color>();
+            itemColors = new Dictionary<int, Color>();
             popups = new Dictionary<int, Popup>();
             for (int i = 0; i < r.Count; i++)
             {
                 rects.Add(i, r[i]);
                 textures.Add(i, t[i]);
                 colors.Add(i, Color.White * .1f);
+                itemColors.Add(i, iColor[i]);
                 popups.Add(i, new Popup());
                 popups[i].text = (i+1) + "";
             }
@@ -105,24 +110,20 @@ namespace PlanetDestroyer
                     {
                         colors[i] = Color.White * .3f;
                         hoveringIndex = i;
-                        if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
-                        {
-                            //clicked
-                        }
+                        break;
+                        //if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
+                        //{
+                        //    //clicked
+                        //}
                     }
                     else
                     {
                         colors[i] = Color.White * .1f;
+                        hoveringIndex = -1;
                     }
                 }
             }
-            else
-            {
-                if (hoveringIndex > 0)
-                    colors[hoveringIndex] = Color.White * .1f;
-                hoveringIndex = -1;
-                
-            }
+            
 
             if (Game1.mouseRect.Intersects(border) || Game1.mouseRect.Intersects(scrollbarRect))
                 hoveringBorder = true;
@@ -188,7 +189,7 @@ namespace PlanetDestroyer
             {
                 //if (rects)
                 spriteBatch.Draw(Game1.whitePixel, rects[x], colors[i]);
-                spriteBatch.Draw(textures[i], rects[x], Color.White);
+                spriteBatch.Draw(textures[i], rects[x], sourceRect, itemColors[i]);
                 
             }
 

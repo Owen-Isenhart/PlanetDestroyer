@@ -81,6 +81,7 @@ namespace PlanetDestroyer
             populateAchievements();
             List<Texture2D> temp = new List<Texture2D>() ;
             Texture2D tex = Game1.questionMark;
+            List<Color> colors = Enumerable.Repeat(Color.White, rects.Count).ToList();
             for (int i = 0; i < rects.Count; i++)
             {
                 if (i % 5 == 0)
@@ -100,7 +101,7 @@ namespace PlanetDestroyer
 
                 temp.Add(tex);
             }
-            grid = new ScrollView(border, rects, temp, 5);
+            grid = new ScrollView(border, null, rects, temp, colors, 5);
         }
         public void populateAchievements()
         {
