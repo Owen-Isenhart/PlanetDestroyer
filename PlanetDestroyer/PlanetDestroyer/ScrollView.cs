@@ -103,6 +103,26 @@ namespace PlanetDestroyer
                         scrollbarRect.Y += diff;
                     }
                 }
+                else if (Game1.scrollWheel != Game1.oldScrollWheel) //using scrollwheel to move through grid
+                {
+                    if (Game1.scrollWheel < Game1.oldScrollWheel) //going down
+                    {
+                        scrollbarRect.Y += 6;
+                    }
+                    else //going up
+                    {
+                        scrollbarRect.Y -= 6;
+                    }
+
+                    if (scrollbarRect.Y < border.Y) //too far up
+                    {
+                        scrollbarRect.Y = border.Y;
+                    }
+                    else if (scrollbarRect.Bottom > border.Bottom) //too far down
+                    {
+                        scrollbarRect.Y = border.Bottom - scrollbarRect.Height;
+                    }
+                }
 
                 for (int i = lastRow * cols - cols*3, x = 0; i < lastRow*cols; i++, x++)
                 {

@@ -23,6 +23,7 @@ namespace PlanetDestroyer
         public static KeyboardState kb, oldKB;
         public static MouseState mouse, oldMouse;
         public static Rectangle mouseRect;
+        public static int scrollWheel, oldScrollWheel;
 
         //public static List<Rectangle> planetRects;
         //public static List<Texture2D> planetTextures;
@@ -75,6 +76,7 @@ namespace PlanetDestroyer
             mouseRect = new Rectangle(mouse.X - 1, mouse.Y - 1, 2, 2);
             screenW = GraphicsDevice.Viewport.Width;
             screenH = GraphicsDevice.Viewport.Height;
+            scrollWheel = oldScrollWheel = mouse.ScrollWheelValue;
             var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(this.Window.Handle);
             form.Location = new System.Drawing.Point(-7, 0);
             rnd = new Random();
@@ -199,6 +201,8 @@ namespace PlanetDestroyer
             kb = Keyboard.GetState();
             oldMouse = mouse;
             mouse = Mouse.GetState();
+            oldScrollWheel = scrollWheel;
+            scrollWheel = mouse.ScrollWheelValue;
             mouseRect.X = mouse.X - 1; mouseRect.Y = mouse.Y - 1;
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
