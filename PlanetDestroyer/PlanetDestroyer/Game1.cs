@@ -41,6 +41,7 @@ namespace PlanetDestroyer
         public StoreAndPrestige storeAndPrestige;
         public Upgrades upgrades;
         public AchievementsScreen achievements;
+        public Money money;
 
         public static int time, planetGrit;
 
@@ -178,6 +179,7 @@ namespace PlanetDestroyer
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             storeAndPrestige = new StoreAndPrestige();
+            money = new Money();
         }
 
         
@@ -242,7 +244,7 @@ namespace PlanetDestroyer
             storeAndPrestige.Draw(spriteBatch);
             upgrades.Draw(spriteBatch);
             achievements.Draw(spriteBatch);
-            
+            money.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

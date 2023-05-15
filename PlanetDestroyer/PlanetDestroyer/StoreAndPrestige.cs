@@ -13,7 +13,7 @@ namespace PlanetDestroyer
 {
     public class StoreAndPrestige
     {
-        public Rectangle border;
+        public Rectangle storeBorder, prestigebBorder;
         public List<StoreItem> items;
         public List<int> indexes;
         public ScrollView grid;
@@ -21,7 +21,8 @@ namespace PlanetDestroyer
         
         public StoreAndPrestige()
         {
-            border = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH);
+            storeBorder = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, (int)(Game1.screenH / 1.5));
+            prestigebBorder = new Rectangle(0, storeBorder.Bottom + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH - storeBorder.Bottom);
             items = new List<StoreItem>();
             indexes = new List<int>();
             totalDmg = 0;
@@ -48,7 +49,7 @@ namespace PlanetDestroyer
                 colors.Add(new Color(255, 255 - (i / 3) * 50, 255 - (i / 3) * 50));
                 temp.Add(tex);
             }
-            grid = new ScrollView(border, Game1.itemRects[0], t, temp, colors, 3);
+            grid = new ScrollView(storeBorder, Game1.itemRects[0], t, temp, colors, 3);
         }
         public Rectangle calculateInitRect(int i)
         {
@@ -63,18 +64,18 @@ namespace PlanetDestroyer
         {
             
             List<Rectangle> list = new List<Rectangle>();
-            if (border.Width >= 320)
+            if (storeBorder.Width >= 320)
             {
-                int y = border.Y + (int)(Game1.fonts[2].MeasureString("STORE").Y/1.3);
+                int y = storeBorder.Y + (int)(Game1.fonts[2].MeasureString("STORE").Y/1.3);
                 for (int i = 0, x = 0; i < amnt; i++, x++)
                 {
                     if (i % 3 == 0)
                     {
-                        y += border.Width / 6 + 10;
+                        y += storeBorder.Width / 6 + 10;
                         x = 0;
                     }
 
-                    list.Add(new Rectangle(border.X + (int)(1.1 * x * border.Width / 6) + (int)(border.Width / 4.25), y, border.Width / 6, border.Width / 6));
+                    list.Add(new Rectangle(storeBorder.X + (int)(1.1 * x * storeBorder.Width / 6) + (int)(storeBorder.Width / 4.25), y, storeBorder.Width / 6, storeBorder.Width / 6));
                 }
             }
             return list;
@@ -129,8 +130,8 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             
-            spriteBatch.Draw(Game1.pixel, border, Color.Black);
-            spriteBatch.DrawString(Game1.fonts[2], "STORE", new Vector2(border.Width/2 - Game1.fonts[2].MeasureString("STORE").X/2, grid.rects[0].Y - (int)(Game1.healthFont.MeasureString("STORE").Y/1.3)), Color.White);
+            spriteBatch.Draw(Game1.pixel, storeBorder, Color.Black);
+            spriteBatch.DrawString(Game1.fonts[2], "STORE", new Vector2(storeBorder.Width/2 - Game1.fonts[2].MeasureString("STORE").X/2, grid.rects[0].Y - (int)(Game1.healthFont.MeasureString("STORE").Y/1.3)), Color.White);
             grid.Draw(spriteBatch);
 
             foreach (StoreItem item in items)
@@ -139,6 +140,10 @@ namespace PlanetDestroyer
                 item.Draw(spriteBatch);
             }
 
+
+            //prestige stuff
+            spriteBatch.Draw(Game1.pixel, prestigebBorder, Color.Black);
+            spriteBatch.DrawString(Game1.fonts[4], "PRESTIGE", new Vector2(storeBorder.Width / 2 - Game1.fonts[4].MeasureString("PRESTIGE").X / 2, prestigebBorder.Y + 10), Color.White);
         }
     }
 }

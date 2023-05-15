@@ -18,9 +18,9 @@ namespace PlanetDestroyer
    
         public Rectangle border, moneyRect, cometRect;
         
-        public Money(Rectangle b) : base()
+        public Money() : base()
         {
-            border = b;
+            border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, 0, (int)(Game1.screenW / 2.5), Game1.screenH / 10 - 1);
             runAmount = lifeAmount = 0;
             index = 1;
             comets = 0;
@@ -49,6 +49,7 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             //money icon or something
+            spriteBatch.Draw(Game1.pixel, border, Color.White);
         }
     }
 }

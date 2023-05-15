@@ -18,7 +18,7 @@ namespace PlanetDestroyer
 
         public PlayScreen()
         {
-            border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5)/2, 0, (int)(Game1.screenW / 2.5), Game1.screenH);
+            border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5)/2, Game1.screenH / 10, (int)(Game1.screenW / 2.5), Game1.screenH - Game1.screenH / 5);
             planet = new Planet(1);
         }
         public void Update()

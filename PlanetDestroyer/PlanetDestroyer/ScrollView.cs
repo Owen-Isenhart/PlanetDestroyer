@@ -25,6 +25,7 @@ namespace PlanetDestroyer
         public int hoveringIndex;
         public int lastRow;
         public int cols;
+        public int scrollSpeed;
 
         public ScrollView(Rectangle b, Rectangle? source, List<Rectangle> r, List<Texture2D> t, List<Color> iColor, int c)
         {
@@ -54,6 +55,7 @@ namespace PlanetDestroyer
             int cPerF = full / columns;
             scrollbarRect = new Rectangle(border.X + border.Width, border.Y, 8, 3*cPerF)  ;
             lastRow = 3;
+            scrollSpeed = cPerF / 2;
         }
         public void calculatePopup(string direction, int index)
         {
@@ -107,11 +109,11 @@ namespace PlanetDestroyer
                 {
                     if (Game1.scrollWheel < Game1.oldScrollWheel) //going down
                     {
-                        scrollbarRect.Y += 6;
+                        scrollbarRect.Y += scrollSpeed;
                     }
                     else //going up
                     {
-                        scrollbarRect.Y -= 6;
+                        scrollbarRect.Y -= scrollSpeed;
                     }
 
                     if (scrollbarRect.Y < border.Y) //too far up
