@@ -11,11 +11,29 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    class Money
+    public class Money
     {
+        public int runAmount, lifeAmount, index;
+        public double multiplier;
+        
+        public Money()
+        {
+            runAmount = lifeAmount = 0;
+            index = 1;
+            multiplier = 1;
+        }
         public void Update()
         {
-
+            int delta = (int)(index * 100 * multiplier);
+            runAmount += delta;
+            lifeAmount += delta;
+            index++;
+        }
+        public void Prestige()
+        {
+            index = 1;
+            runAmount = 0;
+            multiplier = 1 + Math.Sqrt(lifeAmount / Math.Pow(10, 6));
         }
         public void Draw(SpriteBatch spriteBatch)
         {

@@ -37,7 +37,7 @@ namespace PlanetDestroyer
 
         //public Planet planet;
         public static PlayScreen playScreen;
-        public Store store;
+        public StoreAndPrestige storeAndPrestige;
         public Upgrades upgrades;
         public AchievementsScreen achievements;
 
@@ -175,7 +175,7 @@ namespace PlanetDestroyer
             shipSheet = Content.Load<Texture2D>("New Piskel (1)");
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
-            store = new Store();
+            storeAndPrestige = new StoreAndPrestige();
         }
 
         
@@ -206,7 +206,7 @@ namespace PlanetDestroyer
 
             // TODO: Add your update logic here
             playScreen.Update();
-            store.Update();
+            storeAndPrestige.Update();
             upgrades.Update();
             achievements.Update();
 
@@ -235,7 +235,7 @@ namespace PlanetDestroyer
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             playScreen.Draw(spriteBatch);
-            store.Draw(spriteBatch);
+            storeAndPrestige.Draw(spriteBatch);
             upgrades.Draw(spriteBatch);
             achievements.Draw(spriteBatch);
             

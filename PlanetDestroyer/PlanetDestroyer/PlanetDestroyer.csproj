@@ -85,7 +85,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="ScrollView.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Store.cs" />
+    <Compile Include="StoreAndPrestige.cs" />
     <Compile Include="StoreItem.cs" />
     <Compile Include="Upgrades.cs" />
   </ItemGroup>

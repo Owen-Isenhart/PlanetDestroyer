@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    public class Store
+    public class StoreAndPrestige
     {
         public Rectangle border;
         public List<StoreItem> items;
@@ -19,7 +19,7 @@ namespace PlanetDestroyer
         public ScrollView grid;
         public int totalDmg;
         
-        public Store()
+        public StoreAndPrestige()
         {
             border = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH);
             items = new List<StoreItem>();
