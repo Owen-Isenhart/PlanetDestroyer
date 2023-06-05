@@ -26,7 +26,7 @@ namespace PlanetDestroyer
             Health = 100 * index;
             buffer = 5;
             int size = Game1.screenW / 5;
-            rect = new Rectangle(Game1.screenW / 2 - size / 2, Game1.screenH / 2 - size / 2, size, size);
+            rect = new Rectangle(Game1.screenW / 2 - size / 2, Game1.screenH / 2 - size / 3, size, size);
             explosions = new List<Explosion>();
             time = 80;
             text = Health + " Hits";

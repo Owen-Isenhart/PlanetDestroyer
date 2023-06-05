@@ -29,9 +29,9 @@ namespace PlanetDestroyer
         //public static List<Texture2D> planetTextures;
 
         public static Dictionary<string, List<Rectangle>> explosionRects;
-        public static List<Rectangle> itemRects;
+        public static List<Rectangle> itemRects, cometSources;
 
-        public static Texture2D planetTemplate, planetTexture, pixel, ship, whitePixel, questionMark, checkMark, shipSheet;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
@@ -96,6 +96,7 @@ namespace PlanetDestroyer
                     y += 450;
                 }
             }
+            cometSources = new List<Rectangle> { new Rectangle(0, 0, 100, 100), new Rectangle(100, 0, 100, 100), new Rectangle(0, 100, 100, 100), new Rectangle(100, 100, 100, 100), new Rectangle(0, 200, 100, 100) };
             explosionRects = new Dictionary<string, List<Rectangle>>();
             explosionRects["small"] = loadExplosions("small") ;
             explosionRects["large"] = loadExplosions("large");
@@ -176,6 +177,8 @@ namespace PlanetDestroyer
             checkMark = Content.Load<Texture2D>("checkMark");
             shopFont = Content.Load<SpriteFont>("shopFont1");
             shipSheet = Content.Load<Texture2D>("New Piskel (1)");
+            cash = Content.Load<Texture2D>("Cash");
+            cometSheet = Content.Load<Texture2D>("CometSheet");
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             storeAndPrestige = new StoreAndPrestige();
@@ -215,7 +218,7 @@ namespace PlanetDestroyer
             storeAndPrestige.Update();
             upgrades.Update();
             achievements.Update();
-
+            money.Update();
             if (time % 2 == 0)
                 planetTexture = playScreen.planet.UpdatePlanetTexture();
             //if (kb.IsKeyDown(Keys.Space) && oldKB.IsKeyUp(Keys.Space))
