@@ -16,6 +16,7 @@ namespace PlanetDestroyer
         public Rectangle storeBorder, prestigebBorder;
         public List<StoreItem> items;
         public List<int> indexes;
+        public List<Color> colors;
         public ScrollView grid;
         public int totalDmg;
         public Texture2D[] textures;
@@ -31,24 +32,28 @@ namespace PlanetDestroyer
 
             List<Rectangle> t = organizeRects(12);
             List<Texture2D> temp = new List<Texture2D>();
-            List<Color> colors = new List<Color>();
+            colors = new List<Color>();
             Texture2D tex = Game1.spikyShip;
             for (int i = 0; i < t.Count; i++)
             {
                 if (tex == Game1.ballShip)
                 {
                     tex = Game1.spikyShip;
+                    colors.Add(new Color(255 - (i / 3) * 100, 255 , 255 - (i / 3) * 100));
+
                 }
                 else if (tex == Game1.shipSheet)
                 {
                     tex = Game1.ballShip;
+                    colors.Add(new Color(255 - (i / 3) * 100, 255 - (i / 3) * 100, 255 ));
                 }
                 else
                 {
                     tex = Game1.shipSheet;
+                    colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
                 }
 
-                colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
+                
                 temp.Add(tex);
             }
             grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, 3);
@@ -128,7 +133,7 @@ namespace PlanetDestroyer
                         }
                         else
                         {
-                            items.Add(new StoreItem("ship", i, calculateInitRect(i), tex));
+                            items.Add(new StoreItem("ship", i, calculateInitRect(i), tex, colors[i]));
                         }
                         //items.Add(new StoreItem("ship", i, calculateInitRect(indexByTexture(tex)), tex));
                         //if (items.Count > 1)
