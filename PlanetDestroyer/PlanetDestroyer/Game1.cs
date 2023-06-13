@@ -231,6 +231,7 @@ namespace PlanetDestroyer
             upgrades.Update();
             achievements.Update();
             money.Update();
+            settings.Update();
             if (time % 2 == 0)
                 planetTexture = playScreen.planet.UpdatePlanetTexture();
             //if (kb.IsKeyDown(Keys.Space) && oldKB.IsKeyUp(Keys.Space))

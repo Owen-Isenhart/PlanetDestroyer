@@ -76,7 +76,7 @@ namespace PlanetDestroyer
             //spriteBatch.DrawString(Game1.fonts[4], "Planet Destroyer", new Vector2(moneyRect.Right + 10, moneyRect.Y), Color.White) ;
             if (popupShown)
             {
-                spriteBatch.Draw(Game1.whitePixel, popup, Color.White * .5f);
+                spriteBatch.Draw(Game1.whitePixel, popup, Color.LightGray);
 
             }
         }
