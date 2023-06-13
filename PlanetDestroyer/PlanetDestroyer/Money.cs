@@ -25,7 +25,7 @@ namespace PlanetDestroyer
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, 0, (int)(Game1.screenW / 2.5), Game1.screenH / 7 - 1);
             moneyRect = new Rectangle(border.X + border.Width / 10, border.Height/4, 75, 75);
             cometRect = new Rectangle(border.Right - border.Width / 5, moneyRect.Y, 75, 75);
-            popup = new Rectangle(0, moneyRect.Bottom, 250, 150);
+            popup = new Rectangle(0, moneyRect.Bottom, 150, 75);
             popupShown = false;
             runAmount = lifeAmount = 0;
             index = 1;
@@ -73,7 +73,7 @@ namespace PlanetDestroyer
             spriteBatch.Draw(Game1.pixel, border, Color.White);
             spriteBatch.Draw(Game1.cash, moneyRect, Color.White);
             spriteBatch.Draw(Game1.cometSheet, cometRect, Game1.cometSources[frameIndex], Color.White);
-            spriteBatch.DrawString(Game1.fonts[4], "Planet Destroyer", new Vector2(moneyRect.Right + 10, moneyRect.Y), Color.White) ;
+            //spriteBatch.DrawString(Game1.fonts[4], "Planet Destroyer", new Vector2(moneyRect.Right + 10, moneyRect.Y), Color.White) ;
             if (popupShown)
             {
                 spriteBatch.Draw(Game1.whitePixel, popup, Color.White * .5f);

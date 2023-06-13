@@ -29,9 +29,9 @@ namespace PlanetDestroyer
         //public static List<Texture2D> planetTextures;
 
         public static Dictionary<string, List<Rectangle>> explosionRects;
-        public static List<Rectangle> itemRects, cometSources;
+        public static List<Rectangle> shipRects, cometSources;
 
-        public static Texture2D planetTemplate, planetTexture, pixel, ship, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
@@ -42,6 +42,7 @@ namespace PlanetDestroyer
         public Upgrades upgrades;
         public AchievementsScreen achievements;
         public Money money;
+        public Settings settings;
 
         public static int time, planetGrit;
 
@@ -84,13 +85,23 @@ namespace PlanetDestroyer
             temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
             time = 0;
             gd = GraphicsDevice;
-            itemRects = new List<Rectangle>();
+            shipRects = new List<Rectangle>();
             int y = 0;
-            for (int i = 0, x= 0; i < 7; i ++, x++)
+            //for (int i = 0, x= 0; i < 7; i ++, x++)
+            //{
+            //    if (i != 0 && i != 6)
+            //        shipRects.Add(new Rectangle(x * 450, y, 450, 450));
+            //    if (x == 2)
+            //    {
+            //        x = -1;
+            //        y += 450;
+            //    }
+            //}
+            //y = 0;
+            for (int i = 0, x = 0; i < 5; i ++, x++)
             {
-                if (i != 0 && i != 6)
-                    itemRects.Add(new Rectangle(x * 450, y, 450, 450));
-                if (x == 2)
+                shipRects.Add(new Rectangle(x * 450, y, 450, 450));
+                if (x == 1)
                 {
                     x = -1;
                     y += 450;
@@ -101,8 +112,7 @@ namespace PlanetDestroyer
             explosionRects["small"] = loadExplosions("small") ;
             explosionRects["large"] = loadExplosions("large");
             planetGrit = rnd.Next(5, 100);
-            //itemRects = new List<Rectangle>();
-            //itemRects.Add(new Rectangle(0, 0, 1, 1));
+            
             base.Initialize();
         }
 
@@ -172,16 +182,18 @@ namespace PlanetDestroyer
             pixel = Content.Load<Texture2D>("pixel");
             whitePixel = Content.Load<Texture2D>("whitePixel");
             explosionsSheet = Content.Load<Texture2D>("upscaledExplosions");
-            ship = Content.Load<Texture2D>("spaceShip");
+            ballShip = Content.Load<Texture2D>("ballShip (1)");
+            spikyShip = Content.Load<Texture2D>("spikyShip (1)");
             questionMark = Content.Load<Texture2D>("questionMark");
             checkMark = Content.Load<Texture2D>("checkMark");
             shopFont = Content.Load<SpriteFont>("shopFont1");
-            shipSheet = Content.Load<Texture2D>("New Piskel (1)");
+            shipSheet = Content.Load<Texture2D>("New Piskel (2)");
             cash = Content.Load<Texture2D>("Cash");
             cometSheet = Content.Load<Texture2D>("CometSheet");
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             storeAndPrestige = new StoreAndPrestige();
+            settings = new Settings();
             money = new Money();
         }
 
@@ -248,6 +260,7 @@ namespace PlanetDestroyer
             upgrades.Draw(spriteBatch);
             achievements.Draw(spriteBatch);
             money.Draw(spriteBatch);
+            settings.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -18,6 +18,7 @@ namespace PlanetDestroyer
         public List<int> indexes;
         public ScrollView grid;
         public int totalDmg;
+        public Texture2D[] textures;
         
         public StoreAndPrestige()
         {
@@ -26,34 +27,46 @@ namespace PlanetDestroyer
             items = new List<StoreItem>();
             indexes = new List<int>();
             totalDmg = 0;
-            List<Rectangle> t = organizeRects(21);
+            textures = new Texture2D[] { Game1.shipSheet, Game1.ballShip, Game1.spikyShip };
+
+            List<Rectangle> t = organizeRects(12);
             List<Texture2D> temp = new List<Texture2D>();
             List<Color> colors = new List<Color>();
-            Texture2D tex = Game1.shipSheet;
+            Texture2D tex = Game1.spikyShip;
             for (int i = 0; i < t.Count; i++)
             {
-                //if (i % 3 == 0)
-                //{
-                //    if (tex == Game1.ship)
-                //    {
-                //        tex = Game1.questionMark;
-                //    }
+                if (tex == Game1.ballShip)
+                {
+                    tex = Game1.spikyShip;
+                }
+                else if (tex == Game1.shipSheet)
+                {
+                    tex = Game1.ballShip;
+                }
+                else
+                {
+                    tex = Game1.shipSheet;
+                }
 
-                //    else
-                //    {
-                //        tex = Game1.ship;
-                //    }
-
-                //}
-
-                colors.Add(new Color(255, 255 - (i / 3) * 50, 255 - (i / 3) * 50));
+                colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
                 temp.Add(tex);
             }
-            grid = new ScrollView(storeBorder, Game1.itemRects[0], t, temp, colors, 3);
+            grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, 3);
         }
         public Rectangle calculateInitRect(int i)
         {
-            return new Rectangle(Game1.playScreen.planet.rect.Center.X-40, Game1.playScreen.planet.rect.Center.Y+(i * 25), Game1.screenW / 25, Game1.screenW / 25);
+            return new Rectangle(Game1.playScreen.planet.rect.Center.X-40, Game1.playScreen.planet.rect.Center.Y+(i * 25)-Game1.playScreen.planet.rect.Height/8, Game1.screenW / 25, Game1.screenW / 25);
+        }
+        public int indexByTexture(Texture2D t, int temp)
+        {
+            for (int i = items.Count-1; i > -1; i--)
+            {
+                if (items[i].texture == t && items[i].index/3 == temp)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
         public void populateStore()
         {
@@ -104,7 +117,22 @@ namespace PlanetDestroyer
                     if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                     {
                         int temp = i / 3;
-                        items.Add(new StoreItem("ship", i, calculateInitRect(temp), Game1.shipSheet));
+                        Texture2D tex = textures[i % 3];
+                        int index = indexByTexture(tex, temp);
+                        if (index != -1)
+                        {
+                            StoreItem item = items[index].getClone();
+                            items.Insert(index + 1, item);
+                            items[index+1].rect = items[index].positionNext();
+                            items[index+1].angleNext();
+                        }
+                        else
+                        {
+                            items.Add(new StoreItem("ship", i, calculateInitRect(i), tex));
+                        }
+                        //items.Add(new StoreItem("ship", i, calculateInitRect(indexByTexture(tex)), tex));
+                        //if (items.Count > 1)
+                        //    items[items.Count - 1].angleNext(items[0].angleX, items[0].angleY, items[0].subX, items[0].subY);
                         items = items.OrderByDescending(o => o.index).ToList(); //to get correct overlapping when drawn
                     }
                 }

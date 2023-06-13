@@ -11,15 +11,20 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    class Settings
+    public class Settings
     {
+        public Rectangle border;
+        public Settings()
+        {
+            border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 7 + Game1.screenH - Game1.screenH / 4 + 1, (int)(Game1.screenW / 2.5), Game1.screenH / 7 - 1);
+        }
         public void Update()
         {
 
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Draw(Game1.pixel, border, Color.White);
         }
     }
 }
