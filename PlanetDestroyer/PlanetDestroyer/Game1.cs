@@ -51,6 +51,8 @@ namespace PlanetDestroyer
 
         public static Texture2D explosionsSheet;
 
+        public static bool activeModal;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -112,7 +114,7 @@ namespace PlanetDestroyer
             explosionRects["small"] = loadExplosions("small") ;
             explosionRects["large"] = loadExplosions("large");
             planetGrit = rnd.Next(5, 100);
-            
+            activeModal = false;
             base.Initialize();
         }
 

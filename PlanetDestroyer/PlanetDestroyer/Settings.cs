@@ -27,20 +27,39 @@ namespace PlanetDestroyer
                 popups.Add(new ModalPopup());
                 buttons.Add(new Button(new Rectangle(border.X + border.Width / 15 + border.Width / 3 * i, border.Y + 25, border.Width / 5, 50), texts[i]));
             }
-            
+            setupPopups();
+        }
+        public void setupPopups()
+        {
+            popups[0].buttons.Add(new Rectangle(popups[0].window.X + 10, popups[0].window.Y + 10, 100, 100));
+            popups[0].buttonStates.Add(true);
+            popups[0].buttonHovers.Add(false);
+            popups[0].sliders.Add(new Slider(new Rectangle(popups[0].window.X + 10, popups[0].window.Y + 120, 100, 100)));
         }
         public void Update()
         {
+            int count = 0;
             for (int i = 0; i < 3; i++)
             {
                 buttons[i].Update();
                 popups[i].Update();
-                if (buttons[i].clicked)
+                if (buttons[i].clicked && !Game1.activeModal)
                 {
                     popups[i].active = true;
                 }
                 
-
+                if (popups[i].active)
+                {
+                    count++;
+                }
+            }
+            if (count > 0)
+            {
+                Game1.activeModal = true;
+            }
+            else
+            {
+                Game1.activeModal = false;
             }
         }
         public void Draw(SpriteBatch spriteBatch)
