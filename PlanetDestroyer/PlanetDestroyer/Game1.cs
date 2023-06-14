@@ -31,7 +31,7 @@ namespace PlanetDestroyer
         public static Dictionary<string, List<Rectangle>> explosionRects;
         public static List<Rectangle> shipRects, cometSources;
 
-        public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet, logo;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
@@ -192,6 +192,7 @@ namespace PlanetDestroyer
             shipSheet = Content.Load<Texture2D>("New Piskel (2)");
             cash = Content.Load<Texture2D>("Cash");
             cometSheet = Content.Load<Texture2D>("CometSheet");
+            logo = Content.Load<Texture2D>("pDestroyerLogo");
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             storeAndPrestige = new StoreAndPrestige();
