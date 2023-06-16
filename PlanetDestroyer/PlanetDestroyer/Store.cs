@@ -11,20 +11,22 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    public class StoreAndPrestige
+    public class Store
     {
-        public Rectangle storeBorder, prestigebBorder;
+        public Rectangle storeBorder;
         public List<StoreItem> items;
         public List<int> indexes;
         public List<Color> colors;
         public ScrollView grid;
         public int totalDmg;
         public Texture2D[] textures;
+
+        //prestige stuff
         
-        public StoreAndPrestige()
+        
+        public Store()
         {
             storeBorder = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, (int)(Game1.screenH / 1.5));
-            prestigebBorder = new Rectangle(0, storeBorder.Bottom + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH - storeBorder.Bottom);
             items = new List<StoreItem>();
             indexes = new List<int>();
             totalDmg = 0;
@@ -113,7 +115,7 @@ namespace PlanetDestroyer
         public void Update()
         {
             grid.Update();
-            DamagePlanet();
+            //DamagePlanet();
             for (int i = grid.lastRow * 3 - 9, x = 0; i < grid.lastRow * 3; i++, x++)
             {
                 if (grid.hoveringIndex == i)
@@ -153,6 +155,9 @@ namespace PlanetDestroyer
                         //    items[items.Count - 1].angleNext(items[0].angleX, items[0].angleY, items[0].subX, items[0].subY);
                         items = items.OrderByDescending(o => o.index).ToList(); //to get correct overlapping when drawn
                     }
+
+                    //prestige stuff
+
                 }
                 else
                 {
@@ -190,8 +195,7 @@ namespace PlanetDestroyer
 
 
             //prestige stuff
-            spriteBatch.Draw(Game1.pixel, prestigebBorder, Color.Black);
-            spriteBatch.DrawString(Game1.fonts[4], "PRESTIGE", new Vector2(storeBorder.Width / 2 - Game1.fonts[4].MeasureString("PRESTIGE").X / 2, prestigebBorder.Y + 10), Color.White);
+            
         }
     }
 }

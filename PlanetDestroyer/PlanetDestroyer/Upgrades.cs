@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    public class Upgrades
+    public class Upgrades //add dps increases to every ship of a single type
     {
         public Rectangle border;
         public Upgrades()

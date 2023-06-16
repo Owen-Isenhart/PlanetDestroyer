@@ -20,7 +20,7 @@ namespace PlanetDestroyer
         public bool popupShown;
         public string popupText;
         
-        public Money() : base("linear", 8, Game1.cometSources)
+        public Money() : base("linear", 9, Game1.cometSources)
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, 0, (int)(Game1.screenW / 2.5), Game1.screenH / 7 - 1);
             moneyRect = new Rectangle(border.X + border.Width / 10, border.Height/4, 71, 71);
@@ -71,7 +71,7 @@ namespace PlanetDestroyer
         {
             //money icon or something
             spriteBatch.Draw(Game1.pixel, border, Color.White);
-            spriteBatch.Draw(Game1.logo, new Rectangle(border.Center.X - 125, border.Y + 5, 250, 150), Color.White);
+            spriteBatch.Draw(Game1.logo, new Rectangle(border.Center.X - 100, border.Y + 5, 200, 150), Color.White);
             spriteBatch.Draw(Game1.cash, moneyRect, Color.White);
             spriteBatch.Draw(Game1.cometSheet, cometRect, Game1.cometSources[frameIndex], Color.White);
             //spriteBatch.DrawString(Game1.fonts[4], "Planet Destroyer", new Vector2(moneyRect.Right + 10, moneyRect.Y), Color.White) ;

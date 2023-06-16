@@ -22,7 +22,7 @@ namespace PlanetDestroyer
         public static int screenW, screenH;
         public static KeyboardState kb, oldKB;
         public static MouseState mouse, oldMouse;
-        public static Rectangle mouseRect;
+        public static Rectangle mouseRect, oldMouseRect;
         public static int scrollWheel, oldScrollWheel;
 
         //public static List<Rectangle> planetRects;
@@ -31,14 +31,15 @@ namespace PlanetDestroyer
         public static Dictionary<string, List<Rectangle>> explosionRects;
         public static List<Rectangle> shipRects, cometSources;
 
-        public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet, logo;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet, logo, prestigeDmg, prestigeCost, prestigeMoney;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
 
         //public Planet planet;
         public static PlayScreen playScreen;
-        public StoreAndPrestige storeAndPrestige;
+        public static Store store;
+        public Prestige prestige;
         public Upgrades upgrades;
         public AchievementsScreen achievements;
         public Money money;
@@ -78,6 +79,7 @@ namespace PlanetDestroyer
             mouse = oldMouse = Mouse.GetState();
             kb = oldKB = Keyboard.GetState();
             mouseRect = new Rectangle(mouse.X - 1, mouse.Y - 1, 2, 2);
+            oldMouseRect = new Rectangle(mouse.X - 1, mouse.Y - 1, 2, 2);
             screenW = GraphicsDevice.Viewport.Width;
             screenH = GraphicsDevice.Viewport.Height;
             scrollWheel = oldScrollWheel = mouse.ScrollWheelValue;
@@ -157,6 +159,24 @@ namespace PlanetDestroyer
             }
             return temp;
         }
+        public static List<Rectangle> rectsBySheet(int rows, int cols, int width, int height, int items)
+        {
+            List<Rectangle> result = new List<Rectangle>();
+            int total = 0;
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    total++;
+                    if (total == items)
+                    {
+                        return result;
+                    }
+                    result.Add(new Rectangle(c * width, r * height, width, height));
+                }
+            }
+            return null; //something impossibly wrong has happened
+        }
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -193,9 +213,13 @@ namespace PlanetDestroyer
             cash = Content.Load<Texture2D>("Cash");
             cometSheet = Content.Load<Texture2D>("CometSheet");
             logo = Content.Load<Texture2D>("pDestroyerLogo");
+            prestigeCost = Content.Load<Texture2D>("costPrestige");
+            prestigeDmg = Content.Load<Texture2D>("dmgPrestige");
+            prestigeMoney = Content.Load<Texture2D>("moneyPrestige");
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
-            storeAndPrestige = new StoreAndPrestige();
+            store = new Store();
+            prestige = new Prestige();
             settings = new Settings();
             money = new Money();
         }
@@ -224,16 +248,22 @@ namespace PlanetDestroyer
             oldScrollWheel = scrollWheel;
             scrollWheel = mouse.ScrollWheelValue;
             mouseRect.X = mouse.X - 1; mouseRect.Y = mouse.Y - 1;
+            oldMouseRect.X = oldMouse.X - 1; oldMouseRect.Y = oldMouse.Y - 1;
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
 
             // TODO: Add your update logic here
             playScreen.Update();
-            storeAndPrestige.Update();
-            upgrades.Update();
-            achievements.Update();
-            money.Update();
+            if (!activeModal)
+            {
+                store.Update();
+                upgrades.Update();
+                achievements.Update();
+                money.Update();
+                prestige.Update();
+            }
+            store.DamagePlanet();
             settings.Update();
             if (time % 2 == 0)
                 planetTexture = playScreen.planet.UpdatePlanetTexture();
@@ -260,7 +290,8 @@ namespace PlanetDestroyer
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             playScreen.Draw(spriteBatch);
-            storeAndPrestige.Draw(spriteBatch);
+            store.Draw(spriteBatch);
+            prestige.Draw(spriteBatch);
             upgrades.Draw(spriteBatch);
             achievements.Draw(spriteBatch);
             money.Draw(spriteBatch);
