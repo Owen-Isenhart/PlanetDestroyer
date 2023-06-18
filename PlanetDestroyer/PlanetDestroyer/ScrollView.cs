@@ -130,7 +130,9 @@ namespace PlanetDestroyer
                 {
                     if (Game1.mouseRect.Intersects(rects[x]))
                     {
+                        colors = colors.ToDictionary(p => p.Key, p => Color.White * .1f); //weird thing where some boxes retain highlighted colors after mouse moves off of it, not sure how efficient this is but it works
                         colors[i] = Color.White * .3f;
+                        
                         hoveringIndex = i;
                         break;
                         //if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
@@ -156,7 +158,8 @@ namespace PlanetDestroyer
         }
         public int finalShownIndex()
         {
-            
+            //this method is kinda insane and hard to follow, but it works and works good.
+            //probably not very effiencent considering there's two for loops, but the divine knowledge bestowed onto me when i created this method decided it was the best solution
             int center = scrollbarRect.Center.Y;
             int full = rects[cols * 3 - 1].Y + rects[cols * 3 - 1].Height - rects[0].Y;
             int columns = rects.Count / cols;
@@ -179,31 +182,15 @@ namespace PlanetDestroyer
                 }
                 
             }
-            Console.WriteLine(closestIndex);
             if (closestIndex > 3)
             {
-                updateRects(closestIndex);
                 return closestIndex;
             }
-
-            else
-            {
-                updateRects(3);
-                return 3;
-            }
+            return 3;
+            
                 
         }
-        public void updateRects(int index)
-        {
-            //if (index != 3)
-            //    Console.WriteLine();
-            //index *= 5;
-            //for (int i = index - 15, x = 0; i < index; i++, x++)
-            //{
-            //    rects[i] = rects[x];
-               
-            //}
-        }
+        
         public void Draw(SpriteBatch spriteBatch)
         {
             //int index = finalShownIndex() * 5;

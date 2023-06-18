@@ -11,67 +11,14 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    //public class Achievement : Popup
-    //{
-    //    public string text;
-    //    public bool completed;
-    //    public int reward;
-    //    public Rectangle rect;
-    //    public Color rectColor;
-        
-
-    //    public Achievement(string t, int index, Rectangle r) : base()
-    //    {
-    //        text = t;
-    //        completed = false;
-    //        reward = index * 100;
-    //        rect = r;
-    //        rectColor = Color.White * .1f;
-            
-    //    }
-    //    public void Update()
-    //    {
-    //        //Console.WriteLine(Game1.mouseRect + " " + rect);
-    //        if (Game1.mouseRect.Intersects(rect))
-    //        {
-
-    //            rectColor = Color.White * .3f;
-    //            shown = true;
-    //            //calculatePopup();
-    //            //popupRect.X = Game1.mouse.X
-    //        }
-    //        else
-    //        {
-    //            rectColor = Color.White * .1f;
-    //            shown = false;
-    //        }
-    //    }
-        
-    //    public void Draw(SpriteBatch spriteBatch)
-    //    {
-    //        spriteBatch.Draw(Game1.whitePixel, rect, rectColor);
-    //        if (completed)
-    //        {
-    //            spriteBatch.Draw(Game1.checkMark, rect, Color.White);
-    //        }
-    //        else
-    //        {
-    //            spriteBatch.Draw(Game1.questionMark, rect, Color.White);
-    //        }
-            
-    //    }
-    //    public void DrawPopup(SpriteBatch spriteBatch)
-    //    {
-    //        if (shown)
-    //            spriteBatch.Draw(Game1.whitePixel, popupRect, Color.White * .7f);
-    //    }
-    //}
+    
     public class AchievementsScreen
     {
         public Rectangle border;
         //public HashSet<Achievement> achievements;
         public List<Rectangle> rects;
         public ScrollView grid;
+        public Vector2 titlePos;
         //public 
         public AchievementsScreen()
         {
@@ -102,6 +49,7 @@ namespace PlanetDestroyer
                 temp.Add(tex);
             }
             grid = new ScrollView(border, null, rects, temp, colors, 5);
+            titlePos = textPosition();
         }
         public void populateAchievements()
         {
@@ -194,7 +142,7 @@ namespace PlanetDestroyer
             //    achievement.Draw(spriteBatch);
             //}
 
-            spriteBatch.DrawString(Game1.fonts[4], "ACHIEVEMENTS", textPosition(), Color.White);
+            spriteBatch.DrawString(Game1.fonts[4], "ACHIEVEMENTS", titlePos, Color.White);
         }
     }
 }
