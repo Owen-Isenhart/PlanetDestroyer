@@ -11,14 +11,14 @@ using System.Linq;
 
 namespace PlanetDestroyer
 {
-    public class Prestige
+    public class Prestige : Popup
     {
         public Texture2D[] prestigeTextures;
         public Rectangle[] prestigeRects;
         public ModalPopup[] confirmations;
         public PrestigeItem[] prestiges;
         public Rectangle prestigeBorder;
-        public Prestige()
+        public Prestige() : base()
         {
             prestigeBorder = new Rectangle(0, Game1.store.storeBorder.Bottom + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH - Game1.store.storeBorder.Bottom);
             prestigeRects = new Rectangle[3];
@@ -26,20 +26,31 @@ namespace PlanetDestroyer
             prestigeTextures[0] = Game1.prestigeDmg; prestigeTextures[1] = Game1.prestigeMoney; prestigeTextures[2] = Game1.prestigeCost;
             for (int i = 0; i < 3; i++)
             {
-                prestigeRects[i] = new Rectangle(prestigeBorder.X + prestigeBorder.Width / 15 + prestigeBorder.Width / 3 * i, prestigeBorder.Y + prestigeBorder.Height / 3 + 15, 100, 100);
+                prestigeRects[i] = new Rectangle(prestigeBorder.X + (int)(prestigeBorder.Width / 5.8) + prestigeBorder.Width / 4 * i, prestigeBorder.Y + prestigeBorder.Height / 3 + 15, 100, 100);
             }
             confirmations = new ModalPopup[3];
             prestiges = new PrestigeItem[3];
             prestiges[0] = new PrestigeItem(prestigeRects[0], prestigeTextures[0], 4, 4, 13);
             prestiges[1] = new PrestigeItem(prestigeRects[1], prestigeTextures[1], 3, 3, 9);
             prestiges[2] = new PrestigeItem(prestigeRects[2], prestigeTextures[2], 4, 4, 15);
+            popupRect.Width = 180;
+            popupRect.Height = 80;
         }
         public void Update()
         {
+            int count = 0;
             for (int i = 0; i < prestiges.Length; i++)
             {
                 prestiges[i].Update();
+                if (prestiges[i].active)
+                {
+                    count++;
+                    popupRect.X = prestigeRects[i].X + prestigeRects[i].Width / 2 - popupRect.Width / 2;
+                    popupRect.Y = prestigeRects[i].Bottom + 10;
+                    shown = true;
+                }
             }
+            if (count == 0) shown = false;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -50,6 +61,8 @@ namespace PlanetDestroyer
             {
                 p.Draw(spriteBatch);
             }
+            if (shown)
+                spriteBatch.Draw(Game1.whitePixel, popupRect, Color.White * .7f);
         }
     }
 }

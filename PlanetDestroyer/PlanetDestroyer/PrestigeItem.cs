@@ -16,7 +16,7 @@ namespace PlanetDestroyer
         public Rectangle rect;
         public Texture2D tex;
         public bool active;
-        public PrestigeItem(Rectangle re, Texture2D t, int r, int c, int i) : base("s", 6, Game1.rectsBySheet(r, c, 300, 300, i))
+        public PrestigeItem(Rectangle re, Texture2D t, int r, int c, int i) : base("s", 5, Game1.rectsBySheet(r, c, 300, 300, i))
         {
             rect = re;
             tex = t;
