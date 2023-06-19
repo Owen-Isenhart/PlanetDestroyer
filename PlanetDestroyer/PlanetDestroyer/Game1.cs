@@ -59,8 +59,8 @@ namespace PlanetDestroyer
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width-5;
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height-80;
+            graphics.PreferredBackBufferWidth = 1400; //GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width-5;
+            graphics.PreferredBackBufferHeight = 600; //GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height-80;
             Window.AllowUserResizing = true;
 
             this.IsMouseVisible = true;
@@ -186,16 +186,7 @@ namespace PlanetDestroyer
             planetTemplate = Content.Load<Texture2D>("upscaledBlankPlanet");
             fonts = new List<SpriteFont> { Content.Load<SpriteFont>("font1"), Content.Load<SpriteFont>("font2"), Content.Load<SpriteFont>("font3"), Content.Load<SpriteFont>("font4"), Content.Load<SpriteFont>("font5"), Content.Load<SpriteFont>("font6"), Content.Load<SpriteFont>("font7"), Content.Load<SpriteFont>("font8") };
             
-            if (screenW >= 1080)
-                healthFont = fonts[0];
-            else if (screenW >= 980)
-                healthFont = fonts[1];
-            else if (screenW >= 880)
-                healthFont = fonts[2];
-            else if (screenW >= 780)
-                healthFont = fonts[3];
-            else if (screenW >= 680)
-                healthFont = fonts[4];
+            
 
             //planet = new Planet(1);
             playScreen = new PlayScreen();
@@ -238,18 +229,17 @@ namespace PlanetDestroyer
             // TODO: Unload any non ContentManager content here
         }
 
-        public static SpriteFont getFont(int size) //0 for huge, 1 for large, 2 for medium, 3 for small, 4 for tiny
-        {
-            if (screenW >= 1600)
-                return fonts[size];
-            else if (screenW >= 1400)
-                return fonts[size + 1];
-            else if (screenW >= 1200)
-                return fonts[size + 2];
-            else if (screenW >= 1000)
-                return fonts[size + 3];
-            else
-                return fonts[size + 4];
+        public static SpriteFont getFont(int size) //0 for planet, 1 for store and upgrades, 2 for prestige + achievements, 5 for settings, 6 for popups
+        { 
+            //probably a better way to do this but this was ez
+            int result = 0;
+            for (int i = 1900, x = 0; i > screenW; i -= 200, x++)
+            {
+                result = x;
+            }
+            if (result + size >= fonts.Count) return fonts[fonts.Count - 1];
+            return fonts[result + size];
+
         }
         /// <summary>
         /// Allows the game to run logic such as updating the world,

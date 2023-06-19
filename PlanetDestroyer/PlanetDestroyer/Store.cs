@@ -154,7 +154,7 @@ namespace PlanetDestroyer
                                 StoreItem item = items[0].getClone();
 
                                 item.texture = tex;
-                                item.rect.Y += 25;
+                                item.rect.Y += Game1.screenW / 75;
                                 item.index = i;
                                 item.color = colors[i];
                                 item.dps = (int)Math.Pow(i + 1, 2);

@@ -58,7 +58,7 @@ namespace PlanetDestroyer
             scrollbarRect = new Rectangle(border.X + border.Width, border.Y, 8, 3*cPerF)  ;
             lastRow = 3;
             scrollSpeed = cPerF / 2;
-            font = Game1.getFont(7);
+            font = Game1.getFont(6);
         }
         public void calculatePopup(string direction, int index)
         {
@@ -197,27 +197,32 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             //int index = finalShownIndex() * 5;
+            int temp = -1;
+            int tempPos = -1;
+            if (hoveringBorder || clickingBar)
+                spriteBatch.Draw(Game1.whitePixel, scrollbarRect, Color.White);
+
             for (int i = lastRow * cols - cols*3, x = 0; i < lastRow * cols; i++, x++)
             {
                 //if (rects)
                 spriteBatch.Draw(Game1.whitePixel, rects[x], colors[i]);
                 spriteBatch.Draw(textures[i], rects[x], sourceRect, itemColors[i]);
-                
-            }
 
-            for (int i = lastRow * cols - cols*3, x = 0; i < lastRow * cols; i++, x++)
-            {
                 if (popups[i].shown)
                 {
-                    spriteBatch.Draw(Game1.whitePixel, popups[x].popupRect, Color.White * .7f);
-                    spriteBatch.DrawString(font, popups[i].text, new Vector2(popups[x].popupRect.X + 5, popups[x].popupRect.Y + 10), Color.Black);
+                    temp = i;
+                    tempPos = x;
                 }
-                    
+            }
 
+            if (temp != -1 && tempPos != -1)
+            {
+                spriteBatch.Draw(Game1.whitePixel, popups[tempPos].popupRect, Color.White * .7f);
+                spriteBatch.DrawString(font, popups[temp].text, new Vector2(popups[tempPos].popupRect.X + 5, popups[tempPos].popupRect.Y + 10), Color.Black);
             }
             
-            if (hoveringBorder || clickingBar)
-                spriteBatch.Draw(Game1.whitePixel, scrollbarRect, Color.White);
+
+
         }
     }
 }
