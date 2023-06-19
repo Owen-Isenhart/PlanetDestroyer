@@ -17,8 +17,10 @@ namespace PlanetDestroyer
         public Rectangle rect;
         public Color color;
         public bool hovering, clicked;
+        public SpriteFont font;
         public Button(Rectangle r, string t)
         {
+            font = Game1.getFont(5);
             rect = r;
             text = t;
             color = new Color(44, 44, 44);
@@ -52,7 +54,7 @@ namespace PlanetDestroyer
             if (hovering)
                 spriteBatch.Draw(Game1.whitePixel, new Rectangle(rect.X - 1, rect.Y - 1, rect.Width + 2, rect.Height + 2), Color.White);
             spriteBatch.Draw(Game1.whitePixel, rect, color);
-            spriteBatch.DrawString(Game1.fonts[5], text, new Vector2(rect.Center.X - Game1.fonts[5].MeasureString(text).X / 2, rect.Center.Y - Game1.fonts[5].MeasureString(text).Y / 2), Color.White);
+            spriteBatch.DrawString(font, text, new Vector2(rect.Center.X - font.MeasureString(text).X / 2, rect.Center.Y - font.MeasureString(text).Y / 2), Color.White);
         }
     }
 }

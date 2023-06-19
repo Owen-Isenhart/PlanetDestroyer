@@ -20,18 +20,22 @@ namespace PlanetDestroyer
         public ScrollView grid;
         public int totalDmg;
         public Texture2D[] textures;
-
+        public SpriteFont font;
+        public Vector2 titlePos;
         //prestige stuff
-        
-        
+
+
         public Store()
         {
             storeBorder = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, (int)(Game1.screenH / 1.5));
             items = new List<StoreItem>();
             indexes = new List<int>();
             totalDmg = 0;
+            font = Game1.getFont(1);
             textures = new Texture2D[] { Game1.shipSheet, Game1.ballShip, Game1.spikyShip };
-
+            int diff = (int)(storeBorder.Width - font.MeasureString("STORE").X);
+            titlePos = new Vector2(storeBorder.X + diff / 2, storeBorder.Y + font.MeasureString("STORE").Y / 2);
+            
             List<Rectangle> t = organizeRects(12);
             List<Texture2D> temp = new List<Texture2D>();
             colors = new List<Color>();
@@ -59,6 +63,7 @@ namespace PlanetDestroyer
                 temp.Add(tex);
             }
             grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, 3);
+            
         }
         public Rectangle calculateInitRect(int i)
         {
@@ -88,7 +93,7 @@ namespace PlanetDestroyer
             List<Rectangle> list = new List<Rectangle>();
             if (storeBorder.Width >= 320)
             {
-                int y = storeBorder.Y + (int)(Game1.fonts[2].MeasureString("STORE").Y/1.3);
+                int y = storeBorder.Y + (int)(font.MeasureString("STORE").Y);
                 for (int i = 0, x = 0; i < amnt; i++, x++)
                 {
                     if (i % 3 == 0)
@@ -182,7 +187,7 @@ namespace PlanetDestroyer
         {
             
             spriteBatch.Draw(Game1.pixel, storeBorder, Color.Black);
-            spriteBatch.DrawString(Game1.fonts[2], "STORE", new Vector2(storeBorder.Width/2 - Game1.fonts[2].MeasureString("STORE").X/2, grid.rects[0].Y - (int)(Game1.healthFont.MeasureString("STORE").Y/1.3)), Color.White);
+            spriteBatch.DrawString(font, "STORE", titlePos, Color.White);
             grid.Draw(spriteBatch);
             //int i = 0;
             foreach (StoreItem item in items)

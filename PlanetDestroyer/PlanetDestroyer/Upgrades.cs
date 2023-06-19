@@ -18,11 +18,13 @@ namespace PlanetDestroyer
         public List<Rectangle> rects; //cant use a scrollview for this stuff because I coded it in a way where I can't have something be layed out horizontally without a ton of elements :(
         public List<Texture2D> textures;
         public int hoveringIndex;
+        public SpriteFont font;
         public Upgrades() : base()
         {
+            font = Game1.getFont(1);
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH/2);
-            int diff = (int)(border.Width - Game1.fonts[3].MeasureString("UPGRADES").X);
-            titlePos = new Vector2(border.X + diff / 2, border.Y + Game1.fonts[3].MeasureString("UPGRADES").Y/2);
+            int diff = (int)(border.Width - font.MeasureString("UPGRADES").X);
+            titlePos = new Vector2(border.X + diff / 2, border.Y + font.MeasureString("UPGRADES").Y/2);
             rects = new List<Rectangle>();
             textures = new List<Texture2D> { Game1.clickUpgrade, Game1.shipUpgrade, Game1.ballUpgrade, Game1.spikyUpgrade };
             hoveringIndex = -1;
@@ -59,7 +61,7 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Game1.pixel, border, Color.White);
-            spriteBatch.DrawString(Game1.fonts[3], "UPGRADES", titlePos, Color.White);
+            spriteBatch.DrawString(font, "UPGRADES", titlePos, Color.White);
 
             for (int i = 0; i < rects.Count; i++)
             {

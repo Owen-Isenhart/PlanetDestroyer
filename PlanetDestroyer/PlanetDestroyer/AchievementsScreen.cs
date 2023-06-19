@@ -19,6 +19,7 @@ namespace PlanetDestroyer
         public List<Rectangle> rects;
         public ScrollView grid;
         public Vector2 titlePos;
+        public SpriteFont font;
         //public 
         public AchievementsScreen()
         {
@@ -49,6 +50,7 @@ namespace PlanetDestroyer
                 temp.Add(tex);
             }
             grid = new ScrollView(border, null, rects, temp, colors, 5);
+            font = Game1.getFont(2);
             titlePos = textPosition();
         }
         public void populateAchievements()
@@ -67,7 +69,7 @@ namespace PlanetDestroyer
             List<Rectangle> list = new List<Rectangle>();
             if (border.Width >= 320)
             {
-                int y = border.Y + 25;
+                int y = border.Y + border.Height / 10;
                 //int x = 0;
                 for (int i = 0, x = 0; i < amnt; i++, x++)
                 {
@@ -130,7 +132,7 @@ namespace PlanetDestroyer
         }
         public Vector2 textPosition()
         {
-            int diff = (int)(border.Width - Game1.fonts[4].MeasureString("ACHIEVEMENTS").X);
+            int diff = (int)(border.Width - font.MeasureString("ACHIEVEMENTS").X);
             return new Vector2(border.X + diff/2, border.Y + Game1.fonts[4].MeasureString("ACHIEVEMENTS").Y / 5);
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -142,7 +144,7 @@ namespace PlanetDestroyer
             //    achievement.Draw(spriteBatch);
             //}
 
-            spriteBatch.DrawString(Game1.fonts[4], "ACHIEVEMENTS", titlePos, Color.White);
+            spriteBatch.DrawString(font, "ACHIEVEMENTS", titlePos, Color.White);
         }
     }
 }

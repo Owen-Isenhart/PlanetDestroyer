@@ -184,7 +184,7 @@ namespace PlanetDestroyer
 
             // TODO: use this.Content to load your game content here
             planetTemplate = Content.Load<Texture2D>("upscaledBlankPlanet");
-            fonts = new List<SpriteFont> { Content.Load<SpriteFont>("planetFont1"), Content.Load<SpriteFont>("planetFont2"), Content.Load<SpriteFont>("planetFont3"), Content.Load<SpriteFont>("planetFont4"), Content.Load<SpriteFont>("planetFont5"), Content.Load<SpriteFont>("shopFont1") };
+            fonts = new List<SpriteFont> { Content.Load<SpriteFont>("font1"), Content.Load<SpriteFont>("font2"), Content.Load<SpriteFont>("font3"), Content.Load<SpriteFont>("font4"), Content.Load<SpriteFont>("font5"), Content.Load<SpriteFont>("font6"), Content.Load<SpriteFont>("font7"), Content.Load<SpriteFont>("font8") };
             
             if (screenW >= 1080)
                 healthFont = fonts[0];
@@ -238,6 +238,19 @@ namespace PlanetDestroyer
             // TODO: Unload any non ContentManager content here
         }
 
+        public static SpriteFont getFont(int size) //0 for huge, 1 for large, 2 for medium, 3 for small, 4 for tiny
+        {
+            if (screenW >= 1600)
+                return fonts[size];
+            else if (screenW >= 1400)
+                return fonts[size + 1];
+            else if (screenW >= 1200)
+                return fonts[size + 2];
+            else if (screenW >= 1000)
+                return fonts[size + 3];
+            else
+                return fonts[size + 4];
+        }
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.

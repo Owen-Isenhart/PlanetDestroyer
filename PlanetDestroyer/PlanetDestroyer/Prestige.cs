@@ -18,6 +18,7 @@ namespace PlanetDestroyer
         public ModalPopup[] confirmations;
         public PrestigeItem[] prestiges;
         public Rectangle prestigeBorder;
+        public SpriteFont font;
         public Prestige() : base()
         {
             prestigeBorder = new Rectangle(0, Game1.store.storeBorder.Bottom + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH - Game1.store.storeBorder.Bottom);
@@ -26,7 +27,7 @@ namespace PlanetDestroyer
             prestigeTextures[0] = Game1.prestigeDmg; prestigeTextures[1] = Game1.prestigeMoney; prestigeTextures[2] = Game1.prestigeCost;
             for (int i = 0; i < 3; i++)
             {
-                prestigeRects[i] = new Rectangle(prestigeBorder.X + (int)(prestigeBorder.Width / 5.8) + prestigeBorder.Width / 4 * i, prestigeBorder.Y + prestigeBorder.Height / 3 + 15, 100, 100);
+                prestigeRects[i] = new Rectangle(prestigeBorder.X + (int)(prestigeBorder.Width / 5.8) + prestigeBorder.Width / 4 * i, prestigeBorder.Y + prestigeBorder.Height / 3 + 15, (int)(prestigeBorder.Width / 5.8), (int)(prestigeBorder.Width / 5.8));
             }
             confirmations = new ModalPopup[3];
             prestiges = new PrestigeItem[3];
@@ -35,6 +36,7 @@ namespace PlanetDestroyer
             prestiges[2] = new PrestigeItem(prestigeRects[2], prestigeTextures[2], 4, 4, 15);
             popupRect.Width = 180;
             popupRect.Height = 80;
+            font = Game1.getFont(2);
         }
         public void Update()
         {
@@ -55,7 +57,7 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Game1.pixel, prestigeBorder, Color.Black);
-            spriteBatch.DrawString(Game1.fonts[4], "PRESTIGE", new Vector2(Game1.store.storeBorder.Width / 2 - Game1.fonts[4].MeasureString("PRESTIGE").X / 2, prestigeBorder.Y + 10), Color.White);
+            spriteBatch.DrawString(font, "PRESTIGE", new Vector2(Game1.store.storeBorder.Width / 2 - font.MeasureString("PRESTIGE").X / 2, prestigeBorder.Y + 10), Color.White);
         
             foreach (PrestigeItem p in prestiges)
             {

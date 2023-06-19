@@ -19,7 +19,8 @@ namespace PlanetDestroyer
         public List<Explosion> explosions; //from clicking
         public string text;
         public Vector2 textSize;
-        
+        public SpriteFont font;
+
         public Planet(int i) //index increases linearly, as does the amount of hits to blow up the planet
         {
             index = i;
@@ -30,7 +31,8 @@ namespace PlanetDestroyer
             explosions = new List<Explosion>();
             time = 80;
             text = Health + " Hits";
-            textSize = Game1.healthFont.MeasureString(text);
+            font = Game1.getFont(0);
+            textSize = font.MeasureString(text);
             Game1.planetGrit = Game1.rnd.Next(5, 50);
             Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
             while (Darken(Game1.temp) == Color.Black || Darken(Darken(Game1.temp)) == Color.Black)
@@ -47,7 +49,7 @@ namespace PlanetDestroyer
             time = 80;
             //explosions.Clear();
             text = Math.Round(Health) + " Hits";
-            textSize = Game1.healthFont.MeasureString(text);
+            textSize = font.MeasureString(text);
             Game1.planetGrit = Game1.rnd.Next(5, 50);
             Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
             while (Darken(Game1.temp) == Color.Black || Darken(Darken(Game1.temp)) == Color.Black)
@@ -163,7 +165,7 @@ namespace PlanetDestroyer
             {
                 Health = 0;
                 text = Math.Round(Health) + " Hits";
-                textSize = Game1.healthFont.MeasureString(text);
+                textSize = font.MeasureString(text);
                 if (time == 0)
                 {
                     Reset();
@@ -188,7 +190,7 @@ namespace PlanetDestroyer
             {
                 if (Math.Round(Health) == 1) text = Math.Round(Health) + " Hit";
                 else text = Math.Round(Health) + " Hits";
-                textSize = Game1.healthFont.MeasureString(text);
+                textSize = font.MeasureString(text);
 
                 if (Game1.mouseRect.Intersects(rect) && IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                 {
@@ -239,7 +241,7 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Game1.planetTexture, rect, Color.White);
-            spriteBatch.DrawString(Game1.healthFont, text, new Vector2(rect.X - (textSize.X - rect.Width) / 2, rect.Y - textSize.Y), Color.White);
+            spriteBatch.DrawString(font, text, new Vector2(rect.X - (textSize.X - rect.Width) / 2, rect.Y - textSize.Y), Color.White);
 
             foreach (Explosion explosion in explosions)
                 explosion.Draw(spriteBatch);
