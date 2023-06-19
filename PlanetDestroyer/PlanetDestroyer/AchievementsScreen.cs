@@ -30,6 +30,7 @@ namespace PlanetDestroyer
             List<Texture2D> temp = new List<Texture2D>() ;
             Texture2D tex = Game1.questionMark;
             List<Color> colors = Enumerable.Repeat(Color.White, rects.Count).ToList();
+            List<string> sTemp = new List<string>();
             for (int i = 0; i < rects.Count; i++)
             {
                 if (i % 5 == 0)
@@ -45,11 +46,11 @@ namespace PlanetDestroyer
                     }
                     
                 }
-                    
 
+                sTemp.Add(i + "");
                 temp.Add(tex);
             }
-            grid = new ScrollView(border, null, rects, temp, colors, 5);
+            grid = new ScrollView(border, null, rects, temp, colors, sTemp, 5);
             font = Game1.getFont(2);
             titlePos = textPosition();
         }

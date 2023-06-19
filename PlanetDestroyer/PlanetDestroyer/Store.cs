@@ -35,7 +35,7 @@ namespace PlanetDestroyer
             textures = new Texture2D[] { Game1.shipSheet, Game1.ballShip, Game1.spikyShip };
             int diff = (int)(storeBorder.Width - font.MeasureString("STORE").X);
             titlePos = new Vector2(storeBorder.X + diff / 2, storeBorder.Y + font.MeasureString("STORE").Y / 2);
-            
+            List<string> sTemp = new List<string>();
             List<Rectangle> t = organizeRects(12);
             List<Texture2D> temp = new List<Texture2D>();
             colors = new List<Color>();
@@ -46,23 +46,28 @@ namespace PlanetDestroyer
                 {
                     tex = Game1.spikyShip;
                     colors.Add(new Color(255 - (i / 3) * 100, 255 , 255 - (i / 3) * 100));
-
+                    int index = 1 + (i / 3);
+                    sTemp.Add("Laser Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps");
                 }
                 else if (tex == Game1.shipSheet)
                 {
                     tex = Game1.ballShip;
                     colors.Add(new Color(255 - (i / 3) * 100, 255 - (i / 3) * 100, 255 ));
+                    int index = 1 + (i / 3);
+                    sTemp.Add("Gunner Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps");
                 }
                 else
                 {
                     tex = Game1.shipSheet;
                     colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
+                    int index = 1 + (i / 3);
+                    sTemp.Add("Missile Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps");
                 }
 
                 
                 temp.Add(tex);
             }
-            grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, 3);
+            grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
             
         }
         public Rectangle calculateInitRect(int i)
@@ -146,9 +151,10 @@ namespace PlanetDestroyer
                                 items.Add(new StoreItem("ship", i, calculateInitRect(i), tex, colors[i]));
                             else
                             {
-                                StoreItem item = items[items.Count-1].getClone();
+                                StoreItem item = items[0].getClone();
+
                                 item.texture = tex;
-                                item.rect.Y += i * 25;
+                                item.rect.Y += 25;
                                 item.index = i;
                                 item.color = colors[i];
                                 item.dps = (int)Math.Pow(i + 1, 2);
@@ -189,17 +195,15 @@ namespace PlanetDestroyer
             spriteBatch.Draw(Game1.pixel, storeBorder, Color.Black);
             spriteBatch.DrawString(font, "STORE", titlePos, Color.White);
             grid.Draw(spriteBatch);
-            //int i = 0;
             foreach (StoreItem item in items)
             {
                 item.Update();
                 item.Draw(spriteBatch);
-                //spriteBatch.DrawString(Game1.fonts[4], i + "", new Vector2(item.rect.X, item.rect.Y), Color.White);
+                //spriteBatch.DrawString(Game1.fonts[7], i + "", new Vector2(item.rect.X, item.rect.Y), Color.White);
                 //i++;
             }
 
 
-            //prestige stuff
             
         }
     }

@@ -21,6 +21,7 @@ namespace PlanetDestroyer
         public Dictionary<int, Color> colors;
         public Dictionary<int, Color> itemColors;
         public Dictionary<int, Popup> popups;
+        public List<string> popupText;
         public bool hoveringBorder, clickingBar;
         public int hoveringIndex;
         public int lastRow;
@@ -28,7 +29,7 @@ namespace PlanetDestroyer
         public int scrollSpeed;
         public SpriteFont font;
 
-        public ScrollView(Rectangle b, Rectangle? source, List<Rectangle> r, List<Texture2D> t, List<Color> iColor, int c)
+        public ScrollView(Rectangle b, Rectangle? source, List<Rectangle> r, List<Texture2D> t, List<Color> iColor, List<string> text, int c)
         {
             sourceRect = source;
             cols = c;
@@ -45,7 +46,7 @@ namespace PlanetDestroyer
                 colors.Add(i, Color.White * .1f);
                 itemColors.Add(i, iColor[i]);
                 popups.Add(i, new Popup());
-                popups[i].text = (i+1) + "";
+                popups[i].text = text[i];
             }
             hoveringIndex = -1;
             hoveringBorder = false;
@@ -57,7 +58,7 @@ namespace PlanetDestroyer
             scrollbarRect = new Rectangle(border.X + border.Width, border.Y, 8, 3*cPerF)  ;
             lastRow = 3;
             scrollSpeed = cPerF / 2;
-            font = Game1.getFont(5);
+            font = Game1.getFont(7);
         }
         public void calculatePopup(string direction, int index)
         {
@@ -209,7 +210,7 @@ namespace PlanetDestroyer
                 if (popups[i].shown)
                 {
                     spriteBatch.Draw(Game1.whitePixel, popups[x].popupRect, Color.White * .7f);
-                    spriteBatch.DrawString(font, popups[i].text, new Vector2(popups[x].popupRect.X, popups[x].popupRect.Y + 10), Color.Black);
+                    spriteBatch.DrawString(font, popups[i].text, new Vector2(popups[x].popupRect.X + 5, popups[x].popupRect.Y + 10), Color.Black);
                 }
                     
 
