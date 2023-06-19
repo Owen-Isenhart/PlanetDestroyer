@@ -31,7 +31,7 @@ namespace PlanetDestroyer
         public static Dictionary<string, List<Rectangle>> explosionRects;
         public static List<Rectangle> shipRects, cometSources;
 
-        public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet, logo, prestigeDmg, prestigeCost, prestigeMoney;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet, logo, prestigeDmg, prestigeCost, prestigeMoney, shipUpgrade, ballUpgrade, spikyUpgrade, clickUpgrade;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
@@ -216,6 +216,10 @@ namespace PlanetDestroyer
             prestigeCost = Content.Load<Texture2D>("costPrestige");
             prestigeDmg = Content.Load<Texture2D>("dmgPrestige");
             prestigeMoney = Content.Load<Texture2D>("moneyPrestige");
+            ballUpgrade = Content.Load<Texture2D>("ballUpgrade (1)");
+            shipUpgrade = Content.Load<Texture2D>("shipUpgrade");
+            spikyUpgrade = Content.Load<Texture2D>("spikyUpgrade");
+            clickUpgrade = Content.Load<Texture2D>("clickUpgrade");
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             store = new Store();

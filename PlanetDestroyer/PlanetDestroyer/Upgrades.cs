@@ -24,7 +24,7 @@ namespace PlanetDestroyer
             int diff = (int)(border.Width - Game1.fonts[3].MeasureString("UPGRADES").X);
             titlePos = new Vector2(border.X + diff / 2, border.Y + Game1.fonts[3].MeasureString("UPGRADES").Y/2);
             rects = new List<Rectangle>();
-            textures = Enumerable.Repeat(Game1.questionMark, 4).ToList();
+            textures = new List<Texture2D> { Game1.clickUpgrade, Game1.shipUpgrade, Game1.ballUpgrade, Game1.spikyUpgrade };
             hoveringIndex = -1;
 
             for (int i = 0; i < 4; i++)
@@ -69,7 +69,10 @@ namespace PlanetDestroyer
                 else
                     spriteBatch.Draw(Game1.whitePixel, rects[i], Color.White * .1f);
 
-                spriteBatch.Draw(textures[i], rects[i], Color.White);
+                if (i != 0)
+                    spriteBatch.Draw(textures[i], new Rectangle(rects[i].X + 10, rects[i].Y + 10, rects[i].Width - 20, rects[i].Height - 20), Color.White);
+                else //click texture is weird
+                    spriteBatch.Draw(textures[i], new Rectangle(rects[i].X + 5, rects[i].Y + 10, rects[i].Width - 20, rects[i].Height - 20), new Rectangle(0, 0, 300, 306), Color.White);
             }
 
             if (shown)
