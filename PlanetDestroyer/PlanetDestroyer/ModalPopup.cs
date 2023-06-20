@@ -20,7 +20,9 @@ namespace PlanetDestroyer
         public List<bool> buttonHovers;
         public List<Color> colors;
         public List<Slider> sliders;
-        
+        public List<Vector2> positions;
+        public List<string> text;
+        public SpriteFont font;
         public ModalPopup()
         {
             fullScreen = new Rectangle(0, 0, Game1.screenW, Game1.screenH);
@@ -33,6 +35,9 @@ namespace PlanetDestroyer
             colors = new List<Color> { Color.Green, Color.DarkGreen, Color.Red, Color.DarkRed };
             active = false;
             mouseInBounds = true;
+            text = new List<string>();
+            positions = new List<Vector2>();
+            font = Game1.getFont(6);
         }
         public void Update()
         {
@@ -75,6 +80,7 @@ namespace PlanetDestroyer
             if (hoveringExit)
                 spriteBatch.Draw(Game1.pixel, new Rectangle(exit.X - 1, exit.Y - 1, exit.Width + 2, exit.Height + 2), Color.White) ;
             spriteBatch.Draw(Game1.whitePixel, exit, Color.Red);
+            //spriteBatch.DrawString(font, "x", new Vector2(exit.X + exit.Width / 2 - font.MeasureString("x").X / 2, exit.Y + exit.Height / 2 - font.MeasureString("x").Y / 2), Color.Black);
 
             foreach (Slider s in sliders)
             {
@@ -98,6 +104,10 @@ namespace PlanetDestroyer
                         spriteBatch.Draw(Game1.whitePixel, buttons[i], colors[2]);
                 }
                     
+            }
+            for (int i = 0; i < text.Count; i++)
+            {
+                spriteBatch.DrawString(font, text[i], positions[i], Color.Black);
             }
         }
     }

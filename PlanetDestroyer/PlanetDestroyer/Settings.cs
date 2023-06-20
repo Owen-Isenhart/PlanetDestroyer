@@ -31,10 +31,28 @@ namespace PlanetDestroyer
         }
         public void setupPopups()
         {
-            popups[0].buttons.Add(new Rectangle(popups[0].window.X + 10, popups[0].window.Y + 10, 100, 100));
-            popups[0].buttonStates.Add(true);
-            popups[0].buttonHovers.Add(false);
-            popups[0].sliders.Add(new Slider(new Rectangle(popups[0].window.X + 10, popups[0].window.Y + 120, 100, 100)));
+            //audio
+            
+            popups[0].sliders.Add(new Slider(new Rectangle(popups[0].window.X + popups[0].window.Width / 4, popups[0].window.Y + popups[0].window.Height / 5, popups[0].window.Width / 2, 1)));
+            popups[0].sliders.Add(new Slider(new Rectangle(popups[0].window.X + popups[0].window.Width / 4, popups[0].window.Y + (int)(popups[0].window.Height / 2.2), popups[0].window.Width / 2, 1)));
+            for (int i = 0; i < 3; i++)
+            {
+                popups[0].buttons.Add(new Rectangle(popups[0].window.X + (int)(popups[0].window.Width / 3 * (i + 1) - popups[0].window.Width / 4.69), popups[0].window.Y + (int)(popups[0].window.Height / 1.4), popups[0].window.Width / 10, popups[0].window.Width / 10));
+                popups[0].buttonHovers.Add(false);
+                popups[0].buttonStates.Add(true);
+            }
+
+            popups[0].text.Add("Audio"); popups[0].positions.Add(new Vector2(popups[0].window.Center.X - popups[0].font.MeasureString("Audio").X / 2, popups[0].window.Y + 10));
+            popups[0].text.Add("Music"); popups[0].positions.Add(new Vector2(popups[0].sliders[0].line.X - popups[0].font.MeasureString("Music").X  - 15, popups[0].sliders[0].line.Y + popups[0].sliders[0].line.Height / 2 - popups[0].font.MeasureString("Music").Y / 2));
+            popups[0].text.Add("Sounds"); popups[0].positions.Add(new Vector2(popups[0].sliders[1].line.X - popups[0].font.MeasureString("Sounds").X - 15, popups[0].sliders[1].line.Y + popups[0].sliders[1].line.Height / 2 - popups[0].font.MeasureString("Sounds").Y / 2));
+            popups[0].text.Add("Cursor Sounds"); popups[0].positions.Add(new Vector2(popups[0].buttons[0].Center.X - popups[0].font.MeasureString("Cursor Sounds").X / 2, popups[0].buttons[0].Y - popups[0].font.MeasureString("Cursor Sounds").Y - 10));
+            popups[0].text.Add("Clicking Sound"); popups[0].positions.Add(new Vector2(popups[0].buttons[1].Center.X - popups[0].font.MeasureString("Clicking Sound").X / 2, popups[0].buttons[1].Y - popups[0].font.MeasureString("Clicking Sound").Y - 10));
+            popups[0].text.Add("Explosion Sounds"); popups[0].positions.Add(new Vector2(popups[0].buttons[2].Center.X - popups[0].font.MeasureString("Explosion Sounds").X / 2, popups[0].buttons[2].Y - popups[0].font.MeasureString("Explosion Sounds").Y - 10));
+
+            //video
+
+
+            //stats
         }
         public void Update()
         {

@@ -14,13 +14,14 @@ namespace PlanetDestroyer
     public class Slider
     {
         public Rectangle knob, line;
-        public bool knobHeld, mouseInBounds;
+        public bool knobHeld, mouseInBounds, hover;
         public int sliderValue;
         public Slider(Rectangle pos)
         {
             line = new Rectangle(pos.X, pos.Y, Game1.screenW / 6, 5);
-            knob = new Rectangle(line.Right - 10, line.Y - 3, 10, 11);
+            knob = new Rectangle(line.Right - 18, line.Y - 6, 18, 18);
             knobHeld = false;
+            hover = false;
             mouseInBounds = true;
             sliderValue = 100;
         }
@@ -48,11 +49,20 @@ namespace PlanetDestroyer
             {
                 knobHeld = true;
             }
+            else if (Game1.mouseRect.Intersects(knob))
+            {
+                hover = true;
+            }
+            else
+                hover = false;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Game1.pixel, line, Color.White);
-            spriteBatch.Draw(Game1.whitePixel, knob, Color.Green);
+            if (!hover && !knobHeld)
+                spriteBatch.Draw(Game1.whitePixel, knob, Color.Green);
+            else
+                spriteBatch.Draw(Game1.whitePixel, knob, Color.DarkGreen);
         }
     }
 }

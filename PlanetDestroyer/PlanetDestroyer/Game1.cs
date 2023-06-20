@@ -59,8 +59,8 @@ namespace PlanetDestroyer
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferWidth = 1400; //GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width-5;
-            graphics.PreferredBackBufferHeight = 600; //GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height-80;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width-5;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height-80;
             Window.AllowUserResizing = true;
 
             this.IsMouseVisible = true;

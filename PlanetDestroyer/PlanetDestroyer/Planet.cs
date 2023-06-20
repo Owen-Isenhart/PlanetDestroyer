@@ -192,7 +192,7 @@ namespace PlanetDestroyer
                 else text = Math.Round(Health) + " Hits";
                 textSize = font.MeasureString(text);
 
-                if (Game1.mouseRect.Intersects(rect) && IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
+                if (!Game1.activeModal && Game1.mouseRect.Intersects(rect) && IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                 {
                     Health--;
                     explosions.Add(new Explosion(new Rectangle(Game1.mouseRect.X - 30, Game1.mouseRect.Y - 20, 40, 40), "small"));
