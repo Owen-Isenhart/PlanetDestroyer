@@ -67,6 +67,30 @@ namespace PlanetDestroyer
             popups[1].text.Add("Performance"); popups[1].positions.Add(new Vector2(popups[1].buttons[0].Center.X - popups[1].font.MeasureString("Performance").X / 2, popups[1].buttons[0].Y - popups[1].font.MeasureString("Performance").Y - 10));
 
             //stats
+            popups[2].text.Add("Stats"); popups[2].positions.Add(new Vector2(popups[2].window.Center.X - popups[2].font.MeasureString("Stats").X / 2, popups[2].window.Y + 10));
+            
+            popups[2].text.Add("Total Playtime: 0");
+            popups[2].text.Add("Total Money Earned: 0");
+            popups[2].text.Add("Total Money Spent: 0");
+            popups[2].text.Add("Total Ships Bought: 0");
+
+            popups[2].text.Add("Total Planets Destroyed: 0");
+            popups[2].text.Add("Total Planet Clicks: 0");
+            popups[2].text.Add("Total Upgrades Bought: 0");
+            popups[2].text.Add("Total Prestiges: 0");
+
+            int y = popups[2].window.Y + popups[2].window.Height / 3;
+            int x = popups[2].window.Center.X - (int)popups[2].font.MeasureString("Total Planets Destroyed: 0").X - 12;
+            for (int i = 0; i < 8; i++)
+            {
+                if (i != 0 && i % 4 == 0)
+                {
+                    y = popups[2].window.Y + popups[2].window.Height / 3;
+                    x = popups[2].window.Center.X + 12;
+                }
+                popups[2].positions.Add(new Vector2(x, y));
+                y += (int)popups[2].font.MeasureString("TP").Y + 10;
+            }
         }
         public void Update()
         {
