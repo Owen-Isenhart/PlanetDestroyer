@@ -231,7 +231,7 @@ namespace PlanetDestroyer
 
         public static SpriteFont getFont(int size) //0 for planet, 1 for store and upgrades, 2 for prestige + achievements, 5 for settings, 6 for popups
         { 
-            //probably a better way to do this but this was ez
+            //god why does xna not just have a way to programatically generate and change fonts 
             int result = 0;
             for (int i = 1900, x = 0; i > screenW; i -= 200, x++)
             {

@@ -80,16 +80,26 @@ namespace PlanetDestroyer
             popups[2].text.Add("Total Prestiges: 0");
 
             int y = popups[2].window.Y + popups[2].window.Height / 3;
-            int x = popups[2].window.Center.X - (int)popups[2].font.MeasureString("Total Planets Destroyed: 0").X - 12;
+            int x;
+
             for (int i = 0; i < 8; i++)
             {
+                if (i >= 4)
+                    x = popups[2].window.Center.X - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "000K").X;
+                else
+                    x = popups[2].window.Right - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "0000000K").X;
+
+                
+                
                 if (i != 0 && i % 4 == 0)
                 {
                     y = popups[2].window.Y + popups[2].window.Height / 3;
-                    x = popups[2].window.Center.X;
                 }
                 popups[2].positions.Add(new Vector2(x, y));
+
                 y += (int)popups[2].font.MeasureString("TP").Y + 10;
+                
+
             }
         }
         public void Update()
