@@ -86,7 +86,7 @@ namespace PlanetDestroyer
                 if (i != 0 && i % 4 == 0)
                 {
                     y = popups[2].window.Y + popups[2].window.Height / 3;
-                    x = popups[2].window.Center.X + 12;
+                    x = popups[2].window.Center.X;
                 }
                 popups[2].positions.Add(new Vector2(x, y));
                 y += (int)popups[2].font.MeasureString("TP").Y + 10;
