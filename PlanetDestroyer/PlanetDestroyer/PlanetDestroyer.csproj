@@ -76,6 +76,7 @@
     <Compile Include="AchievementsScreen.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Button.cs" />
+    <Compile Include="Dropdown.cs" />
     <Compile Include="Explosion.cs" />
     <Compile Include="ModalPopup.cs" />
     <Compile Include="Money.cs" />

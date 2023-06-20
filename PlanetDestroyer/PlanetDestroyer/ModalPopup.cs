@@ -22,6 +22,7 @@ namespace PlanetDestroyer
         public List<Slider> sliders;
         public List<Vector2> positions;
         public List<string> text;
+        public List<Dropdown> dropdowns;
         public SpriteFont font;
         public ModalPopup()
         {
@@ -37,6 +38,7 @@ namespace PlanetDestroyer
             mouseInBounds = true;
             text = new List<string>();
             positions = new List<Vector2>();
+            dropdowns = new List<Dropdown>();
             font = Game1.getFont(6);
         }
         public void Update()
@@ -71,6 +73,10 @@ namespace PlanetDestroyer
             for (int i = 0; i < sliders.Count; i++)
             {
                 sliders[i].Update();
+            }
+            for (int i = 0; i < dropdowns.Count; i++)
+            {
+                dropdowns[i].Update();
             }
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -108,6 +114,10 @@ namespace PlanetDestroyer
             for (int i = 0; i < text.Count; i++)
             {
                 spriteBatch.DrawString(font, text[i], positions[i], Color.Black);
+            }
+            for (int i = 0; i < dropdowns.Count; i++)
+            {
+                dropdowns[i].Draw(spriteBatch);
             }
         }
     }

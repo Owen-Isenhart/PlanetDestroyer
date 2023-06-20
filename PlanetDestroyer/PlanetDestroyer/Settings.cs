@@ -50,7 +50,21 @@ namespace PlanetDestroyer
             popups[0].text.Add("Explosion Sounds"); popups[0].positions.Add(new Vector2(popups[0].buttons[2].Center.X - popups[0].font.MeasureString("Explosion Sounds").X / 2, popups[0].buttons[2].Y - popups[0].font.MeasureString("Explosion Sounds").Y - 10));
 
             //video
+            List<Rectangle> rects = new List<Rectangle>();
+            List<string> text = new List<string>();
+            for (int i = 0; i < 5; i++)
+            {
+                rects.Add(new Rectangle(popups[1].window.Center.X - popups[1].window.Width / 6 - popups[1].window.Width / 10, popups[1].window.Y + popups[1].window.Height / 3 + (popups[1].window.Width / 20 * i), popups[1].window.Width / 5, popups[1].window.Width / 20));
+                text.Add(i + "");
+            }
+            popups[1].dropdowns.Add(new Dropdown(rects, text));
+            popups[1].buttons.Add(new Rectangle(popups[1].window.Center.X + popups[1].window.Width / 6 - popups[1].window.Width / 10, rects[0].Y, popups[1].window.Width / 5, popups[1].window.Width / 20));
+            popups[1].buttonHovers.Add(false);
+            popups[1].buttonStates.Add(false);
 
+            popups[1].text.Add("Video"); popups[1].positions.Add(new Vector2(popups[1].window.Center.X - popups[1].font.MeasureString("Video").X / 2, popups[1].window.Y + 10));
+            popups[1].text.Add("Resolution"); popups[1].positions.Add(new Vector2(rects[0].Center.X - popups[1].font.MeasureString("Resolution").X / 2, rects[0].Y - popups[1].font.MeasureString("Resolution").Y - 10));
+            popups[1].text.Add("Performance"); popups[1].positions.Add(new Vector2(popups[1].buttons[0].Center.X - popups[1].font.MeasureString("Performance").X / 2, popups[1].buttons[0].Y - popups[1].font.MeasureString("Performance").Y - 10));
 
             //stats
         }
