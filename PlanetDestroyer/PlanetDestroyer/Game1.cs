@@ -69,17 +69,29 @@ namespace PlanetDestroyer
             graphics.ApplyChanges();
         }
 
-        public static void updateScreen(int w, int h)
+        public void updateScreen(int w, int h)
         {
             graphics.PreferredBackBufferWidth = w;
             graphics.PreferredBackBufferHeight = h;
             graphics.ApplyChanges();
             screenW = w;
             screenH = h;
+            //set window position
+            var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(this.Window.Handle);
+            form.Location = new System.Drawing.Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - screenW - 18) / 2, (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 80 - screenH) / 2);
+
             resizeComponents();
         }
         public static void resizeComponents()
         {
+            achievements.resizeComponents();
+            playScreen.resizeComponents();
+            store.resizeComponents();
+            prestige.resizeComponents();
+            upgrades.resizeComponents();
+            achievements.resizeComponents();
+            money.resizeComponents();
+            settings.resizeComponents();
 
         }
 
@@ -100,7 +112,8 @@ namespace PlanetDestroyer
             screenH = GraphicsDevice.Viewport.Height;
             scrollWheel = oldScrollWheel = mouse.ScrollWheelValue;
             var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(this.Window.Handle);
-            form.Location = new System.Drawing.Point(-7, 0);
+            form.Location = new System.Drawing.Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - screenW - 18) / 2, (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 80 - screenH) / 2);
+
             rnd = new Random();
             temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
             time = 0;
@@ -289,6 +302,8 @@ namespace PlanetDestroyer
             }
             store.DamagePlanet();
             settings.Update();
+            if (settings.resize)
+                updateScreen(settings.w, settings.h);
             if (time % 2 == 0)
                 planetTexture = playScreen.planet.UpdatePlanetTexture();
             //if (kb.IsKeyDown(Keys.Space) && oldKB.IsKeyUp(Keys.Space))

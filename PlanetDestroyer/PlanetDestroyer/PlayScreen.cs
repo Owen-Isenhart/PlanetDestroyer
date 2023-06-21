@@ -21,6 +21,11 @@ namespace PlanetDestroyer
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5)/2, Game1.screenH / 7, (int)(Game1.screenW / 2.5), Game1.screenH - Game1.screenH / 4);
             planet = new Planet(1);
         }
+        public void resizeComponents()
+        {
+            border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 7, (int)(Game1.screenW / 2.5), Game1.screenH - Game1.screenH / 4);
+            planet.resizeComponents();
+        }
         public void Update()
         {
             planet.Update();

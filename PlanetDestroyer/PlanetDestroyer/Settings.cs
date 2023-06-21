@@ -16,6 +16,8 @@ namespace PlanetDestroyer
         public Rectangle border;
         public List<Button> buttons;
         public List<ModalPopup> popups;
+        public int w, h;
+        public bool resize;
         public Settings()
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 7 + Game1.screenH - Game1.screenH / 4 + 1, (int)(Game1.screenW / 2.5), Game1.screenH / 7 - 1);
@@ -28,7 +30,83 @@ namespace PlanetDestroyer
                 buttons.Add(new Button(new Rectangle(border.X + border.Width / 15 + border.Width / 3 * i, border.Y + 25, border.Width / 5, 50), texts[i]));
             }
             setupPopups();
+            resize = false;
         }
+        public void resizeComponents()
+        {
+            resize = false;
+            border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 7 + Game1.screenH - Game1.screenH / 4 + 1, (int)(Game1.screenW / 2.5), Game1.screenH / 7 - 1);
+            //popups.Clear();
+            for (int i = 0; i < 3; i++)
+            {
+                popups[i].resizeComponents();
+                buttons[i].rect = new Rectangle(border.X + border.Width / 15 + border.Width / 3 * i, border.Y + 25, border.Width / 5, 50);
+            }
+
+            //audio
+            int temp1 = popups[0].sliders[0].sliderValue;
+            int temp2 = popups[0].sliders[1].sliderValue;
+
+            popups[0].sliders[0] = (new Slider(new Rectangle(popups[0].window.X + popups[0].window.Width / 4, popups[0].window.Y + popups[0].window.Height / 5, popups[0].window.Width / 2, 1)));
+            popups[0].sliders[1] = (new Slider(new Rectangle(popups[0].window.X + popups[0].window.Width / 4, popups[0].window.Y + (int)(popups[0].window.Height / 2.2), popups[0].window.Width / 2, 1)));
+            popups[0].sliders[0].setByPercent(temp1);
+            popups[0].sliders[1].setByPercent(temp2);
+            for (int i = 0; i < 3; i++)
+            {
+                popups[0].buttons[i] = (new Rectangle(popups[0].window.X + (int)(popups[0].window.Width / 3 * (i + 1) - popups[0].window.Width / 4.69), popups[0].window.Y + (int)(popups[0].window.Height / 1.4), popups[0].window.Width / 10, popups[0].window.Width / 10));
+
+            }
+            popups[0].positions[0] = (new Vector2(popups[0].window.Center.X - popups[0].font.MeasureString("Audio").X / 2, popups[0].window.Y + 10));
+            popups[0].positions[1] = (new Vector2(popups[0].sliders[0].line.X - popups[0].font.MeasureString("Music").X - 15, popups[0].sliders[0].line.Y + popups[0].sliders[0].line.Height / 2 - popups[0].font.MeasureString("Music").Y / 2));
+            popups[0].positions[2] = (new Vector2(popups[0].sliders[1].line.X - popups[0].font.MeasureString("Sounds").X - 15, popups[0].sliders[1].line.Y + popups[0].sliders[1].line.Height / 2 - popups[0].font.MeasureString("Sounds").Y / 2));
+            popups[0].positions[3] = (new Vector2(popups[0].buttons[0].Center.X - popups[0].font.MeasureString("Cursor Sounds").X / 2, popups[0].buttons[0].Y - popups[0].font.MeasureString("Cursor Sounds").Y - 10));
+            popups[0].positions[4] = (new Vector2(popups[0].buttons[1].Center.X - popups[0].font.MeasureString("Clicking Sound").X / 2, popups[0].buttons[1].Y - popups[0].font.MeasureString("Clicking Sound").Y - 10));
+            popups[0].positions[5] = (new Vector2(popups[0].buttons[2].Center.X - popups[0].font.MeasureString("Explosion Sounds").X / 2, popups[0].buttons[2].Y - popups[0].font.MeasureString("Explosion Sounds").Y - 10));
+
+            //video
+            List<Rectangle> rects = new List<Rectangle>();
+            List<string> text = new List<string> { "Fullscreen", "1600 x 900", "1366 x 768", "1280 x 720", "1024 x 576" };
+            for (int i = 0; i < 6; i++)
+            {
+                rects.Add(new Rectangle(popups[1].window.Center.X - popups[1].window.Width / 6 - popups[1].window.Width / 10, popups[1].window.Y + (int)(popups[1].window.Height / 3.5) + (popups[1].window.Width / 20 * i), popups[1].window.Width / 5, popups[1].window.Width / 20));
+                //text.Add(i + "");
+            }
+            bool h = popups[1].dropdowns[0].hover;
+            bool o = popups[1].dropdowns[0].opened;
+            int hi = popups[1].dropdowns[0].hoverIndex;
+            int si = popups[1].dropdowns[0].selectedIndex;
+            popups[1].dropdowns[0] = (new Dropdown(rects, text));
+            popups[1].dropdowns[0].hover = h; popups[1].dropdowns[0].opened = o; popups[1].dropdowns[0].hoverIndex = hi; popups[1].dropdowns[0].selectedIndex = si;
+            popups[1].buttons[0] = (new Rectangle(popups[1].window.Center.X + popups[1].window.Width / 6 - popups[1].window.Width / 10, rects[0].Y, popups[1].window.Width / 5, popups[1].window.Width / 20));
+            popups[1].positions[0] = (new Vector2(popups[1].window.Center.X - popups[1].font.MeasureString("Video").X / 2, popups[1].window.Y + 10));
+            popups[1].positions[1] = (new Vector2(rects[0].Center.X - popups[1].font.MeasureString("Resolution").X / 2, rects[0].Y - popups[1].font.MeasureString("Resolution").Y - 10));
+            popups[1].positions[2] = (new Vector2(popups[1].buttons[0].Center.X - popups[1].font.MeasureString("Performance").X / 2, popups[1].buttons[0].Y - popups[1].font.MeasureString("Performance").Y - 10));
+
+            //stats
+            int y = popups[2].window.Y + popups[2].window.Height / 3;
+            int x;
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (i >= 4)
+                    x = popups[2].window.Right - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "0000K").X;
+                else
+                    x = popups[2].window.Center.X - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "000000K").X;
+
+
+
+                if (i != 0 && i % 4 == 0)
+                {
+                    y = popups[2].window.Y + popups[2].window.Height / 3;
+                }
+                popups[2].positions.Add(new Vector2(x, y));
+
+                y += (int)popups[2].font.MeasureString("TP").Y + 10;
+
+
+            }
+        }
+
         public void setupPopups()
         {
             //audio
@@ -51,7 +129,7 @@ namespace PlanetDestroyer
 
             //video
             List<Rectangle> rects = new List<Rectangle>();
-            List<string> text = new List<string> { "1920 x 1080", "1600 x 900", "1366 x 768", "1280 x 720", "1024 x 576" };
+            List<string> text = new List<string> { "Fullscreen", "1600 x 900", "1366 x 768", "1280 x 720", "1024 x 576" };
             for (int i = 0; i < 6; i++)
             {
                 rects.Add(new Rectangle(popups[1].window.Center.X - popups[1].window.Width / 6 - popups[1].window.Width / 10, popups[1].window.Y + (int)(popups[1].window.Height / 3.5) + (popups[1].window.Width / 20 * i), popups[1].window.Width / 5, popups[1].window.Width / 20));
@@ -104,6 +182,7 @@ namespace PlanetDestroyer
         }
         public void Update()
         {
+            resize = false;
             int count = 0;
             for (int i = 0; i < 3; i++)
             {
@@ -132,21 +211,21 @@ namespace PlanetDestroyer
             {
 
             }
-            if (popups[1].active)
+            if (popups[1].active && popups[1].dropdowns[0].newIndex)
             {
-                if (!popups[1].dropdowns[0].opened)
+                resize = true;
+                if (popups[1].dropdowns[0].selectedIndex == 0)
                 {
-                    if (popups[1].dropdowns[0].selectedIndex == 0)
-                    {
-                        Game1.updateScreen(1920, 1080);
+                    w = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 5;
+                    h = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 80;
                         
-                    }
-                    else if (popups[1].dropdowns[0].selectedIndex == 1)
-                    {
-                        Game1.updateScreen(1600, 900);
-                        
-                    }
                 }
+                else if (popups[1].dropdowns[0].selectedIndex == 1)
+                {
+                    w = 1600;
+                    h = 900;
+                }
+                
             }
             if (popups[2].active)
                 UpdateStats();

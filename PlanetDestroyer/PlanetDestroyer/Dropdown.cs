@@ -15,7 +15,7 @@ namespace PlanetDestroyer
     {
         public List<Rectangle> rect;
         public List<string> options;
-        public bool hover, opened;
+        public bool hover, opened, newIndex;
         public int hoverIndex, selectedIndex;
         SpriteFont font;
         public Dropdown (List<Rectangle> pos, List<string> o)
@@ -26,11 +26,13 @@ namespace PlanetDestroyer
             opened = false;
             hoverIndex = 0;
             selectedIndex = 0;
+            newIndex = false;
             font = Game1.getFont(6);
         }
+        
         public void Update()
         {
-
+            newIndex = false;
             for (int i = 0; i < rect.Count; i++)
             {
                 if (!opened && i == 0)
@@ -81,6 +83,7 @@ namespace PlanetDestroyer
                     selectedIndex = hoverIndex - 1;
                     opened = false;
                     hover = false;
+                    newIndex = true;
                 }
             }
 

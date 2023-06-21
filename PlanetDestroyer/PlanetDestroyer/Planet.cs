@@ -44,6 +44,12 @@ namespace PlanetDestroyer
             totalDestroyed = 0;
             totalClicks = 0;
         }
+        public void resizeComponents()
+        {
+            rect = new Rectangle(Game1.screenW / 2 - Game1.screenW / 5 / 2, Game1.screenH / 2 - Game1.screenW / 5 / 3, Game1.screenW / 5, Game1.screenW / 5);
+            font = Game1.getFont(0);
+            textSize = font.MeasureString(text);
+        }
 
         public void Reset()
         {

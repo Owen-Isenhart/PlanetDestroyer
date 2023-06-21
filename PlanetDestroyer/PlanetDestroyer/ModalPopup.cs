@@ -41,6 +41,14 @@ namespace PlanetDestroyer
             dropdowns = new List<Dropdown>();
             font = Game1.getFont(6);
         }
+        public void resizeComponents()
+        {
+            fullScreen = new Rectangle(0, 0, Game1.screenW, Game1.screenH);
+            window = new Rectangle(Game1.screenW / 3, Game1.screenH / 3, Game1.screenW / 3, Game1.screenH / 3);
+            exit = new Rectangle(window.Right - 25, window.Y + 5, 20, 20);
+            //resize actual buttons and sliders and stuff
+        }
+
         public void Update()
         {
             if (Game1.mouseRect.Intersects(exit))

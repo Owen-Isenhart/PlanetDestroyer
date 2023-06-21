@@ -39,7 +39,24 @@ namespace PlanetDestroyer
             popupRect.Height = 110;
             totalUpgrades = 0;
         }
-        
+        public void resizeComponents()
+        {
+            font = Game1.getFont(1);
+            border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
+            int diff = (int)(border.Width - font.MeasureString("UPGRADES").X);
+            titlePos = new Vector2(border.X + diff / 2, border.Y + font.MeasureString("UPGRADES").Y / 2);
+            rects = new List<Rectangle>();
+            textures = new List<Texture2D> { Game1.clickUpgrade, Game1.shipUpgrade, Game1.ballUpgrade, Game1.spikyUpgrade };
+            hoveringIndex = -1;
+
+            for (int i = 0; i < 4; i++)
+            {
+                rects.Add(new Rectangle(border.X + (border.Width / 9 * i * 2) + border.Width / 12, border.Center.Y - border.Width / 18, border.Width / 6, border.Width / 6));
+            }
+            popupRect.Y = rects[0].Bottom + 10;
+            popupRect.Width = 180;
+            popupRect.Height = 110;
+        }
         public void Update()
         {
             for (int i = 0; i < rects.Count; i++)

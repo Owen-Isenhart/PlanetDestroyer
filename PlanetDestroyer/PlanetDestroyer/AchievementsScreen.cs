@@ -26,7 +26,6 @@ namespace PlanetDestroyer
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, Game1.screenH / 2 + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             //achievements = new HashSet<Achievement>();
             rects = organizeRects(60);
-            populateAchievements();
             List<Texture2D> temp = new List<Texture2D>() ;
             Texture2D tex = Game1.questionMark;
             List<Color> colors = Enumerable.Repeat(Color.White, rects.Count).ToList();
@@ -54,17 +53,39 @@ namespace PlanetDestroyer
             font = Game1.getFont(2);
             titlePos = textPosition();
         }
-        public void populateAchievements()
+        public void resizeComponents()
         {
-            //alternate planets destroyed, money collected, and things bought in shop
-            //List<Rectangle> rects = organizeRects(15);
-            //change this to a for loop
-            //for (int i = 0; i < rects.Count; i++)
-            //{
-                //achievements.Add(new Achievement("Destroy 5 Planets", 1, rects[i]));
-            //}
-            
+            border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, Game1.screenH / 2 + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
+            //achievements = new HashSet<Achievement>();
+            rects = organizeRects(60);
+            List<Texture2D> temp = new List<Texture2D>();
+            Texture2D tex = Game1.questionMark;
+            List<Color> colors = Enumerable.Repeat(Color.White, rects.Count).ToList();
+            List<string> sTemp = new List<string>();
+            for (int i = 0; i < rects.Count; i++)
+            {
+                if (i % 5 == 0)
+                {
+                    if (tex == Game1.checkMark)
+                    {
+                        tex = Game1.questionMark;
+                    }
+
+                    else
+                    {
+                        tex = Game1.checkMark;
+                    }
+
+                }
+
+                sTemp.Add(i + "");
+                temp.Add(tex);
+            }
+            grid = new ScrollView(border, null, rects, temp, colors, sTemp, 5);
+            font = Game1.getFont(2);
+            titlePos = textPosition();
         }
+        
         public List<Rectangle> organizeRects(int amnt) //have to change this to reset after 3 rows
         {
             List<Rectangle> list = new List<Rectangle>();

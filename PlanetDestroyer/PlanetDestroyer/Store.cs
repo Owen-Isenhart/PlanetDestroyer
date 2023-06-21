@@ -71,6 +71,47 @@ namespace PlanetDestroyer
             grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
             totalShips = 0;
         }
+        public void resizeComponents()
+        {
+            storeBorder = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, (int)(Game1.screenH / 1.5));
+            font = Game1.getFont(1);
+            textures = new Texture2D[] { Game1.shipSheet, Game1.ballShip, Game1.spikyShip };
+            int diff = (int)(storeBorder.Width - font.MeasureString("STORE").X);
+            titlePos = new Vector2(storeBorder.X + diff / 2, storeBorder.Y + font.MeasureString("STORE").Y / 2);
+            List<string> sTemp = new List<string>();
+            List<Rectangle> t = organizeRects(12);
+            List<Texture2D> temp = new List<Texture2D>();
+            colors = new List<Color>();
+            Texture2D tex = Game1.spikyShip;
+            for (int i = 0; i < t.Count; i++)
+            {
+                if (tex == Game1.ballShip)
+                {
+                    tex = Game1.spikyShip;
+                    colors.Add(new Color(255 - (i / 3) * 100, 255, 255 - (i / 3) * 100));
+                    int index = 1 + (i / 3);
+                    sTemp.Add("Laser Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps");
+                }
+                else if (tex == Game1.shipSheet)
+                {
+                    tex = Game1.ballShip;
+                    colors.Add(new Color(255 - (i / 3) * 100, 255 - (i / 3) * 100, 255));
+                    int index = 1 + (i / 3);
+                    sTemp.Add("Gunner Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps");
+                }
+                else
+                {
+                    tex = Game1.shipSheet;
+                    colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
+                    int index = 1 + (i / 3);
+                    sTemp.Add("Missile Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps");
+                }
+
+
+                temp.Add(tex);
+            }
+            grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
+        }
         public Rectangle calculateInitRect(int i)
         {
             return new Rectangle(Game1.playScreen.planet.rect.Center.X - 40, Game1.playScreen.planet.rect.Center.Y + (i * 25) - Game1.playScreen.planet.rect.Height / 8, Game1.screenW / 25, Game1.screenW / 25);

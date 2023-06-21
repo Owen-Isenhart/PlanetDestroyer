@@ -40,6 +40,16 @@ namespace PlanetDestroyer
             font = Game1.getFont(2);
             totalPrestiges = 0;
         }
+        public void resizeComponents()
+        {
+            prestigeBorder = new Rectangle(0, Game1.store.storeBorder.Bottom + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH - Game1.store.storeBorder.Bottom);
+            for (int i = 0; i < 3; i++)
+            {
+                prestiges[i].rect = new Rectangle(prestigeBorder.X + (int)(prestigeBorder.Width / 5.8) + prestigeBorder.Width / 4 * i, prestigeBorder.Y + prestigeBorder.Height / 3 + 15, (int)(prestigeBorder.Width / 5.8), (int)(prestigeBorder.Width / 5.8));
+                //confirmations[i].resizeComponents();
+            }
+            font = Game1.getFont(2);
+        }
         public void Update()
         {
             int count = 0;

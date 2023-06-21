@@ -16,6 +16,7 @@ namespace PlanetDestroyer
         public Rectangle knob, line;
         public bool knobHeld, mouseInBounds, hover;
         public int sliderValue;
+        SpriteFont font;
         public Slider(Rectangle pos)
         {
             line = new Rectangle(pos.X, pos.Y, Game1.screenW / 6, 5);
@@ -24,6 +25,13 @@ namespace PlanetDestroyer
             hover = false;
             mouseInBounds = true;
             sliderValue = 100;
+            font = Game1.getFont(6);
+        }
+        public void setByPercent(int value)
+        {
+            sliderValue = value;
+            knob.Y = line.Y - 6;
+            knob.X = (((line.Right - line.X - knob.Width) * value) / 100) + line.X;
         }
         public void Update()
         {
@@ -39,6 +47,13 @@ namespace PlanetDestroyer
                     knob.X = line.X;
                 else if (knob.X > line.Right - knob.Width)
                     knob.X = line.Right - knob.Width;
+                //sliderValue = (knob.X - line.X) / (line.Width / 100);
+                double min = (knob.X - line.X);
+                double range = (line.Right - line.X - knob.Width);
+                sliderValue = (int)(100 * (min / range));
+                //setByPercent(sliderValue);
+                //if (sliderValue > 100)
+                    //Console.WriteLine("how");
             }
 
             if (knobHeld && Game1.mouse.LeftButton == ButtonState.Released)
@@ -63,6 +78,7 @@ namespace PlanetDestroyer
                 spriteBatch.Draw(Game1.whitePixel, knob, Color.Green);
             else
                 spriteBatch.Draw(Game1.whitePixel, knob, Color.DarkGreen);
+            spriteBatch.DrawString(font, sliderValue + "%", new Vector2(knob.Center.X - font.MeasureString(sliderValue + "%").X / 2, knob.Bottom), Color.Black);
         }
     }
 }
