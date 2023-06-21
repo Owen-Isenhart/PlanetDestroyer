@@ -19,6 +19,7 @@ namespace PlanetDestroyer
         public List<Texture2D> textures;
         public int hoveringIndex;
         public SpriteFont font;
+        public static int totalUpgrades;
         public Upgrades() : base()
         {
             font = Game1.getFont(1);
@@ -36,6 +37,7 @@ namespace PlanetDestroyer
             popupRect.Y = rects[0].Bottom + 10;
             popupRect.Width = 180;
             popupRect.Height = 110;
+            totalUpgrades = 0;
         }
         
         public void Update()

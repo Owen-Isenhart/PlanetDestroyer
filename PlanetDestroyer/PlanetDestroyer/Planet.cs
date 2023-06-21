@@ -20,6 +20,7 @@ namespace PlanetDestroyer
         public string text;
         public Vector2 textSize;
         public SpriteFont font;
+        public static int totalDestroyed, totalClicks;
 
         public Planet(int i) //index increases linearly, as does the amount of hits to blow up the planet
         {
@@ -40,6 +41,8 @@ namespace PlanetDestroyer
                 Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
             }
             Game1.planetTexture = PlanetTextureGeneration();
+            totalDestroyed = 0;
+            totalClicks = 0;
         }
 
         public void Reset()
@@ -182,6 +185,7 @@ namespace PlanetDestroyer
                     {
                         explosions.Add(new Explosion(rect, "large"));
                         explosions[explosions.Count - 1].framesInbetween = 9;
+                        Game1.money.IncreaseMoney(index);
                     }
                     time--;
                 }
@@ -196,6 +200,7 @@ namespace PlanetDestroyer
                 {
                     Health--;
                     explosions.Add(new Explosion(new Rectangle(Game1.mouseRect.X - 30, Game1.mouseRect.Y - 20, 40, 40), "small"));
+                    totalClicks++;
                     //ClickAnimation();
                 }
             }

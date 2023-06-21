@@ -16,7 +16,7 @@ namespace PlanetDestroyer
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
+        static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         public static int screenW, screenH;
@@ -39,11 +39,11 @@ namespace PlanetDestroyer
         //public Planet planet;
         public static PlayScreen playScreen;
         public static Store store;
-        public Prestige prestige;
-        public Upgrades upgrades;
-        public AchievementsScreen achievements;
-        public Money money;
-        public Settings settings;
+        public static Prestige prestige;
+        public static Upgrades upgrades;
+        public static AchievementsScreen achievements;
+        public static Money money;
+        public static Settings settings;
 
         public static int time, planetGrit;
 
@@ -53,6 +53,8 @@ namespace PlanetDestroyer
         public static Texture2D explosionsSheet;
 
         public static bool activeModal;
+
+        public static GameTime gT;
 
         public Game1()
         {
@@ -65,6 +67,20 @@ namespace PlanetDestroyer
 
             this.IsMouseVisible = true;
             graphics.ApplyChanges();
+        }
+
+        public static void updateScreen(int w, int h)
+        {
+            graphics.PreferredBackBufferWidth = w;
+            graphics.PreferredBackBufferHeight = h;
+            graphics.ApplyChanges();
+            screenW = w;
+            screenH = h;
+            resizeComponents();
+        }
+        public static void resizeComponents()
+        {
+
         }
 
         /// <summary>
@@ -117,6 +133,7 @@ namespace PlanetDestroyer
             explosionRects["large"] = loadExplosions("large");
             planetGrit = rnd.Next(5, 100);
             activeModal = false;
+            gT = new GameTime();
             base.Initialize();
         }
 
@@ -278,10 +295,10 @@ namespace PlanetDestroyer
             //{
             //    planetGrit = rnd.Next(5, 100);
             //    temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
-                
+
             //    planetTexture = planet.PlanetTextureGeneration();
             //}
-                
+            gT = gameTime;
             time++;
             base.Update(gameTime);
         }

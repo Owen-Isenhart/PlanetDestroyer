@@ -51,11 +51,11 @@ namespace PlanetDestroyer
 
             //video
             List<Rectangle> rects = new List<Rectangle>();
-            List<string> text = new List<string>();
-            for (int i = 0; i < 5; i++)
+            List<string> text = new List<string> { "1920 x 1080", "1600 x 900", "1366 x 768", "1280 x 720", "1024 x 576" };
+            for (int i = 0; i < 6; i++)
             {
-                rects.Add(new Rectangle(popups[1].window.Center.X - popups[1].window.Width / 6 - popups[1].window.Width / 10, popups[1].window.Y + popups[1].window.Height / 3 + (popups[1].window.Width / 20 * i), popups[1].window.Width / 5, popups[1].window.Width / 20));
-                text.Add(i + "");
+                rects.Add(new Rectangle(popups[1].window.Center.X - popups[1].window.Width / 6 - popups[1].window.Width / 10, popups[1].window.Y + (int)(popups[1].window.Height / 3.5) + (popups[1].window.Width / 20 * i), popups[1].window.Width / 5, popups[1].window.Width / 20));
+                //text.Add(i + "");
             }
             popups[1].dropdowns.Add(new Dropdown(rects, text));
             popups[1].buttons.Add(new Rectangle(popups[1].window.Center.X + popups[1].window.Width / 6 - popups[1].window.Width / 10, rects[0].Y, popups[1].window.Width / 5, popups[1].window.Width / 20));
@@ -69,7 +69,7 @@ namespace PlanetDestroyer
             //stats
             popups[2].text.Add("Stats"); popups[2].positions.Add(new Vector2(popups[2].window.Center.X - popups[2].font.MeasureString("Stats").X / 2, popups[2].window.Y + 10));
             
-            popups[2].text.Add("Total Playtime: 0");
+            popups[2].text.Add("Total Playtime (hrs): 0");
             popups[2].text.Add("Total Money Earned: 0");
             popups[2].text.Add("Total Money Spent: 0");
             popups[2].text.Add("Total Ships Bought: 0");
@@ -85,12 +85,12 @@ namespace PlanetDestroyer
             for (int i = 0; i < 8; i++)
             {
                 if (i >= 4)
-                    x = popups[2].window.Center.X - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "000K").X;
+                    x = popups[2].window.Right - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "0000K").X;
                 else
-                    x = popups[2].window.Right - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "0000000K").X;
+                    x = popups[2].window.Center.X - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "000000K").X;
 
-                
-                
+
+
                 if (i != 0 && i % 4 == 0)
                 {
                     y = popups[2].window.Y + popups[2].window.Height / 3;
@@ -127,7 +127,100 @@ namespace PlanetDestroyer
             {
                 Game1.activeModal = false;
             }
+
+            if (popups[0].active)
+            {
+
+            }
+            if (popups[1].active)
+            {
+                if (!popups[1].dropdowns[0].opened)
+                {
+                    if (popups[1].dropdowns[0].selectedIndex == 0)
+                    {
+                        Game1.updateScreen(1920, 1080);
+                        
+                    }
+                    else if (popups[1].dropdowns[0].selectedIndex == 1)
+                    {
+                        Game1.updateScreen(1600, 900);
+                        
+                    }
+                }
+            }
+            if (popups[2].active)
+                UpdateStats();
         }
+        public void UpdateStats()
+        {
+            double hours = Math.Round(Game1.gT.TotalGameTime.TotalMinutes / 60, 1);
+            string hrs = hours.ToString();
+            if (hours > 999)
+            {
+                hours = Math.Round(hours / 1000, 1);
+                hrs = ((int)hours).ToString() + "k";
+            }
+            double money = Money.lifetimeMoney;
+            string mny = money.ToString();
+            if (money > 999)
+            {
+                money = Math.Round(money / 1000, 1);
+                mny = ((int)money).ToString() + "k";
+            }
+            double spent = Money.lifetimeSpent;
+            string spt = spent.ToString();
+            if (spent > 999)
+            {
+                spent = Math.Round(spent / 1000, 1);
+                spt = ((int)spent).ToString() + "k";
+            }
+            double ships = Store.totalShips;
+            string sps = ships.ToString();
+            if (ships > 999)
+            {
+                ships = Math.Round(ships / 1000, 1);
+                sps = ((int)ships).ToString() + "k";
+            }
+            double destroyed = Planet.totalDestroyed;
+            string dest = destroyed.ToString();
+            if (destroyed > 999)
+            {
+                destroyed = Math.Round(destroyed / 1000, 1);
+                dest = ((int)destroyed).ToString() + "k";
+            }
+            double clicks = Planet.totalClicks;
+            string cls = clicks.ToString();
+            if (clicks > 999)
+            {
+                clicks = Math.Round(clicks / 1000, 1);
+                cls = ((int)clicks).ToString() + "k";
+            }
+            double upgrades = Upgrades.totalUpgrades;
+            string upgs = upgrades.ToString();
+            if (upgrades > 999)
+            {
+                upgrades = Math.Round(upgrades / 1000, 1);
+                upgs = ((int)upgrades).ToString() + "k";
+            }
+            double prestiges = Prestige.totalPrestiges;
+            string prest = prestiges.ToString();
+            if (prestiges > 999)
+            {
+                prestiges = Math.Round(prestiges / 1000, 1);
+                prest = ((int)prestiges).ToString() + "k";
+            }
+
+            popups[2].text[1] = "Total Playtime (hrs): " + hrs; //done
+            popups[2].text[2] = "Total Money Earned: " + mny;
+            popups[2].text[3] = "Total Money Spent: " + spt;
+            popups[2].text[4] = "Total Ships Bought: " + sps;
+            popups[2].text[5] = "Total Planets Destroyed: " + dest;
+            popups[2].text[6] = "Total Planet Clicks: " + cls; //done
+            popups[2].text[7] = "Total Upgrades Bought: " + upgs;
+            popups[2].text[8] = "Total Prestiges: " + prest;
+
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Game1.pixel, border, Color.White);

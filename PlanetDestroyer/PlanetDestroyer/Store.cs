@@ -22,6 +22,7 @@ namespace PlanetDestroyer
         public Texture2D[] textures;
         public SpriteFont font;
         public Vector2 titlePos;
+        public static int totalShips;
         //prestige stuff
 
 
@@ -68,7 +69,7 @@ namespace PlanetDestroyer
                 temp.Add(tex);
             }
             grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
-            
+            totalShips = 0;
         }
         public Rectangle calculateInitRect(int i)
         {

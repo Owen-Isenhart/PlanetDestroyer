@@ -19,6 +19,7 @@ namespace PlanetDestroyer
         public PrestigeItem[] prestiges;
         public Rectangle prestigeBorder;
         public SpriteFont font;
+        public static int totalPrestiges;
         public Prestige() : base()
         {
             prestigeBorder = new Rectangle(0, Game1.store.storeBorder.Bottom + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH - Game1.store.storeBorder.Bottom);
@@ -37,6 +38,7 @@ namespace PlanetDestroyer
             popupRect.Width = 180;
             popupRect.Height = 80;
             font = Game1.getFont(2);
+            totalPrestiges = 0;
         }
         public void Update()
         {
