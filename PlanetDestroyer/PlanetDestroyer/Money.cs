@@ -44,8 +44,8 @@ namespace PlanetDestroyer
         public void resizeComponents()
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, 0, (int)(Game1.screenW / 2.5), Game1.screenH / 7 - 1);
-            moneyRect = new Rectangle(border.X + border.Width / 10, border.Height / 4, 71, 71);
-            cometRect = new Rectangle(border.Right - border.Width / 5, moneyRect.Y - 10, 75, 75);
+            moneyRect = new Rectangle(border.X + border.Width / 10, border.Height / 4, border.Width / 10, border.Width / 10);
+            cometRect = new Rectangle(border.Right - border.Width / 5, moneyRect.Y - 10, 4 + border.Width / 10, 4 + border.Width / 10);
             popup = new Rectangle(0, moneyRect.Bottom, border.Width / 3, border.Height / 2 + border.Height / 5);
         }
         public void Update()

@@ -35,12 +35,13 @@ namespace PlanetDestroyer
                 rects.Add(new Rectangle(border.X + (border.Width / 9 * i * 2) + border.Width / 12, border.Center.Y - border.Width / 18, border.Width / 6, border.Width / 6));
             }
             popupRect.Y = rects[0].Bottom + 10;
-            popupRect.Width = 180;
-            popupRect.Height = 110;
+            popupRect.Width = border.Width / 3;
+            popupRect.Height = border.Height / 5;
             totalUpgrades = 0;
         }
         public void resizeComponents()
         {
+            
             font = Game1.getFont(1);
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             int diff = (int)(border.Width - font.MeasureString("UPGRADES").X);
@@ -54,8 +55,8 @@ namespace PlanetDestroyer
                 rects.Add(new Rectangle(border.X + (border.Width / 9 * i * 2) + border.Width / 12, border.Center.Y - border.Width / 18, border.Width / 6, border.Width / 6));
             }
             popupRect.Y = rects[0].Bottom + 10;
-            popupRect.Width = 180;
-            popupRect.Height = 110;
+            popupRect.Width = border.Width / 3;
+            popupRect.Height = border.Height / 5;
         }
         public void Update()
         {

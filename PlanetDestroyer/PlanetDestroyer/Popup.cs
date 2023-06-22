@@ -19,7 +19,7 @@ namespace PlanetDestroyer
         public bool shown;
         public Popup()
         {
-            popupRect = new Rectangle(0, 0, 250, 150);
+            popupRect = new Rectangle(0, 0, Game1.screenW / 7, Game1.screenH / 8);
             shown = false;
             text = "";
             orientation = "";
