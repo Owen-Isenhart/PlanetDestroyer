@@ -14,14 +14,17 @@ namespace PlanetDestroyer
     public class Store
     {
         public Rectangle storeBorder;
-        public List<StoreItem> items;
+        public List<List<StoreItem>> items;
         public List<int> indexes;
         public List<Color> colors;
         public ScrollView grid;
         public int totalDmg;
         public Texture2D[] textures;
+        public List<Texture2D> texs;
         public SpriteFont font;
         public Vector2 titlePos;
+        public List<int> widths;
+        public List<int> heights;
         public static int totalShips;
         //prestige stuff
 
@@ -29,7 +32,11 @@ namespace PlanetDestroyer
         public Store()
         {
             storeBorder = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, (int)(Game1.screenH / 1.5));
-            items = new List<StoreItem>();
+            items = new List<List<StoreItem>>();
+            for (int j = 0; j < 5; j++)
+            {
+                items.Add(new List<StoreItem>());
+            }
             indexes = new List<int>();
             totalDmg = 0;
             font = Game1.getFont(1);
@@ -68,8 +75,11 @@ namespace PlanetDestroyer
                 
                 temp.Add(tex);
             }
+            texs = temp;
             grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
             totalShips = 0;
+            widths = new List<int> { Game1.screenW, 1600, 1366, 1280, 1024 };
+            heights = new List<int> { Game1.screenH, 900, 768, 720, 576 };
         }
         public void resizeComponents()
         {
@@ -111,24 +121,83 @@ namespace PlanetDestroyer
                 temp.Add(tex);
             }
             grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
-        }
-        public Rectangle calculateInitRect(int i)
-        {
-            return new Rectangle(Game1.playScreen.planet.rect.Center.X - 40, Game1.playScreen.planet.rect.Center.Y + (i * 25) - Game1.playScreen.planet.rect.Height / 8, Game1.screenW / 25, Game1.screenW / 25);
-            
-        }
-        
-        public int indexByTexture(Texture2D t, int temp)
-        {
-            for (int i = items.Count-1; i > -1; i--)
+            List<int> indexes = new List<int>();
+            for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].texture == t && items[i].index/3 == temp)
+                if (indexByTexture(textures[i%3], i) != -1)
                 {
-                    return i;
+                    indexes.Add(i);
                 }
             }
+
+            //OWEN, THIS IS YOU FROM THE PAST. THE EASIEST WAY TO DO THIS, EVEN THOUGH ITS DOGSHIT STUPID,
+            //IS TO CREATE COPYS OF THE ITEMS ARRAY FOR EACH RESOLUTION AND JUST ADD TO THEM LIKE THE REGULAR ONE
+
+            //List<StoreItem> itemsTemp = new List<StoreItem>();
+            //if (items.Count > 0)
+            //{
+                
+            //    //itemsTemp.Add(new StoreItem("ship", 0, calculateInitRect(0), tex, colors[0]));
+            //    for (int i = items.Count - 1, x = 0, c = 0; i > -1; i--, x++)
+            //    {
+            //        int row = x / 3;
+            //        Texture2D text = textures[i % 3];
+            //        int index = indexByTexture(text, row);
+
+            //        if (x == 0 && index == x)
+            //            itemsTemp.Add(new StoreItem("ship", 0, calculateInitRect(c), tex, colors[0]));
+            //        else if (index == -1)
+            //        {
+            //            x = -1;
+            //            c++;
+            //        }
+                        
+            //        else
+            //        {
+            //            StoreItem item = items[x].getClone();
+            //            items.Insert(x + 1, item);
+            //            items[x + 1].rect = items[x].positionNext();
+            //            items[x + 1].angleNext();
+            //        }
+            //        items = items.OrderByDescending(o => o.index).ToList(); //to get correct overlapping when drawn
+            //    }
+            //    items = itemsTemp;
+            //}
+            
+        }
+        public Rectangle calculateInitRect(int i, int w, int h)
+        {
+            //return new Rectangle(Game1.playScreen.planet.rect.Center.X - 40, Game1.playScreen.planet.rect.Center.Y + (i * 25) - Game1.playScreen.planet.rect.Height / 8, w / 25, h / 25);
+            return new Rectangle(w / 2 - 40, (int)(h / 1.7) + (i * (h / 30)) - Game1.playScreen.planet.rect.Height / 8, w / 28, w / 28);
+
+        }
+
+        public int indexByTexture(Texture2D t, int temp)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                for (int i = items[j].Count - 1; i > -1; i--)
+                {
+                    if (items[j][i].texture == t && items[j][i].index / 3 == temp)
+                    {
+                        return i;
+                    }
+                }
+            }
+            
             return -1;
         }
+        //public int firstIndexByTexture(Texture2D t, int temp)
+        //{
+        //    for (int i = 0; i < items.Count; i++)
+        //    {
+        //        if (items[i].texture == t && items[i].index / 3 == temp)
+        //        {
+        //            return i;
+        //        }
+        //    }
+        //    return -1;
+        //}
         public void populateStore()
         {
             List<Rectangle> rects = organizeRects(5);
@@ -157,7 +226,7 @@ namespace PlanetDestroyer
         public void DamagePlanet()
         {
             totalDmg = 0;
-            foreach (StoreItem item in items)
+            foreach (StoreItem item in items[0])
             {
                 totalDmg += item.dps;
             }
@@ -182,31 +251,45 @@ namespace PlanetDestroyer
                         int index = indexByTexture(tex, temp);
                         if (index != -1)
                         {
-                            StoreItem item = items[index].getClone();
-                            items.Insert(index + 1, item);
-                            items[index+1].rect = items[index].positionNext();
-                            items[index+1].angleNext();
+                            for (int j = 0; j < 5; j++)
+                            {
+                                StoreItem item = items[j][index].getClone(); //might need to switch
+                                items[j].Insert(index + 1, item);
+                                items[j][index + 1].rect = items[j][index].positionNext();
+                                items[j][index + 1].angleNext();
+
+                            }
+                            
                         }
                         else
                         {
-                            if (items.Count == 0)
-                                items.Add(new StoreItem("ship", i, calculateInitRect(i), tex, colors[i]));
+                            if (items[0].Count == 0)
+                            {
+                                for (int j = 0; j < 5; j ++)
+                                    items[j].Add(new StoreItem("ship", i, widths[j], calculateInitRect(i, widths[j], heights[j]), tex, colors[i]));
+                            }
+                                
                             else
                             {
-                                StoreItem item = items[0].getClone();
+                                for (int j = 0; j < 5; j++)
+                                {
+                                    StoreItem item = items[j][0].getClone();
 
-                                item.texture = tex;
-                                item.rect.Y += Game1.screenW / 75;
-                                item.index = i;
-                                item.color = colors[i];
-                                item.dps = (int)Math.Pow(i + 1, 2);
-                                items.Add(item);
+                                    item.texture = tex;
+                                    item.rect.Y += heights[j] / 45;
+                                    item.index = i;
+                                    item.color = colors[i];
+                                    item.dps = (int)Math.Pow(i + 1, 2);
+                                    items[j].Add(item);
+                                }
+                                
                             }
                         }
                         //items.Add(new StoreItem("ship", i, calculateInitRect(indexByTexture(tex)), tex));
                         //if (items.Count > 1)
                         //    items[items.Count - 1].angleNext(items[0].angleX, items[0].angleY, items[0].subX, items[0].subY);
-                        items = items.OrderByDescending(o => o.index).ToList(); //to get correct overlapping when drawn
+                        for (int j = 0; j < 5; j ++)
+                            items[j] = items[j].OrderByDescending(o => o.index).ToList(); //to get correct overlapping when drawn
                     }
 
                     //prestige stuff
@@ -237,7 +320,8 @@ namespace PlanetDestroyer
             spriteBatch.Draw(Game1.pixel, storeBorder, Color.Black);
             spriteBatch.DrawString(font, "STORE", titlePos, Color.White);
             grid.Draw(spriteBatch);
-            foreach (StoreItem item in items)
+            //int i = 0;
+            foreach (StoreItem item in items[Game1.settings.popups[1].dropdowns[0].selectedIndex])
             {
                 item.Update();
                 item.Draw(spriteBatch);

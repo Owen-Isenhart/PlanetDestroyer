@@ -20,7 +20,7 @@ namespace PlanetDestroyer
         public Rectangle rect, intersectRect;
         public Texture2D texture;
         public Color color;
-        public StoreItem(string n, int i, Rectangle r, Texture2D tex, Color c) : base("delayed-linear", 25, Game1.shipRects)
+        public StoreItem(string n, int i, int w, Rectangle r, Texture2D tex, Color c) : base("delayed-linear", 25, Game1.shipRects)
         {
             name = n;
             texture = tex;
@@ -34,7 +34,8 @@ namespace PlanetDestroyer
             angleX = (float)Math.PI;
             subX = true;
             subY = true;
-            dist = (int)(Game1.playScreen.planet.rect.Width*1.3);
+            //dist = (int)(Game1.playScreen.planet.rect.Width*1.3);
+            dist = w / 4;
             //dist = Game1.playScreen.planet.rect.Center.X - rect.Right;
             frameIndex = 2;
             framesInbetween = 13;

@@ -225,7 +225,22 @@ namespace PlanetDestroyer
                     w = 1600;
                     h = 900;
                 }
-                
+                else if (popups[1].dropdowns[0].selectedIndex == 2)
+                {
+                    w = 1366;
+                    h = 768;
+                }
+                else if (popups[1].dropdowns[0].selectedIndex == 3)
+                {
+                    w = 1280;
+                    h = 720;
+                }
+                else if (popups[1].dropdowns[0].selectedIndex == 4)
+                {
+                    w = 1024;
+                    h = 576;
+                }
+
             }
             if (popups[2].active)
                 UpdateStats();

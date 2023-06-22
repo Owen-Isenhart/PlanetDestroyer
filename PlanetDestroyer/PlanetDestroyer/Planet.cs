@@ -192,6 +192,7 @@ namespace PlanetDestroyer
                         explosions.Add(new Explosion(rect, "large"));
                         explosions[explosions.Count - 1].framesInbetween = 9;
                         Game1.money.IncreaseMoney(index);
+                        totalDestroyed++;
                     }
                     time--;
                 }
