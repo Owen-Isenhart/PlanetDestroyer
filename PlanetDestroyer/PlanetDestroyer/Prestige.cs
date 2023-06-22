@@ -35,8 +35,8 @@ namespace PlanetDestroyer
             prestiges[0] = new PrestigeItem(prestigeRects[0], prestigeTextures[0], 4, 4, 13);
             prestiges[1] = new PrestigeItem(prestigeRects[1], prestigeTextures[1], 3, 3, 9);
             prestiges[2] = new PrestigeItem(prestigeRects[2], prestigeTextures[2], 4, 4, 15);
-            popupRect.Width = 180;
-            popupRect.Height = 80;
+            popupRect.Width = prestigeBorder.Width / 3;
+            popupRect.Height = prestigeBorder.Height / 4;
             font = Game1.getFont(2);
             totalPrestiges = 0;
         }
@@ -49,6 +49,8 @@ namespace PlanetDestroyer
                 //confirmations[i].resizeComponents();
             }
             font = Game1.getFont(2);
+            popupRect.Width = prestigeBorder.Width / 3;
+            popupRect.Height = prestigeBorder.Height / 4;
         }
         public void Update()
         {
@@ -59,8 +61,8 @@ namespace PlanetDestroyer
                 if (prestiges[i].active)
                 {
                     count++;
-                    popupRect.X = prestigeRects[i].X + prestigeRects[i].Width / 2 - popupRect.Width / 2;
-                    popupRect.Y = prestigeRects[i].Bottom + 10;
+                    popupRect.X = prestiges[i].rect.X + prestiges[i].rect.Width / 2 - popupRect.Width / 2;
+                    popupRect.Y = prestiges[i].rect.Bottom + 10;
                     shown = true;
                 }
             }

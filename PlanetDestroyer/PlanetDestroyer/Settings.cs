@@ -27,7 +27,7 @@ namespace PlanetDestroyer
             for (int i = 0; i < 3; i++)
             {
                 popups.Add(new ModalPopup());
-                buttons.Add(new Button(new Rectangle(border.X + border.Width / 15 + border.Width / 3 * i, border.Y + 25, border.Width / 5, 50), texts[i]));
+                buttons.Add(new Button(new Rectangle(border.X + border.Width / 15 + border.Width / 3 * i, border.Center.Y - (int)(border.Height / 3.2), border.Width / 5, (int)(border.Height / 2.5)), texts[i]));
             }
             setupPopups();
             resize = false;
@@ -40,7 +40,8 @@ namespace PlanetDestroyer
             for (int i = 0; i < 3; i++)
             {
                 popups[i].resizeComponents();
-                buttons[i].rect = new Rectangle(border.X + border.Width / 15 + border.Width / 3 * i, border.Y + 25, border.Width / 5, 50);
+                buttons[i].rect = new Rectangle(border.X + border.Width / 15 + border.Width / 3 * i, border.Center.Y - (int)(border.Height / 3.2), border.Width / 5, (int)(border.Height / 2.5));
+                buttons[i].font = Game1.getFont(6);
             }
 
             //audio

@@ -20,7 +20,7 @@ namespace PlanetDestroyer
         public SpriteFont font;
         public Button(Rectangle r, string t)
         {
-            font = Game1.getFont(5);
+            font = Game1.getFont(6);
             rect = r;
             text = t;
             color = new Color(44, 44, 44);
