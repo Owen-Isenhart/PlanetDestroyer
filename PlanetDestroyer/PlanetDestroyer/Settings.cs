@@ -149,8 +149,8 @@ namespace PlanetDestroyer
             popups[2].text.Add("Stats"); popups[2].positions.Add(new Vector2(popups[2].window.Center.X - popups[2].font.MeasureString("Stats").X / 2, popups[2].window.Y + 10));
             
             popups[2].text.Add("Total Playtime (hrs): 0");
-            popups[2].text.Add("Total Money Earned: 0");
-            popups[2].text.Add("Total Money Spent: 0");
+            popups[2].text.Add("Total Money Earned: $");
+            popups[2].text.Add("Total Money Spent: $");
             popups[2].text.Add("Total Ships Bought: 0");
 
             popups[2].text.Add("Total Planets Destroyed: 0");
@@ -306,10 +306,10 @@ namespace PlanetDestroyer
             }
 
             popups[2].text[1] = "Total Playtime (hrs): " + hrs; //done
-            popups[2].text[2] = "Total Money Earned: " + mny;
-            popups[2].text[3] = "Total Money Spent: " + spt;
-            popups[2].text[4] = "Total Ships Bought: " + sps;
-            popups[2].text[5] = "Total Planets Destroyed: " + dest;
+            popups[2].text[2] = "Total Money Earned: $" + mny; //done
+            popups[2].text[3] = "Total Money Spent: $" + spt; //done
+            popups[2].text[4] = "Total Ships Bought: " + sps; //done
+            popups[2].text[5] = "Total Planets Destroyed: " + dest; //done
             popups[2].text[6] = "Total Planet Clicks: " + cls; //done
             popups[2].text[7] = "Total Upgrades Bought: " + upgs;
             popups[2].text[8] = "Total Prestiges: " + prest;

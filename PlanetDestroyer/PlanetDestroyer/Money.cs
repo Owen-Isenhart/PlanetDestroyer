@@ -29,14 +29,13 @@ namespace PlanetDestroyer
             cometRect = new Rectangle(border.Right - border.Width / 5, moneyRect.Y - 10, 4 + border.Width / 10, 4 + border.Width / 10);
             popup = new Rectangle(0, moneyRect.Bottom, border.Width / 3, border.Height / 2 + border.Height / 5);
             popupShown = false;
-            runAmount = lifeAmount = 500;
+            runAmount = lifeAmount = lifetimeMoney = 500;
             index = 1;
             comets = 0;
             deltaC = 0;
             multiplier = 1;
             deltaM = 0;
             repeat = true;
-            lifetimeMoney = 0;
             lifetimeSpent = 0;
             popupText = new string[] { "a", "b", "c" };
             font = Game1.getFont(6);

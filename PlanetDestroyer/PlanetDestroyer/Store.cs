@@ -232,6 +232,8 @@ namespace PlanetDestroyer
                     if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && unlocked[i] && Game1.money.runAmount >= prices[i])
                     {
                         Game1.money.runAmount -= prices[i];
+                        Money.lifetimeSpent += prices[i];
+                        totalShips++;
 
                         int temp = i / 3;
                         Texture2D tex = textures[i % 3];
