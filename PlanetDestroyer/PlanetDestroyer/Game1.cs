@@ -52,7 +52,7 @@ namespace PlanetDestroyer
 
         public static Texture2D explosionsSheet;
 
-        public static bool activeModal;
+        public static bool activeSettingsModal, activePrestigeModal;
 
         public static GameTime gT;
 
@@ -145,7 +145,8 @@ namespace PlanetDestroyer
             explosionRects["small"] = loadExplosions("small") ;
             explosionRects["large"] = loadExplosions("large");
             planetGrit = rnd.Next(5, 100);
-            activeModal = false;
+            activeSettingsModal = false;
+            activePrestigeModal = false;
             gT = new GameTime();
             base.Initialize();
         }
@@ -292,16 +293,24 @@ namespace PlanetDestroyer
 
             // TODO: Add your update logic here
             playScreen.Update();
-            if (!activeModal)
+            if (!activeSettingsModal && !activePrestigeModal)
             {
                 store.Update();
                 upgrades.Update();
                 achievements.Update();
                 money.Update();
                 prestige.Update();
+                settings.Update();
+            }
+            else if (!activeSettingsModal && activePrestigeModal)
+            {
+                prestige.Update();
+            }
+            else if (activeSettingsModal && !activePrestigeModal)
+            {
+                settings.Update();
             }
             store.DamagePlanet();
-            settings.Update();
             if (settings.resize)
                 updateScreen(settings.w, settings.h);
             if (time % 2 == 0)
@@ -330,10 +339,11 @@ namespace PlanetDestroyer
             spriteBatch.Begin();
             playScreen.Draw(spriteBatch);
             store.Draw(spriteBatch);
-            prestige.Draw(spriteBatch);
+            
             upgrades.Draw(spriteBatch);
             achievements.Draw(spriteBatch);
             money.Draw(spriteBatch);
+            prestige.Draw(spriteBatch);
             settings.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);

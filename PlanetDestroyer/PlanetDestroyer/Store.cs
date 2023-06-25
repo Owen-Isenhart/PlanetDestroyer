@@ -33,7 +33,7 @@ namespace PlanetDestroyer
 
         public Store()
         {
-            storeBorder = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, (int)(Game1.screenH / 1.5));
+            storeBorder = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, (int)(Game1.screenH / 1.6));
             items = new List<List<StoreItem>>();
 
             for (int j = 0; j < 5; j++)
@@ -45,7 +45,7 @@ namespace PlanetDestroyer
             font = Game1.getFont(1);
             textures = new Texture2D[] { Game1.shipSheet, Game1.ballShip, Game1.spikyShip };
             int diff = (int)(storeBorder.Width - font.MeasureString("STORE").X);
-            titlePos = new Vector2(storeBorder.X + diff / 2, storeBorder.Y + font.MeasureString("STORE").Y / 2);
+            titlePos = new Vector2(storeBorder.X + diff / 2, storeBorder.Y + font.MeasureString("STORE").Y / 4);
             List<string> sTemp = new List<string>();
             List<Rectangle> t = organizeRects(12);
             List<Texture2D> temp = new List<Texture2D>();
@@ -87,7 +87,6 @@ namespace PlanetDestroyer
             }
             unlocked[0] = true; //FINISH DOING THIS, USE IT TO SHADE THE GRID AND CHECK IN UPDATE
             
-            //priceOrLocked[0] = "$" + prices[0]; //NEED TO ADD SOMETHING TO SCROLLVIEW CLASS THAT LETS ME CHANGE THE POPUP TEXT, OR I COULD PARSE FOR "\N" AND ALTER THAT PART
             texs = temp;
             grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
             string[] text = grid.popups[0].text.Split('\n');
@@ -98,61 +97,61 @@ namespace PlanetDestroyer
         }
         public void resizeComponents()
         {
-            storeBorder = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, (int)(Game1.screenH / 1.5));
+            storeBorder = new Rectangle(0, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, (int)(Game1.screenH / 1.6));
             font = Game1.getFont(1);
             textures = new Texture2D[] { Game1.shipSheet, Game1.ballShip, Game1.spikyShip };
             int diff = (int)(storeBorder.Width - font.MeasureString("STORE").X);
-            titlePos = new Vector2(storeBorder.X + diff / 2, storeBorder.Y + font.MeasureString("STORE").Y / 2);
+            titlePos = new Vector2(storeBorder.X + diff / 2, storeBorder.Y + font.MeasureString("STORE").Y / 4);
             List<string> sTemp = new List<string>();
             List<Rectangle> t = organizeRects(12);
             List<Texture2D> temp = new List<Texture2D>();
             colors = new List<Color>();
             Texture2D tex = Game1.spikyShip;
+            priceOrLocked = new List<string>();
+            prices = new List<int>();
             for (int i = 0; i < t.Count; i++)
             {
+                prices.Add((int)Math.Pow((i + 1) * 2, 4));
+                if (unlocked[i])
+                    priceOrLocked.Add("$" + prices[i]);
+                else
+                    priceOrLocked.Add("LOCKED");
+
                 if (tex == Game1.ballShip)
                 {
                     tex = Game1.spikyShip;
                     colors.Add(new Color(255 - (i / 3) * 100, 255, 255 - (i / 3) * 100));
                     int index = 1 + (i / 3);
-                    sTemp.Add("Laser Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps");
+                    sTemp.Add("Laser Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
                 }
                 else if (tex == Game1.shipSheet)
                 {
                     tex = Game1.ballShip;
                     colors.Add(new Color(255 - (i / 3) * 100, 255 - (i / 3) * 100, 255));
                     int index = 1 + (i / 3);
-                    sTemp.Add("Gunner Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps");
+                    sTemp.Add("Gunner Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
                 }
                 else
                 {
                     tex = Game1.shipSheet;
                     colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
                     int index = 1 + (i / 3);
-                    sTemp.Add("Missile Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps");
+                    sTemp.Add("Missile Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
                 }
 
 
                 temp.Add(tex);
             }
             grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
-            List<int> indexes = new List<int>();
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (indexByTexture(textures[i%3], i) != -1)
-                {
-                    indexes.Add(i);
-                }
-            }
 
-            //OWEN, THIS IS YOU FROM THE PAST. THE EASIEST WAY TO DO THIS, EVEN THOUGH ITS DOGSHIT STUPID,
-            //IS TO CREATE COPYS OF THE ITEMS ARRAY FOR EACH RESOLUTION AND JUST ADD TO THEM LIKE THE REGULAR ONE
+
+
+
 
             
         }
         public Rectangle calculateInitRect(int i, int w, int h)
         {
-            //return new Rectangle(Game1.playScreen.planet.rect.Center.X - 40, Game1.playScreen.planet.rect.Center.Y + (i * 25) - Game1.playScreen.planet.rect.Height / 8, w / 25, h / 25);
             return new Rectangle(w / 2 - 40, (int)(h / 1.7) + (i * (h / 30)) - Game1.playScreen.planet.rect.Height / 8, w / 28, w / 28);
 
         }
@@ -172,17 +171,7 @@ namespace PlanetDestroyer
             
             return -1;
         }
-        //public int firstIndexByTexture(Texture2D t, int temp)
-        //{
-        //    for (int i = 0; i < items.Count; i++)
-        //    {
-        //        if (items[i].texture == t && items[i].index / 3 == temp)
-        //        {
-        //            return i;
-        //        }
-        //    }
-        //    return -1;
-        //}
+        
         public void populateStore()
         {
             List<Rectangle> rects = organizeRects(5);
@@ -192,9 +181,9 @@ namespace PlanetDestroyer
         {
             
             List<Rectangle> list = new List<Rectangle>();
-            if (storeBorder.Width >= 320)
+            if (storeBorder.Width >= 0)
             {
-                int y = storeBorder.Y + (int)(font.MeasureString("STORE").Y);
+                int y = storeBorder.Y + (int)(font.MeasureString("STORE").Y / 1.5);
                 for (int i = 0, x = 0; i < amnt; i++, x++)
                 {
                     if (i % 3 == 0)
@@ -324,13 +313,13 @@ namespace PlanetDestroyer
             spriteBatch.Draw(Game1.pixel, storeBorder, Color.Black);
             spriteBatch.DrawString(font, "STORE", titlePos, Color.White);
             grid.Draw(spriteBatch);
-            int i = 0;
+            //int i = 0;
             foreach (StoreItem item in items[Game1.settings.popups[1].dropdowns[0].selectedIndex])
             {
                 item.Update();
                 item.Draw(spriteBatch);
-                spriteBatch.DrawString(Game1.fonts[7], i + "", new Vector2(item.rect.X, item.rect.Y), Color.White);
-                i++;
+                //spriteBatch.DrawString(Game1.fonts[7], i + "", new Vector2(item.rect.X, item.rect.Y), Color.White);
+               // i++;
             }
 
 

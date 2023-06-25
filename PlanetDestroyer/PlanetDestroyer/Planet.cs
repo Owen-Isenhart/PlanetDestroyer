@@ -18,8 +18,8 @@ namespace PlanetDestroyer
         public Rectangle rect;
         public List<Explosion> explosions; //from clicking
         public string text;
-        public Vector2 textSize;
-        public SpriteFont font;
+        public Vector2 textSize, smallTextSize;
+        public SpriteFont font, smallFont;
         public static int totalDestroyed, totalClicks;
 
         public Planet(int i) //index increases linearly, as does the amount of hits to blow up the planet
@@ -33,7 +33,9 @@ namespace PlanetDestroyer
             time = 80;
             text = Health + " Hits";
             font = Game1.getFont(0);
+            smallFont = Game1.getFont(6);
             textSize = font.MeasureString(text);
+            smallTextSize = smallFont.MeasureString("dps: 0 hits/sec");
             Game1.planetGrit = Game1.rnd.Next(5, 50);
             Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
             while (Darken(Game1.temp) == Color.Black || Darken(Darken(Game1.temp)) == Color.Black)
@@ -203,7 +205,7 @@ namespace PlanetDestroyer
                 else text = Math.Round(Health) + " Hits";
                 textSize = font.MeasureString(text);
 
-                if (!Game1.activeModal && Game1.mouseRect.Intersects(rect) && IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
+                if (!Game1.activeSettingsModal && !Game1.activePrestigeModal && Game1.mouseRect.Intersects(rect) && IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                 {
                     Health--;
                     explosions.Add(new Explosion(new Rectangle(Game1.mouseRect.X - 30, Game1.mouseRect.Y - 20, 40, 40), "small"));
@@ -222,7 +224,8 @@ namespace PlanetDestroyer
                 }
             }
             //if (buffer != 5)
-                //ClickAnimation();
+            //ClickAnimation();
+            smallTextSize = smallFont.MeasureString("dps: " + Game1.store.totalDmg + " hits/sec");
         }
         public void ClickAnimation()
         {
@@ -253,8 +256,8 @@ namespace PlanetDestroyer
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Game1.planetTexture, rect, Color.White);
-            spriteBatch.DrawString(font, text, new Vector2(rect.X - (textSize.X - rect.Width) / 2, rect.Y - textSize.Y), Color.White);
-
+            spriteBatch.DrawString(font, text, new Vector2(rect.X - (textSize.X - rect.Width) / 2, rect.Y - textSize.Y - rect.Height / 10), Color.White);
+            spriteBatch.DrawString(smallFont, "dps: " + Game1.store.totalDmg + " hits/sec", new Vector2(rect.X - (smallTextSize.X - rect.Width) / 2, rect.Y - smallTextSize.Y - rect.Height / 18), Color.White);
             foreach (Explosion explosion in explosions)
                 explosion.Draw(spriteBatch);
         }

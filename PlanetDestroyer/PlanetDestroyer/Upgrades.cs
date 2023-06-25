@@ -25,18 +25,25 @@ namespace PlanetDestroyer
             font = Game1.getFont(1);
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH/2);
             int diff = (int)(border.Width - font.MeasureString("UPGRADES").X);
-            titlePos = new Vector2(border.X + diff / 2, border.Y + font.MeasureString("UPGRADES").Y/2);
+            titlePos = new Vector2(border.X + diff / 2, border.Y + font.MeasureString("UPGRADES").Y/4);
             rects = new List<Rectangle>();
             textures = new List<Texture2D> { Game1.clickUpgrade, Game1.shipUpgrade, Game1.ballUpgrade, Game1.spikyUpgrade };
             hoveringIndex = -1;
-
+            int x = border.Center.X - border.Width / 5 - border.Width/40;
+            int y = border.Center.Y - border.Width / 10;
             for (int i = 0; i < 4; i++)
             {
-                rects.Add(new Rectangle(border.X + (border.Width / 9 * i * 2) + border.Width / 12, border.Center.Y - border.Width / 18, border.Width / 6, border.Width / 6));
+                rects.Add(new Rectangle(x, y, border.Width / 5, border.Width / 5));
+                y += border.Width / 5 + border.Width / 20;
+                if (i == 1)
+                {
+                    x = border.Center.X + border.Width / 40;
+                    y = border.Center.Y - border.Width / 10;
+                }
             }
-            popupRect.Y = rects[0].Bottom + 10;
-            popupRect.Width = border.Width / 3;
-            popupRect.Height = border.Height / 5;
+            //popupRect.Y = rects[0].Bottom + 10;
+            popupRect.Width = Game1.screenW / 7;
+            popupRect.Height = Game1.screenH / 8;
             totalUpgrades = 0;
         }
         public void resizeComponents()
@@ -45,18 +52,26 @@ namespace PlanetDestroyer
             font = Game1.getFont(1);
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             int diff = (int)(border.Width - font.MeasureString("UPGRADES").X);
-            titlePos = new Vector2(border.X + diff / 2, border.Y + font.MeasureString("UPGRADES").Y / 2);
+            titlePos = new Vector2(border.X + diff / 2, border.Y + font.MeasureString("UPGRADES").Y / 4);
             rects = new List<Rectangle>();
             textures = new List<Texture2D> { Game1.clickUpgrade, Game1.shipUpgrade, Game1.ballUpgrade, Game1.spikyUpgrade };
             hoveringIndex = -1;
 
+            int x = border.Center.X - border.Width / 5 - border.Width / 40;
+            int y = border.Center.Y - border.Width / 10;
             for (int i = 0; i < 4; i++)
             {
-                rects.Add(new Rectangle(border.X + (border.Width / 9 * i * 2) + border.Width / 12, border.Center.Y - border.Width / 18, border.Width / 6, border.Width / 6));
+                rects.Add(new Rectangle(x, y, border.Width / 5, border.Width / 5));
+                y += border.Width / 5 + border.Width / 20;
+                if (i == 1)
+                {
+                    x = border.Center.X + border.Width / 40;
+                    y = border.Center.Y - border.Width / 10;
+                }
             }
-            popupRect.Y = rects[0].Bottom + 10;
-            popupRect.Width = border.Width / 3;
-            popupRect.Height = border.Height / 5;
+            //popupRect.Y = rects[0].Bottom + 10;
+            popupRect.Width = Game1.screenW / 7;
+            popupRect.Height = Game1.screenH / 8;
         }
         public void Update()
         {
@@ -65,7 +80,8 @@ namespace PlanetDestroyer
                 if (Game1.mouseRect.Intersects(rects[i]))
                 {
                     hoveringIndex = i;
-                    popupRect.X = rects[i].X + rects[i].Width / 2 - popupRect.Width / 2;
+                    popupRect.X = rects[i].X - popupRect.Width - 10;
+                    popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
                     shown = true;
                     break;
                 }

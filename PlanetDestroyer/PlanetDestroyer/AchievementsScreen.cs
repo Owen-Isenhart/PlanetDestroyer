@@ -89,7 +89,7 @@ namespace PlanetDestroyer
         public List<Rectangle> organizeRects(int amnt) //have to change this to reset after 3 rows
         {
             List<Rectangle> list = new List<Rectangle>();
-            if (border.Width >= 320)
+            if (border.Width >= 0)
             {
                 int y = border.Y + border.Height / 10;
                 //int x = 0;

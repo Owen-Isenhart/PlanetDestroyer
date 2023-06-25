@@ -16,8 +16,9 @@ namespace PlanetDestroyer
         public Rectangle border;
         public List<Button> buttons;
         public List<ModalPopup> popups;
-        public int w, h;
+        public int w, h, popupIndex;
         public bool resize;
+       
         public Settings()
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 7 + Game1.screenH - Game1.screenH / 4 + 1, (int)(Game1.screenW / 2.5), Game1.screenH / 7 - 1);
@@ -31,6 +32,7 @@ namespace PlanetDestroyer
             }
             setupPopups();
             resize = false;
+            popupIndex = 0;
         }
         public void resizeComponents()
         {
@@ -84,9 +86,39 @@ namespace PlanetDestroyer
             popups[1].positions[2] = (new Vector2(popups[1].buttons[0].Center.X - popups[1].font.MeasureString("Performance").X / 2, popups[1].buttons[0].Y - popups[1].font.MeasureString("Performance").Y - 10));
 
             //stats
+            //int y = popups[2].window.Y + popups[2].window.Height / 3;
+            //int x;
+
+            //for (int i = 0; i < 8; i++)
+            //{
+            //    if (i >= 4)
+            //        x = popups[2].window.Right - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "0000K").X;
+            //    else
+            //        x = popups[2].window.Center.X - (int)popups[2].font.MeasureString(popups[2].text[i + 1] + "000000K").X;
+
+
+
+            //    if (i != 0 && i % 4 == 0)
+            //    {
+            //        y = popups[2].window.Y + popups[2].window.Height / 3;
+            //    }
+            //    popups[2].positions.Add(new Vector2(x, y));
+
+            //    y += (int)popups[2].font.MeasureString("TP").Y + 10;
+
+
+            //}
             int y = popups[2].window.Y + popups[2].window.Height / 3;
             int x;
-
+            popups[2].text[1] = ("Total Playtime (hrs): 0");
+            popups[2].text[2] = ("Total Money Earned: $");
+            popups[2].text[3] = ("Total Money Spent: $");
+            popups[2].text[4] = ("Total Ships Bought: 0");
+            popups[2].text[5] = ("Total Planets Destroyed: 0");
+            popups[2].text[6] = ("Total Planet Clicks: 0");
+            popups[2].text[7] = ("Total Upgrades Bought: 0");
+            popups[2].text[8] = ("Total Prestiges: 0");
+            popups[2].positions[0] = (new Vector2(popups[2].window.Center.X - popups[2].font.MeasureString("Stats").X / 2, popups[2].window.Y + 10));
             for (int i = 0; i < 8; i++)
             {
                 if (i >= 4)
@@ -100,7 +132,7 @@ namespace PlanetDestroyer
                 {
                     y = popups[2].window.Y + popups[2].window.Height / 3;
                 }
-                popups[2].positions.Add(new Vector2(x, y));
+                popups[2].positions[i + 1] = (new Vector2(x, y));
 
                 y += (int)popups[2].font.MeasureString("TP").Y + 10;
 
@@ -189,9 +221,10 @@ namespace PlanetDestroyer
             {
                 buttons[i].Update();
                 popups[i].Update();
-                if (buttons[i].clicked && !Game1.activeModal)
+                if (buttons[i].clicked && !Game1.activeSettingsModal)
                 {
                     popups[i].active = true;
+                    popupIndex = i;
                 }
                 
                 if (popups[i].active)
@@ -201,11 +234,11 @@ namespace PlanetDestroyer
             }
             if (count > 0)
             {
-                Game1.activeModal = true;
+                Game1.activeSettingsModal = true;
             }
             else
             {
-                Game1.activeModal = false;
+                Game1.activeSettingsModal = false;
             }
 
             if (popups[0].active)
@@ -322,10 +355,10 @@ namespace PlanetDestroyer
             
             for (int i = 0; i < 3; i++)
             {
-                buttons[i].Draw(spriteBatch);
-                if (popups[i].active)
-                    popups[i].Draw(spriteBatch);
+                buttons[i].Draw(spriteBatch);                    
             }
+            if (popups[popupIndex].active)
+                popups[popupIndex].Draw(spriteBatch);
         }
     }
 }
