@@ -65,25 +65,25 @@ namespace PlanetDestroyer
                 if (tex == Game1.ballShip)
                 {
                     tex = Game1.spikyShip;
-                    colors.Add(new Color(255 - (i / 3) * 100, 255 , 255 - (i / 3) * 100));
+                    colors.Add(new Color(255 - (i / 3) * 65, 255 - (i / 3) * 65, 255 - (i / 3) * 30));
                     int index = 1 + (i / 3);
                     sTemp.Add("Laser Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
                 }
                 else if (tex == Game1.shipSheet)
                 {
                     tex = Game1.ballShip;
-                    colors.Add(new Color(255 - (i / 3) * 100, 255 - (i / 3) * 100, 255 ));
+                    colors.Add(new Color(255 - (i / 3) * 10, 255 - (i / 3) * 70, 255 - (i / 3) * 70));
                     int index = 1 + (i / 3);
                     sTemp.Add("Gunner Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
                 }
                 else
                 {
                     tex = Game1.shipSheet;
-                    colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
+                    colors.Add(new Color(255, 255 - (i / 3) * 55, 255 - (i / 3) * 65));
                     int index = 1 + (i / 3);
                     sTemp.Add("Missile Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
                 }
-                
+                //colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
                 unlocked.Add(false);
                 
                 temp.Add(tex);
@@ -111,7 +111,7 @@ namespace PlanetDestroyer
             colors = new List<Color>();
             Texture2D tex = Game1.spikyShip;
             priceOrLocked = new List<string>();
-            prices = new List<int>();
+            //prices = new List<int>();
             for (int i = 0; i < t.Count; i++)
             {
                 prices.Add((int)Math.Pow((i + 1) * 2, 4));
@@ -123,25 +123,25 @@ namespace PlanetDestroyer
                 if (tex == Game1.ballShip)
                 {
                     tex = Game1.spikyShip;
-                    colors.Add(new Color(255 - (i / 3) * 100, 255, 255 - (i / 3) * 100));
+                    colors.Add(new Color(255 - (i / 3) * 65, 255 - (i / 3) * 65, 255 - (i / 3) * 30));
                     int index = 1 + (i / 3);
                     sTemp.Add("Laser Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
                 }
                 else if (tex == Game1.shipSheet)
                 {
                     tex = Game1.ballShip;
-                    colors.Add(new Color(255 - (i / 3) * 100, 255 - (i / 3) * 100, 255));
+                    colors.Add(new Color(255 - (i / 3) * 10, 255 - (i / 3) * 70, 255 - (i / 3) * 70));
                     int index = 1 + (i / 3);
                     sTemp.Add("Gunner Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
                 }
                 else
                 {
                     tex = Game1.shipSheet;
-                    colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
+                    colors.Add(new Color(255, 255 - (i / 3) * 55, 255 - (i / 3) * 65));
                     int index = 1 + (i / 3);
                     sTemp.Add("Missile Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
                 }
-
+                //colors.Add(new Color(255, 255 - (i / 3) * 100, 255 - (i / 3) * 100));
 
                 temp.Add(tex);
             }
@@ -260,7 +260,7 @@ namespace PlanetDestroyer
                                     StoreItem item = items[j][0].getClone();
 
                                     item.texture = tex;
-                                    item.rect.Y += heights[j] / 45;
+                                    item.rect.Y += heights[j] / 41;
                                     item.index = i;
                                     item.color = colors[i];
                                     item.dps = (int)Math.Pow(i + 1, 2);

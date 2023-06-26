@@ -21,7 +21,7 @@ namespace PlanetDestroyer
         public SpriteFont font, smallFont;
         public static int totalUpgrades;
         public List<string> popupText;
-        public List<int> prices;
+        public List<int> prices, ogPrices;
         public List<double> increases;
         public Upgrades() : base()
         {
@@ -36,6 +36,7 @@ namespace PlanetDestroyer
             popupText = new List<string> { "a", "b", "c", "d", "e" };
             increases = new List<double> { 1, 1, 1 };
             prices = new List<int> { 250, 500, 1000, 2000 };
+            ogPrices = new List<int> { 250, 500, 1000, 2000 };
             int x = border.Center.X - border.Width / 5 - border.Width/40;
             int y = border.Center.Y - border.Width / 10;
             for (int i = 0; i < 4; i++)
@@ -47,14 +48,8 @@ namespace PlanetDestroyer
                     x = border.Center.X - border.Width / 5 - border.Width / 40;
                     y += border.Width / 5 + border.Width / 20;
                 }
-                //y += border.Width / 5 + border.Width / 20;
-                //if (i == 1)
-                //{
-                //    x = border.Center.X + border.Width / 40;
-                //    y = border.Center.Y - border.Width / 10;
-                //}
+                
             }
-            //popupRect.Y = rects[0].Bottom + 10;
             popupRect.Width = Game1.screenW / 5;
             popupRect.Height = Game1.screenH / 7;
             totalUpgrades = 0;
@@ -75,12 +70,13 @@ namespace PlanetDestroyer
             for (int i = 0; i < 4; i++)
             {
                 rects.Add(new Rectangle(x, y, border.Width / 5, border.Width / 5));
-                y += border.Width / 5 + border.Width / 20;
+                x += border.Width / 5 + border.Width / 20;
                 if (i == 1)
                 {
-                    x = border.Center.X + border.Width / 40;
-                    y = border.Center.Y - border.Width / 10;
+                    x = border.Center.X - border.Width / 5 - border.Width / 40;
+                    y += border.Width / 5 + border.Width / 20;
                 }
+
             }
             //popupRect.Y = rects[0].Bottom + 10;
             popupRect.Width = Game1.screenW / 5;
@@ -96,8 +92,13 @@ namespace PlanetDestroyer
                     popupRect.X = rects[i].X - popupRect.Width - 10;
                     popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
                     shown = true;
-                    if (Game1.oldMouse.LeftButton == ButtonState.Released && Game1.mouse.LeftButton == ButtonState.Pressed)
+                    if (Game1.oldMouse.LeftButton == ButtonState.Released && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.money.runAmount >= prices[i])
                     {
+                        Game1.money.runAmount -= prices[i];
+                        Money.lifetimeSpent += prices[i];
+                        totalUpgrades++;
+                        prices[i] += ogPrices[i];
+
                         if (i == 0)
                         {
                             Game1.clickDamage += 2;
@@ -166,7 +167,9 @@ namespace PlanetDestroyer
                 else
                     spriteBatch.Draw(Game1.whitePixel, rects[i], Color.White * .1f);
 
-                if (i != 0)
+                if (i == 1)
+                    spriteBatch.Draw(textures[i], new Rectangle(rects[i].X + 12, rects[i].Y + 12, rects[i].Width - 24, rects[i].Height - 24), null, Color.White, (float)(4 * Math.PI / 3), new Vector2(360, 110), SpriteEffects.None, 0); 
+                else if (i != 0)
                     spriteBatch.Draw(textures[i], new Rectangle(rects[i].X + 10, rects[i].Y + 10, rects[i].Width - 20, rects[i].Height - 20), Color.White);
                 else //click texture is weird
                     spriteBatch.Draw(textures[i], new Rectangle(rects[i].X + 5, rects[i].Y + 10, rects[i].Width - 20, rects[i].Height - 20), new Rectangle(0, 0, 300, 306), Color.White);

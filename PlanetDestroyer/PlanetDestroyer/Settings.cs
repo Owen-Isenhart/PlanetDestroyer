@@ -344,7 +344,7 @@ namespace PlanetDestroyer
             popups[2].text[4] = "Total Ships Bought: " + sps; //done
             popups[2].text[5] = "Total Planets Destroyed: " + dest; //done
             popups[2].text[6] = "Total Planet Clicks: " + cls; //done
-            popups[2].text[7] = "Total Upgrades Bought: " + upgs;
+            popups[2].text[7] = "Total Upgrades Bought: " + upgs; //done
             popups[2].text[8] = "Total Prestiges: " + prest;
 
         }

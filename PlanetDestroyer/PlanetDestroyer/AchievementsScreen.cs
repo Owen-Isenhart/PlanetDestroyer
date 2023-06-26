@@ -31,7 +31,8 @@ namespace PlanetDestroyer
             List<Texture2D> temp = new List<Texture2D>() ;
             Texture2D tex;
             string s;
-            List<Color> colors = Enumerable.Repeat(Color.White, rects.Count).ToList();
+            //List<Color> colors = Enumerable.Repeat(Color.White, rects.Count).ToList();
+            List<Color> colors = new List<Color>();
             completed = Enumerable.Repeat(false, rects.Count).ToList();
             List<string> sTemp = new List<string>();
             for (int i = 0; i < rects.Count; i++)
@@ -41,18 +42,21 @@ namespace PlanetDestroyer
                     tex = Game1.aMoney;
                     int d = i * 15000;
                     s = "Achievement " + (i + 1) + "\n\nCollect $" + d;
+                    colors.Add(new Color(255, 255 - i * 2, 255 - i));
                 }
                 else if (i % 3 == 0)
                 {
                     tex = Game1.aPlanet;
                     int d = (i + 1) * 50;
                     s = "Achievement " + (i + 1) + "\n\nDestroy " + d + " planets";
+                    colors.Add(new Color(255 - i, 255, 255 - i * 2));
                 }
                 else
                 {
                     tex = Game1.aShips;
                     int d = (i + 1) * 20;
                     s = "Achievement " + (i + 1) + "\n\nBuy " + d + " ships";
+                    colors.Add(new Color(255 - i * 2, 255 - i, 255));
                 }
 
 
@@ -71,7 +75,7 @@ namespace PlanetDestroyer
             List<Texture2D> temp = new List<Texture2D>();
             Texture2D tex;
             string s;
-            List<Color> colors = Enumerable.Repeat(Color.White, rects.Count).ToList();
+            List<Color> colors = new List<Color>();
             List<string> sTemp = new List<string>();
             for (int i = 0; i < rects.Count; i++)
             {
@@ -80,18 +84,21 @@ namespace PlanetDestroyer
                     tex = Game1.aMoney;
                     int d = i * 15000;
                     s = "Achievement " + (i + 1) + "\n\nCollect $" + d;
+                    colors.Add(new Color(255, 255 - i * 2, 255 - i));
                 }
                 else if (i % 3 == 0)
                 {
                     tex = Game1.aPlanet;
                     int d = (i + 1) * 50;
                     s = "Achievement " + (i + 1) + "\n\nDestroy " + d + " planets";
+                    colors.Add(new Color(255 - i, 255, 255 - i * 2));
                 }
                 else
                 {
                     tex = Game1.aShips;
                     int d = (i + 1) * 20;
                     s = "Achievement " + (i + 1) + "\n\nBuy " + d + " ships";
+                    colors.Add(new Color(255 - i * 2, 255 - i, 255));
                 }
 
 
@@ -138,9 +145,7 @@ namespace PlanetDestroyer
         public void Update()
         {
             grid.Update();
-            //0, 3, 6 are planet achievements
-            //1, 4, 7 are money achievements
-            //2, 5, 8 are shop achievement
+
             for (int i = grid.lastRow * 5 - 15, x = 0; i < grid.lastRow * 5; i++, x++)
             {
                 if (grid.hoveringIndex == i)
