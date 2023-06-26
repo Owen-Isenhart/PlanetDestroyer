@@ -245,16 +245,21 @@ namespace PlanetDestroyer
         {
             if (!hitbox1.Intersects(hitbox2))
                 return false;
-            Color[] colorData2 = new Color[texture2.Width * texture2.Height];
-            texture2.GetData(colorData2);
+            if (Game1.screenW >= 1400) //for some reason the algorithm breaks down at smaller resolutions
+            {
+                Color[] colorData2 = new Color[texture2.Width * texture2.Height];
+                texture2.GetData(colorData2);
 
-            int top = Math.Max(hitbox1.Top, hitbox2.Top);
-            int left = Math.Max(hitbox1.Left, hitbox2.Left);
+                int top = Math.Max(hitbox1.Top, hitbox2.Top);
+                int left = Math.Max(hitbox1.Left, hitbox2.Left);
 
-            if (colorData2[(left - hitbox2.Left) + (top - hitbox2.Top) * texture2.Width] != Color.Transparent) 
-                return true;
 
-            return false;
+                if (colorData2[(left - hitbox2.Left) + (top - hitbox2.Top) * texture2.Width] != Color.Transparent)
+                    return true;
+
+                return false;
+            }
+            return true;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
