@@ -216,7 +216,7 @@ namespace PlanetDestroyer
 
             // TODO: use this.Content to load your game content here
             planetTemplate = Content.Load<Texture2D>("upscaledBlankPlanet");
-            fonts = new List<SpriteFont> { Content.Load<SpriteFont>("font1"), Content.Load<SpriteFont>("font2"), Content.Load<SpriteFont>("font3"), Content.Load<SpriteFont>("font4"), Content.Load<SpriteFont>("font5"), Content.Load<SpriteFont>("font6"), Content.Load<SpriteFont>("font7"), Content.Load<SpriteFont>("font8") };
+            fonts = new List<SpriteFont> { Content.Load<SpriteFont>("font1"), Content.Load<SpriteFont>("font2"), Content.Load<SpriteFont>("font3"), Content.Load<SpriteFont>("font4"), Content.Load<SpriteFont>("font5"), Content.Load<SpriteFont>("font6"), Content.Load<SpriteFont>("font7"), Content.Load<SpriteFont>("font8"), Content.Load<SpriteFont>("font9"), Content.Load<SpriteFont>("font10"), Content.Load<SpriteFont>("font11") };
             
             
 
@@ -246,11 +246,12 @@ namespace PlanetDestroyer
             aPlanet = Content.Load<Texture2D>("achievements (2)");
             aMoney = Content.Load<Texture2D>("achievements (3)");
             aShips = Content.Load<Texture2D>("achievements (4)");
+            settings = new Settings();
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             store = new Store();
             prestige = new Prestige();
-            settings = new Settings();
+            
             money = new Money();
         }
 
@@ -265,13 +266,15 @@ namespace PlanetDestroyer
         }
 
         public static SpriteFont getFont(int size) //0 for planet, 1 for store and upgrades, 2 for prestige + achievements, 5 for settings, 6 for popups
-        { 
-            //god why does xna not just have a way to programatically generate and change fonts 
+        {
+            //god why does xna not just have a way to programatically generate and change fonts
             int result = 0;
-            for (int i = 1900, x = 0; i > screenW; i -= 200, x++)
-            {
-                result = x;
-            }
+            if (settings != null)
+                result = settings.popups[1].dropdowns[0].selectedIndex;
+            //for (int i = 1900, x = 0; i > screenW; i -= 200, x++)
+            //{
+            //    result = x;
+            //}
             if (result + size >= fonts.Count) return fonts[fonts.Count - 1];
             return fonts[result + size];
 

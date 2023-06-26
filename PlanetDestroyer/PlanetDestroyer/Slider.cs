@@ -25,7 +25,7 @@ namespace PlanetDestroyer
             hover = false;
             mouseInBounds = true;
             sliderValue = 100;
-            font = Game1.getFont(6);
+            font = Game1.getFont(7);
         }
         public void setByPercent(int value)
         {

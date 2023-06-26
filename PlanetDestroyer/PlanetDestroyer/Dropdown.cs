@@ -27,7 +27,7 @@ namespace PlanetDestroyer
             hoverIndex = 0;
             selectedIndex = 0;
             newIndex = false;
-            font = Game1.getFont(6);
+            font = Game1.getFont(7);
         }
         
         public void Update()

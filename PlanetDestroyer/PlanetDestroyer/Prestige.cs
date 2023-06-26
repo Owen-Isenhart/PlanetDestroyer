@@ -99,9 +99,15 @@ namespace PlanetDestroyer
             {
                 prestiges[i].rect = new Rectangle(prestigeBorder.X + (int)(prestigeBorder.Width / 5.8) + prestigeBorder.Width / 4 * i, prestigeBorder.Y + prestigeBorder.Height / 3 + 15, (int)(prestigeBorder.Width / 5.8), (int)(prestigeBorder.Width / 5.8));
                 confirmations[i].resizeComponents();
+                confirmations[i].buttons.Clear();
+                confirmations[i].buttonHovers.Clear();
+                confirmations[i].buttonStates.Clear();
+                confirmations[i].text.Clear();
+                confirmations[i].positions.Clear();
             }
             font = Game1.getFont(2);
-            //setupPopups();
+
+            setupPopups();
         }
         public void Update()
         {
@@ -121,7 +127,7 @@ namespace PlanetDestroyer
                 if (!confirmations[i].buttonStates[0])
                 {
                     //do the actual prestige thing
-
+                    totalPrestiges++;
                     confirmations[i].active = false;
                     confirmations[i].buttonStates[0] = true;
                 }

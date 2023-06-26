@@ -38,7 +38,7 @@ namespace PlanetDestroyer
             repeat = true;
             lifetimeSpent = 0;
             popupText = new string[] { "a", "b", "c" };
-            font = Game1.getFont(6);
+            font = Game1.getFont(7);
         }
         public void resizeComponents()
         {
@@ -46,6 +46,7 @@ namespace PlanetDestroyer
             moneyRect = new Rectangle(border.X + border.Width / 10, border.Height / 4, border.Width / 10, border.Width / 10);
             cometRect = new Rectangle(border.Right - border.Width / 5, moneyRect.Y - 10, 4 + border.Width / 10, 4 + border.Width / 10);
             popup = new Rectangle(0, moneyRect.Bottom, border.Width / 3, border.Height / 2 + border.Height / 5);
+            font = Game1.getFont(7);
         }
         public void Update()
         {
@@ -91,13 +92,14 @@ namespace PlanetDestroyer
             lifeAmount += i * 1500;
             lifetimeMoney = lifeAmount;
         }
+        
         public void Prestige()
         {
             runAmount = 0;
-            comets = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 4));
+            comets = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 3));
             multiplier = 1 + (double)comets / 5;
 
-            deltaC = comets - (int)Math.Sqrt(lifeAmount / Math.Pow(10, 4)); //increase in comets
+            deltaC = comets - (int)Math.Sqrt(lifeAmount / Math.Pow(10, 3)); 
             deltaM = 1 + (double)deltaC / 5;
         }
         

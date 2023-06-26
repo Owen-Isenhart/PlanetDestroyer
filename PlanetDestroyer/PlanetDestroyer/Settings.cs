@@ -68,7 +68,7 @@ namespace PlanetDestroyer
 
             //video
             List<Rectangle> rects = new List<Rectangle>();
-            List<string> text = new List<string> { "Fullscreen", "1600 x 900", "1366 x 768", "1280 x 720", "1024 x 576" };
+            List<string> text = new List<string> { "Fullscreen", "1600 x 900", "1400 x 750", "1200 x 600", "1000 x 550" };
             for (int i = 0; i < 6; i++)
             {
                 rects.Add(new Rectangle(popups[1].window.Center.X - popups[1].window.Width / 6 - popups[1].window.Width / 10, popups[1].window.Y + (int)(popups[1].window.Height / 3.5) + (popups[1].window.Width / 20 * i), popups[1].window.Width / 5, popups[1].window.Width / 20));
@@ -162,7 +162,7 @@ namespace PlanetDestroyer
 
             //video
             List<Rectangle> rects = new List<Rectangle>();
-            List<string> text = new List<string> { "Fullscreen", "1600 x 900", "1366 x 768", "1280 x 720", "1024 x 576" };
+            List<string> text = new List<string> { "Fullscreen", "1600 x 900", "1400 x 750", "1200 x 600", "1000 x 550" };
             for (int i = 0; i < 6; i++)
             {
                 rects.Add(new Rectangle(popups[1].window.Center.X - popups[1].window.Width / 6 - popups[1].window.Width / 10, popups[1].window.Y + (int)(popups[1].window.Height / 3.5) + (popups[1].window.Width / 20 * i), popups[1].window.Width / 5, popups[1].window.Width / 20));
@@ -261,18 +261,18 @@ namespace PlanetDestroyer
                 }
                 else if (popups[1].dropdowns[0].selectedIndex == 2)
                 {
-                    w = 1366;
-                    h = 768;
+                    w = 1400;
+                    h = 750;
                 }
                 else if (popups[1].dropdowns[0].selectedIndex == 3)
                 {
-                    w = 1280;
-                    h = 720;
+                    w = 1200;
+                    h = 600;
                 }
                 else if (popups[1].dropdowns[0].selectedIndex == 4)
                 {
-                    w = 1024;
-                    h = 576;
+                    w = 1000;
+                    h = 550;
                 }
 
             }

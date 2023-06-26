@@ -60,7 +60,7 @@ namespace PlanetDestroyer
             scrollbarRect = new Rectangle(border.X + border.Width, border.Y, 8, 3*cPerF)  ;
             lastRow = 3;
             scrollSpeed = cPerF / 2;
-            font = Game1.getFont(6);
+            font = Game1.getFont(7);
         }
         public void calculatePopup(string direction, int index)
         {

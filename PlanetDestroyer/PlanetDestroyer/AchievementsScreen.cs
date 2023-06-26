@@ -54,7 +54,7 @@ namespace PlanetDestroyer
                 else
                 {
                     tex = Game1.aShips;
-                    int d = (i + 1) * 20;
+                    int d = i * 15;
                     s = "Achievement " + (i + 1) + "\n\nBuy " + d + " ships";
                     colors.Add(new Color(255 - i * 2, 255 - i, 255));
                 }
@@ -96,11 +96,12 @@ namespace PlanetDestroyer
                 else
                 {
                     tex = Game1.aShips;
-                    int d = (i + 1) * 20;
+                    int d = i * 15;
                     s = "Achievement " + (i + 1) + "\n\nBuy " + d + " ships";
                     colors.Add(new Color(255 - i * 2, 255 - i, 255));
                 }
-
+                if (completed[i])
+                    s += " - CLAIMED";
 
                 sTemp.Add(s);
                 temp.Add(tex);
@@ -162,20 +163,35 @@ namespace PlanetDestroyer
                 {
                     if (i % 3 == 0) //planet
                     {
-
+                        if (Planet.totalDestroyed >= (i + 1) * 50)
+                        {
+                            completed[i] = true;
+                            grid.popups[i].text += " - CLAIM";
+                        }
                     }
                     else if (i % 3 == 1) //money
                     {
-
+                        if (Money.lifetimeMoney >= i * 15000)
+                        {
+                            completed[i] = true;
+                            grid.popups[i].text += " - CLAIM";
+                        }
                     }
                     else //shop
                     {
-
+                        if (Store.totalShips >= i * 15)
+                        {
+                            completed[i] = true;
+                            grid.popups[i].text += " - CLAIM";
+                        }
                     }
                 }
-                //if (achievements.ElementAt(i).shown)
-                //    achievements.ElementAt(i).calculatePopup("right");
-                //achievements.ElementAt(i).Update();
+                if (completed[i] && grid.hoveringIndex == i && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && grid.popups[i].text.IndexOf("CLAIMED") == -1)
+                {
+                    grid.popups[i].text += "ED";
+                    Game1.money.IncreaseMoney(i);
+                }
+                
             }
         }
         public Vector2 textPosition()

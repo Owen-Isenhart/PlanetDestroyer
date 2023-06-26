@@ -218,7 +218,7 @@ namespace PlanetDestroyer
                     grid.popups[i].shown = true;
                     grid.calculatePopup("left", x);
 
-                    if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && unlocked[i] && Game1.money.runAmount >= prices[i])
+                    if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && unlocked[i])
                     {
                         Game1.money.runAmount -= prices[i];
                         Money.lifetimeSpent += prices[i];

@@ -33,7 +33,7 @@ namespace PlanetDestroyer
             time = 80;
             text = Health + " Hits";
             font = Game1.getFont(0);
-            smallFont = Game1.getFont(6);
+            smallFont = Game1.getFont(7);
             textSize = font.MeasureString(text);
             smallTextSize = smallFont.MeasureString("dps: 0 hits/sec");
             Game1.planetGrit = Game1.rnd.Next(5, 50);
@@ -51,6 +51,8 @@ namespace PlanetDestroyer
             rect = new Rectangle(Game1.screenW / 2 - Game1.screenW / 5 / 2, Game1.screenH / 2 - Game1.screenW / 5 / 3, Game1.screenW / 5, Game1.screenW / 5);
             font = Game1.getFont(0);
             textSize = font.MeasureString(text);
+            smallFont = Game1.getFont(7);
+            smallTextSize = smallFont.MeasureString("dps: 0 hits/sec");
         }
 
         public void Reset()

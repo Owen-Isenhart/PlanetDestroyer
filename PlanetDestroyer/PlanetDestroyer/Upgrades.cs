@@ -26,7 +26,7 @@ namespace PlanetDestroyer
         public Upgrades() : base()
         {
             font = Game1.getFont(1);
-            smallFont = Game1.getFont(6);
+            smallFont = Game1.getFont(7);
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH/2);
             int diff = (int)(border.Width - font.MeasureString("UPGRADES").X);
             titlePos = new Vector2(border.X + diff / 2, border.Y + font.MeasureString("UPGRADES").Y/4);
@@ -56,7 +56,7 @@ namespace PlanetDestroyer
         }
         public void resizeComponents()
         {
-            
+            smallFont = Game1.getFont(7);
             font = Game1.getFont(1);
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             int diff = (int)(border.Width - font.MeasureString("UPGRADES").X);

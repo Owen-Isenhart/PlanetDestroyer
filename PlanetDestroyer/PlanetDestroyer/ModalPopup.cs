@@ -39,14 +39,14 @@ namespace PlanetDestroyer
             text = new List<string>();
             positions = new List<Vector2>();
             dropdowns = new List<Dropdown>();
-            font = Game1.getFont(6);
+            font = Game1.getFont(7);
         }
         public void resizeComponents()
         {
             fullScreen = new Rectangle(0, 0, Game1.screenW, Game1.screenH);
             window = new Rectangle(Game1.screenW / 3, Game1.screenH / 3, Game1.screenW / 3, Game1.screenH / 3);
             exit = new Rectangle(window.Right - 25, window.Y + 5, 20, 20);
-            font = Game1.getFont(6);
+            font = Game1.getFont(7);
             //resize actual buttons and sliders and stuff
         }
 
