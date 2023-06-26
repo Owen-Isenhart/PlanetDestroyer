@@ -59,6 +59,8 @@ namespace PlanetDestroyer
             confirmations[0].buttons.Add(new Rectangle(confirmations[0].window.Center.X - confirmations[0].window.Width / 10, (int)(confirmations[0].window.Y + (4.5) * confirmations[0].font.MeasureString(confirmations[0].text[1]).Y + 10 * 5) + confirmations[0].window.Width / 10, confirmations[0].window.Width / 5, confirmations[0].window.Width / 10));
             confirmations[0].buttonHovers.Add(false);
             confirmations[0].buttonStates.Add(true);
+            confirmations[0].text.Add("Yes"); confirmations[0].positions.Add(new Vector2(confirmations[0].buttons[0].Center.X - confirmations[0].font.MeasureString("Yes").X / 2, confirmations[0].buttons[0].Center.Y - confirmations[0].font.MeasureString("Yes").Y / 2));
+
 
             //money
             confirmations[1].text.Add("Money Prestige"); confirmations[1].positions.Add(new Vector2(confirmations[1].window.Center.X - confirmations[1].font.MeasureString(confirmations[1].text[0]).X / 2, confirmations[1].window.Y + 10));
@@ -73,6 +75,7 @@ namespace PlanetDestroyer
             confirmations[1].buttons.Add(new Rectangle(confirmations[0].window.Center.X - confirmations[0].window.Width / 10, (int)(confirmations[0].window.Y + (4.5) * confirmations[0].font.MeasureString(confirmations[0].text[1]).Y + 10 * 5) + confirmations[0].window.Width / 10, confirmations[0].window.Width / 5, confirmations[0].window.Width / 10));
             confirmations[1].buttonHovers.Add(false);
             confirmations[1].buttonStates.Add(true);
+            confirmations[1].text.Add("Yes"); confirmations[1].positions.Add(new Vector2(confirmations[1].buttons[0].Center.X - confirmations[1].font.MeasureString("Yes").X / 2, confirmations[1].buttons[0].Center.Y - confirmations[1].font.MeasureString("Yes").Y / 2));
 
             //sale
             confirmations[2].text.Add("Price Prestige"); confirmations[2].positions.Add(new Vector2(confirmations[2].window.Center.X - confirmations[2].font.MeasureString(confirmations[2].text[0]).X / 2, confirmations[2].window.Y + 10));
@@ -87,6 +90,7 @@ namespace PlanetDestroyer
             confirmations[2].buttons.Add(new Rectangle(confirmations[0].window.Center.X - confirmations[0].window.Width / 10, (int)(confirmations[0].window.Y + (4.5) * confirmations[0].font.MeasureString(confirmations[0].text[1]).Y + 10 * 5) + confirmations[0].window.Width / 10, confirmations[0].window.Width / 5, confirmations[0].window.Width / 10));
             confirmations[2].buttonHovers.Add(false);
             confirmations[2].buttonStates.Add(true);
+            confirmations[2].text.Add("Yes"); confirmations[2].positions.Add(new Vector2(confirmations[2].buttons[0].Center.X - confirmations[2].font.MeasureString("Yes").X / 2, confirmations[2].buttons[0].Center.Y - confirmations[2].font.MeasureString("Yes").Y / 2));
         }
         public void resizeComponents()
         {

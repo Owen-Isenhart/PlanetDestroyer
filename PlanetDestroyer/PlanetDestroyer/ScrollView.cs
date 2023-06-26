@@ -27,10 +27,12 @@ namespace PlanetDestroyer
         public int lastRow;
         public int cols;
         public int scrollSpeed;
+        public int offset;
         public SpriteFont font;
 
-        public ScrollView(Rectangle b, Rectangle? source, List<Rectangle> r, List<Texture2D> t, List<Color> iColor, List<string> text, int c)
+        public ScrollView(Rectangle b, Rectangle? source, List<Rectangle> r, List<Texture2D> t, List<Color> iColor, List<string> text, int c, int o)
         {
+            offset = o;
             sourceRect = source;
             cols = c;
             bigBorder = b;
@@ -206,7 +208,7 @@ namespace PlanetDestroyer
             {
                 //if (rects)
                 spriteBatch.Draw(Game1.whitePixel, rects[x], colors[i]);
-                spriteBatch.Draw(textures[i], rects[x], sourceRect, itemColors[i]);
+                spriteBatch.Draw(textures[i], new Rectangle(rects[x].X + offset, rects[x].Y + offset, rects[x].Width - offset * 2, rects[x].Height - offset * 2), sourceRect, itemColors[i]);
 
                 if (popups[i].shown)
                 {

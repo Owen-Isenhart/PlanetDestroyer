@@ -23,7 +23,7 @@ namespace PlanetDestroyer
         public static KeyboardState kb, oldKB;
         public static MouseState mouse, oldMouse;
         public static Rectangle mouseRect, oldMouseRect;
-        public static int scrollWheel, oldScrollWheel;
+        public static int scrollWheel, oldScrollWheel, clickDamage;
 
         //public static List<Rectangle> planetRects;
         //public static List<Texture2D> planetTextures;
@@ -31,7 +31,7 @@ namespace PlanetDestroyer
         public static Dictionary<string, List<Rectangle>> explosionRects;
         public static List<Rectangle> shipRects, cometSources;
 
-        public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet, logo, prestigeDmg, prestigeCost, prestigeMoney, shipUpgrade, ballUpgrade, spikyUpgrade, clickUpgrade;
+        public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet, logo, prestigeDmg, prestigeCost, prestigeMoney, shipUpgrade, ballUpgrade, spikyUpgrade, clickUpgrade, aPlanet, aMoney, aShips;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
@@ -148,6 +148,7 @@ namespace PlanetDestroyer
             activeSettingsModal = false;
             activePrestigeModal = false;
             gT = new GameTime();
+            clickDamage = 1;
             base.Initialize();
         }
 
@@ -242,6 +243,9 @@ namespace PlanetDestroyer
             shipUpgrade = Content.Load<Texture2D>("shipUpgrade");
             spikyUpgrade = Content.Load<Texture2D>("spikyUpgrade");
             clickUpgrade = Content.Load<Texture2D>("clickUpgrade");
+            aPlanet = Content.Load<Texture2D>("achievements (2)");
+            aMoney = Content.Load<Texture2D>("achievements (3)");
+            aShips = Content.Load<Texture2D>("achievements (4)");
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             store = new Store();

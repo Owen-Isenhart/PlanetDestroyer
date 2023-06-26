@@ -16,9 +16,10 @@ namespace PlanetDestroyer
         public Rectangle storeBorder;
         public List<List<StoreItem>> items;
         public List<int> indexes;
+        public List<ulong> shipDamages, nonalteredDamages;
         public List<Color> colors;
         public ScrollView grid;
-        public int totalDmg;
+        public ulong totalDmg;
         public Texture2D[] textures;
         public List<Texture2D> texs;
         public SpriteFont font;
@@ -54,6 +55,8 @@ namespace PlanetDestroyer
             unlocked = new List<bool>();
             priceOrLocked = new List<string>();
             prices = new List<int>();
+            shipDamages = new List<ulong> { 0, 0, 0 };
+            nonalteredDamages = new List<ulong> { 0, 0, 0 };
             for (int i = 0; i < t.Count; i++)
             {
                 prices.Add((int)Math.Pow((i + 1) * 2, 4));
@@ -88,7 +91,7 @@ namespace PlanetDestroyer
             unlocked[0] = true; //FINISH DOING THIS, USE IT TO SHADE THE GRID AND CHECK IN UPDATE
             
             texs = temp;
-            grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
+            grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3, 0);
             string[] text = grid.popups[0].text.Split('\n');
             grid.popups[0].text = text[0] + "\n\n$" + prices[0];
             totalShips = 0;
@@ -142,7 +145,7 @@ namespace PlanetDestroyer
 
                 temp.Add(tex);
             }
-            grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3);
+            grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3, 0);
 
 
 
@@ -199,11 +202,8 @@ namespace PlanetDestroyer
         }
         public void DamagePlanet()
         {
-            totalDmg = 0;
-            foreach (StoreItem item in items[0])
-            {
-                totalDmg += item.dps;
-            }
+            totalDmg = shipDamages[0] + shipDamages[1] + shipDamages[2];
+            
             Game1.playScreen.planet.Health -= (double)totalDmg/60;
         }
 
@@ -225,6 +225,8 @@ namespace PlanetDestroyer
                         totalShips++;
 
                         int temp = i / 3;
+                        shipDamages[i % 3] += (ulong)Math.Pow(i + 1, 2);
+                        nonalteredDamages[i % 3] += (ulong)Math.Pow(i + 1, 2);
                         Texture2D tex = textures[i % 3];
                         int index = indexByTexture(tex, temp);
                         if (i != unlocked.Count - 1 && unlocked[i + 1] == false)
@@ -306,6 +308,9 @@ namespace PlanetDestroyer
                 }
 
             }
+            shipDamages[0] = (ulong)(nonalteredDamages[0] * Game1.upgrades.increases[0]);
+            shipDamages[1] = (ulong)(nonalteredDamages[1] * Game1.upgrades.increases[1]);
+            shipDamages[2] = (ulong)(nonalteredDamages[2] * Game1.upgrades.increases[2]);
         }
         public void Draw(SpriteBatch spriteBatch)
         {

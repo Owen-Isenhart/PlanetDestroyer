@@ -18,32 +18,45 @@ namespace PlanetDestroyer
         public List<Rectangle> rects; //cant use a scrollview for this stuff because I coded it in a way where I can't have something be layed out horizontally without a ton of elements :(
         public List<Texture2D> textures;
         public int hoveringIndex;
-        public SpriteFont font;
+        public SpriteFont font, smallFont;
         public static int totalUpgrades;
+        public List<string> popupText;
+        public List<int> prices;
+        public List<double> increases;
         public Upgrades() : base()
         {
             font = Game1.getFont(1);
+            smallFont = Game1.getFont(6);
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, 0, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH/2);
             int diff = (int)(border.Width - font.MeasureString("UPGRADES").X);
             titlePos = new Vector2(border.X + diff / 2, border.Y + font.MeasureString("UPGRADES").Y/4);
             rects = new List<Rectangle>();
             textures = new List<Texture2D> { Game1.clickUpgrade, Game1.shipUpgrade, Game1.ballUpgrade, Game1.spikyUpgrade };
             hoveringIndex = -1;
+            popupText = new List<string> { "a", "b", "c", "d", "e" };
+            increases = new List<double> { 1, 1, 1 };
+            prices = new List<int> { 250, 500, 1000, 2000 };
             int x = border.Center.X - border.Width / 5 - border.Width/40;
             int y = border.Center.Y - border.Width / 10;
             for (int i = 0; i < 4; i++)
             {
                 rects.Add(new Rectangle(x, y, border.Width / 5, border.Width / 5));
-                y += border.Width / 5 + border.Width / 20;
+                x += border.Width / 5 + border.Width / 20;
                 if (i == 1)
                 {
-                    x = border.Center.X + border.Width / 40;
-                    y = border.Center.Y - border.Width / 10;
+                    x = border.Center.X - border.Width / 5 - border.Width / 40;
+                    y += border.Width / 5 + border.Width / 20;
                 }
+                //y += border.Width / 5 + border.Width / 20;
+                //if (i == 1)
+                //{
+                //    x = border.Center.X + border.Width / 40;
+                //    y = border.Center.Y - border.Width / 10;
+                //}
             }
             //popupRect.Y = rects[0].Bottom + 10;
-            popupRect.Width = Game1.screenW / 7;
-            popupRect.Height = Game1.screenH / 8;
+            popupRect.Width = Game1.screenW / 5;
+            popupRect.Height = Game1.screenH / 7;
             totalUpgrades = 0;
         }
         public void resizeComponents()
@@ -70,8 +83,8 @@ namespace PlanetDestroyer
                 }
             }
             //popupRect.Y = rects[0].Bottom + 10;
-            popupRect.Width = Game1.screenW / 7;
-            popupRect.Height = Game1.screenH / 8;
+            popupRect.Width = Game1.screenW / 5;
+            popupRect.Height = Game1.screenH / 7;
         }
         public void Update()
         {
@@ -83,6 +96,18 @@ namespace PlanetDestroyer
                     popupRect.X = rects[i].X - popupRect.Width - 10;
                     popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
                     shown = true;
+                    if (Game1.oldMouse.LeftButton == ButtonState.Released && Game1.mouse.LeftButton == ButtonState.Pressed)
+                    {
+                        if (i == 0)
+                        {
+                            Game1.clickDamage += 2;
+                        }
+                        else
+                        {
+                            increases[i-1] += 0.01;
+                            //Game1.store.shipDamages[i-1] = (ulong)(Game1.store.shipDamages[i-1] * increases[i-1]);
+                        }
+                    }
                     break;
                 }
                 else
@@ -92,7 +117,41 @@ namespace PlanetDestroyer
                 }
                     
             }
-
+            if (shown)
+            {
+                switch (hoveringIndex)
+                {
+                    case 0:
+                        popupText[0] = "Click Upgrade";
+                        popupText[1] = "$" + prices[0];
+                        popupText[2] = "Increases click damage by 2";
+                        popupText[3] = "Current click damage: " + Game1.clickDamage;
+                        popupText[4] = "";
+                        break;
+                    case 1:
+                        popupText[0] = "Missile-ship Upgrade";
+                        popupText[1] = "$" + prices[1];
+                        popupText[2] = "Increases missile-ship damage by 1%";
+                        popupText[3] = "Current missile-ship damage: " + Game1.store.shipDamages[0];
+                        popupText[4] = "Current % increase: " + Math.Round((increases[0] - 1) * 100, 0);
+                        break;
+                    case 2:
+                        popupText[0] = "Gunner-ship Upgrade";
+                        popupText[1] = "$" + prices[2];
+                        popupText[2] = "Increases gunner-ship damage by 1%";
+                        popupText[3] = "Current gunner-ship damage: " + Game1.store.shipDamages[1];
+                        popupText[4] = "Current % increase: " + Math.Round((increases[1] - 1) * 100, 0);
+                        break;
+                    case 3:
+                        popupText[0] = "Laser-ship Upgrade";
+                        popupText[1] = "$" + prices[3];
+                        popupText[2] = "Increases laser-ship damage by 1%";
+                        popupText[3] = "Current laser-ship damage: " + Game1.store.shipDamages[2];
+                        popupText[4] = "Current % increase: " + Math.Round((increases[2] - 1) * 100, 0);
+                        break;
+                }
+            }
+            
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -114,7 +173,14 @@ namespace PlanetDestroyer
             }
 
             if (shown)
+            {
                 spriteBatch.Draw(Game1.whitePixel, popupRect, Color.White * .7f);
+                for (int i = 0; i < popupText.Count; i++)
+                {
+                    spriteBatch.DrawString(smallFont, popupText[i], new Vector2(popupRect.X + 5, popupRect.Y + 5 + (i * smallFont.MeasureString(popupText[i]).Y)), Color.Black);
+                }
+            }
+                
         }
     }
 }

@@ -25,7 +25,7 @@ namespace PlanetDestroyer
         public Planet(int i) //index increases linearly, as does the amount of hits to blow up the planet
         {
             index = i;
-            Health = 100 * index;
+            Health = 500 * index;
             buffer = 5;
             int size = Game1.screenW / 5;
             rect = new Rectangle(Game1.screenW / 2 - size / 2, Game1.screenH / 2 - size / 3, size, size);
@@ -56,7 +56,7 @@ namespace PlanetDestroyer
         public void Reset()
         {
             index++;
-            Health = 100 * index;
+            Health = 500 * index;
             time = 80;
             //explosions.Clear();
             text = Math.Round(Health) + " Hits";
@@ -207,9 +207,10 @@ namespace PlanetDestroyer
 
                 if (!Game1.activeSettingsModal && !Game1.activePrestigeModal && Game1.mouseRect.Intersects(rect) && IntersectsPixel(Game1.mouseRect, rect, Game1.planetTexture) && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
                 {
-                    Health--;
+                    Health -= Game1.clickDamage;
                     explosions.Add(new Explosion(new Rectangle(Game1.mouseRect.X - 30, Game1.mouseRect.Y - 20, 40, 40), "small"));
                     totalClicks++;
+                    if (Health < 0) Health = 0;
                     //ClickAnimation();
                 }
             }

@@ -16,7 +16,8 @@ namespace PlanetDestroyer
     {
         public Rectangle border;
         //public HashSet<Achievement> achievements;
-        public List<Rectangle> rects;
+        public List<Rectangle> rects, sourceRects;
+        public List<bool> completed;
         public ScrollView grid;
         public Vector2 titlePos;
         public SpriteFont font;
@@ -25,31 +26,40 @@ namespace PlanetDestroyer
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, Game1.screenH / 2 + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             //achievements = new HashSet<Achievement>();
-            rects = organizeRects(60);
+            rects = organizeRects(100);
+            //sourceRects = Game1.rectsBySheet(1, 3, 300, 300, 3);
             List<Texture2D> temp = new List<Texture2D>() ;
-            Texture2D tex = Game1.questionMark;
+            Texture2D tex;
+            string s;
             List<Color> colors = Enumerable.Repeat(Color.White, rects.Count).ToList();
+            completed = Enumerable.Repeat(false, rects.Count).ToList();
             List<string> sTemp = new List<string>();
             for (int i = 0; i < rects.Count; i++)
             {
-                if (i % 5 == 0)
+                if (i % 3 == 1)
                 {
-                    if (tex == Game1.checkMark)
-                    {
-                        tex = Game1.questionMark;
-                    }
-                    
-                    else
-                    {
-                        tex = Game1.checkMark;
-                    }
-                    
+                    tex = Game1.aMoney;
+                    int d = i * 15000;
+                    s = "Achievement " + (i + 1) + "\n\nCollect $" + d;
+                }
+                else if (i % 3 == 0)
+                {
+                    tex = Game1.aPlanet;
+                    int d = (i + 1) * 50;
+                    s = "Achievement " + (i + 1) + "\n\nDestroy " + d + " planets";
+                }
+                else
+                {
+                    tex = Game1.aShips;
+                    int d = (i + 1) * 20;
+                    s = "Achievement " + (i + 1) + "\n\nBuy " + d + " ships";
                 }
 
-                sTemp.Add(i + "");
+
+                sTemp.Add(s);
                 temp.Add(tex);
             }
-            grid = new ScrollView(border, null, rects, temp, colors, sTemp, 5);
+            grid = new ScrollView(border, null, rects, temp, colors, sTemp, 5, 8);
             font = Game1.getFont(2);
             titlePos = textPosition();
         }
@@ -57,31 +67,38 @@ namespace PlanetDestroyer
         {
             border = new Rectangle((Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 + (int)(Game1.screenW / 2.5) + 1, Game1.screenH / 2 + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2, Game1.screenH / 2);
             //achievements = new HashSet<Achievement>();
-            rects = organizeRects(60);
+            rects = organizeRects(100);
             List<Texture2D> temp = new List<Texture2D>();
-            Texture2D tex = Game1.questionMark;
+            Texture2D tex;
+            string s;
             List<Color> colors = Enumerable.Repeat(Color.White, rects.Count).ToList();
             List<string> sTemp = new List<string>();
             for (int i = 0; i < rects.Count; i++)
             {
-                if (i % 5 == 0)
+                if (i % 3 == 1)
                 {
-                    if (tex == Game1.checkMark)
-                    {
-                        tex = Game1.questionMark;
-                    }
-
-                    else
-                    {
-                        tex = Game1.checkMark;
-                    }
-
+                    tex = Game1.aMoney;
+                    int d = i * 15000;
+                    s = "Achievement " + (i + 1) + "\n\nCollect $" + d;
+                }
+                else if (i % 3 == 0)
+                {
+                    tex = Game1.aPlanet;
+                    int d = (i + 1) * 50;
+                    s = "Achievement " + (i + 1) + "\n\nDestroy " + d + " planets";
+                }
+                else
+                {
+                    tex = Game1.aShips;
+                    int d = (i + 1) * 20;
+                    s = "Achievement " + (i + 1) + "\n\nBuy " + d + " ships";
                 }
 
-                sTemp.Add(i + "");
+
+                sTemp.Add(s);
                 temp.Add(tex);
             }
-            grid = new ScrollView(border, null, rects, temp, colors, sTemp, 5);
+            grid = new ScrollView(border, null, rects, temp, colors, sTemp, 5, 8);
             font = Game1.getFont(2);
             titlePos = textPosition();
         }
@@ -97,7 +114,7 @@ namespace PlanetDestroyer
                 {
                     if (i % 5 == 0)
                     {
-                        y += border.Width / 8 + 10;
+                        y += (int)(border.Width / 7.5 + 10);
                         x = 0;
                     }
 
@@ -135,17 +152,21 @@ namespace PlanetDestroyer
                 {
                     grid.popups[i].shown = false;
                 }
-                if (i % 3 == 0) //planet
+                
+                if (!completed[i])
                 {
+                    if (i % 3 == 0) //planet
+                    {
 
-                }
-                else if (i % 3 == 1) //money
-                {
+                    }
+                    else if (i % 3 == 1) //money
+                    {
 
-                }
-                else //shop
-                {
+                    }
+                    else //shop
+                    {
 
+                    }
                 }
                 //if (achievements.ElementAt(i).shown)
                 //    achievements.ElementAt(i).calculatePopup("right");
