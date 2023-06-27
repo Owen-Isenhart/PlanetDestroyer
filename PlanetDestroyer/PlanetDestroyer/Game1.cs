@@ -29,6 +29,7 @@ namespace PlanetDestroyer
         //public static List<Texture2D> planetTextures;
 
         public static Dictionary<string, List<Rectangle>> explosionRects;
+        public static Dictionary<string, Texture2D> explosionTextures;
         public static List<Rectangle> shipRects, cometSources;
 
         public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet, logo, prestigeDmg, prestigeCost, prestigeMoney, shipUpgrade, ballUpgrade, spikyUpgrade, clickUpgrade, aPlanet, aMoney, aShips;
@@ -50,7 +51,6 @@ namespace PlanetDestroyer
         public static SpriteFont healthFont, shopFont;
         public static List<SpriteFont> fonts;
 
-        public static Texture2D explosionsSheet;
 
         public static bool activeSettingsModal, activePrestigeModal;
 
@@ -132,8 +132,9 @@ namespace PlanetDestroyer
             }
             cometSources = new List<Rectangle> { new Rectangle(0, 0, 100, 100), new Rectangle(100, 0, 100, 100), new Rectangle(0, 100, 100, 100), new Rectangle(100, 100, 100, 100), new Rectangle(0, 200, 100, 100) };
             explosionRects = new Dictionary<string, List<Rectangle>>();
-            explosionRects["small"] = loadExplosions("small") ;
-            explosionRects["large"] = loadExplosions("large");
+            explosionTextures = new Dictionary<string, Texture2D>();
+            explosionRects["small"] = rectsBySheet(1, 8, 48, 48, 8);
+            explosionRects["large"] = rectsBySheet(1, 12, 128, 128, 12);
             planetGrit = rnd.Next(5, 100);
             activeSettingsModal = false;
             activePrestigeModal = false;
@@ -216,7 +217,8 @@ namespace PlanetDestroyer
             planetTexture = playScreen.planet.PlanetTextureGeneration();
             pixel = Content.Load<Texture2D>("pixel");
             whitePixel = Content.Load<Texture2D>("whitePixel");
-            explosionsSheet = Content.Load<Texture2D>("upscaledExplosions");
+            explosionTextures["small"] = Content.Load<Texture2D>("explosion-6");
+            explosionTextures["large"] = Content.Load<Texture2D>("explosion-4");
             ballShip = Content.Load<Texture2D>("ballShip (1)");
             spikyShip = Content.Load<Texture2D>("spikyShip (1)");
             questionMark = Content.Load<Texture2D>("questionMark");

@@ -119,7 +119,7 @@ namespace PlanetDestroyer
             for (int i = 0; i < prestiges.Length; i++)
             {
                 prestiges[i].Update();
-                confirmations[i].Update();
+                
                 if (prestiges[i].active && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && !Game1.activePrestigeModal)
                 {
                     confirmations[i].active = true;
@@ -209,6 +209,9 @@ namespace PlanetDestroyer
                 confirmations[2].positions[3] = new Vector2(confirmations[0].window.Center.X - confirmations[0].font.MeasureString(confirmations[0].text[3]).X / 2, (int)(confirmations[0].window.Y + (4.5) * confirmations[0].font.MeasureString(confirmations[0].text[3]).Y + 10 * 3));
 
             }
+
+            if (confirmations[confirmationIndex].active)
+                confirmations[confirmationIndex].Update();
         }
         public void Draw(SpriteBatch spriteBatch)
         {

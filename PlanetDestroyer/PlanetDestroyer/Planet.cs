@@ -25,12 +25,12 @@ namespace PlanetDestroyer
         public Planet(int i) //index increases linearly, as does the amount of hits to blow up the planet
         {
             index = i;
-            Health = 500 * index;
+            Health = 100 * index;
             buffer = 5;
             int size = Game1.screenW / 5;
             rect = new Rectangle(Game1.screenW / 2 - size / 2, Game1.screenH / 2 - size / 3, size, size);
             explosions = new List<Explosion>();
-            time = 80;
+            time = 84;
             text = Health + " Hits";
             fontSize = 0;
             font = Game1.getFont(fontSize);
@@ -60,8 +60,8 @@ namespace PlanetDestroyer
         public void Reset()
         {
             index++;
-            Health = 500 * index;
-            time = 80;
+            Health = 100 * index;
+            time = 84;
             //explosions.Clear();
             text = Math.Round(Health) + " Hits";
             textSize = font.MeasureString(text);
@@ -195,11 +195,11 @@ namespace PlanetDestroyer
 
                 else
                 {
-                    if (time > 20 && time % 2 == 0)
+                    if (time > 24 && time % 2 == 0)
                         rect.X -= 5;
-                    else if (time > 20 && time % 2 == 1)
+                    else if (time > 24 && time % 2 == 1)
                         rect.X += 5;
-                    else if (time == 20)
+                    else if (time == 24)
                     {
                         explosions.Add(new Explosion(rect, "large"));
                         explosions[explosions.Count - 1].framesInbetween = 9;

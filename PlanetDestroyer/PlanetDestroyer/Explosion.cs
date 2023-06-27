@@ -21,13 +21,13 @@ namespace PlanetDestroyer
             int size;
             if (i.Equals("small"))
             {
-                size = 30;
+                size = 45;
                 rect = new Rectangle(pos.X + pos.Width / 2 - Game1.screenW / size / 2, pos.Y + pos.Height / 2 - Game1.screenH / size / 2, Game1.screenW / size, Game1.screenH / size);
             }
             else if (i.Equals("large"))
             {
                 size = 2;
-                rect = new Rectangle(pos.X + pos.Width/2 - Game1.screenW / size / 2 - 10, pos.Y + pos.Height/2 - Game1.screenH / size / 2, Game1.screenW / size, Game1.screenH / size);
+                rect = new Rectangle(pos.X + pos.Width/2 - Game1.screenW / size / 2, pos.Y + pos.Height/2 - Game1.screenH / size / 2, Game1.screenW / size, Game1.screenH / size);
             }
             else size = 30;
             
@@ -40,7 +40,7 @@ namespace PlanetDestroyer
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Game1.explosionsSheet, rect, Game1.explosionRects[type][frameIndex], Color.White);
+            spriteBatch.Draw(Game1.explosionTextures[type], rect, Game1.explosionRects[type][frameIndex], Color.White);
         }
     }
 }

@@ -220,7 +220,7 @@ namespace PlanetDestroyer
             for (int i = 0; i < 3; i++)
             {
                 buttons[i].Update();
-                popups[i].Update();
+                
                 if (buttons[i].clicked && !Game1.activeSettingsModal)
                 {
                     popups[i].active = true;
@@ -278,6 +278,9 @@ namespace PlanetDestroyer
             }
             if (popups[2].active)
                 UpdateStats();
+
+            if (popups[popupIndex].active)
+                popups[popupIndex].Update();
         }
         public void UpdateStats()
         {
