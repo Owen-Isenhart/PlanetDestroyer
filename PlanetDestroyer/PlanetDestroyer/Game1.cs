@@ -53,6 +53,11 @@ namespace PlanetDestroyer
 
 
         public static bool activeSettingsModal, activePrestigeModal;
+        public static SoundEffect backgroundMusic;
+        public static SoundEffectInstance backgroundInstance;
+        public static List<SoundEffect> sounds;
+        public static List<SoundEffectInstance> soundInstances;
+        
 
         public static GameTime gT;
 
@@ -206,6 +211,21 @@ namespace PlanetDestroyer
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            backgroundMusic = Content.Load<SoundEffect>("Dystopic-Mayhem");
+            backgroundInstance = backgroundMusic.CreateInstance();
+            backgroundInstance.IsLooped = true;
+            backgroundInstance.Volume = .05f;
+            backgroundInstance.Play();
+
+            sounds = new List<SoundEffect> { Content.Load<SoundEffect>("Menu-Selection-Change-G-www.fesliyanstudios.com"), Content.Load<SoundEffect>("Menu-Button-Press-H-www.fesliyanstudios.com"), Content.Load<SoundEffect>("Menu-Scroll-A-www.fesliyanstudios.com") };
+            //soundInstances = new List<SoundEffectInstance> { sounds[0].CreateInstance(), sounds[1].CreateInstance(), sounds[2].CreateInstance() };
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    soundInstances[i].Volume = .1f;
+            //}
+            
+            //MediaPlayer.IsRepeating = true;
+
             planetTemplate = Content.Load<Texture2D>("upscaledBlankPlanet");
             fonts = new List<SpriteFont> { Content.Load<SpriteFont>("font1"), Content.Load<SpriteFont>("font2"), Content.Load<SpriteFont>("font3"), Content.Load<SpriteFont>("font4"), Content.Load<SpriteFont>("font5"), Content.Load<SpriteFont>("font6"), Content.Load<SpriteFont>("font7"), Content.Load<SpriteFont>("font8"), Content.Load<SpriteFont>("font9"), Content.Load<SpriteFont>("font10"), Content.Load<SpriteFont>("font11") };
             
@@ -221,9 +241,6 @@ namespace PlanetDestroyer
             explosionTextures["large"] = Content.Load<Texture2D>("explosion-4");
             ballShip = Content.Load<Texture2D>("ballShip (1)");
             spikyShip = Content.Load<Texture2D>("spikyShip (1)");
-            questionMark = Content.Load<Texture2D>("questionMark");
-            checkMark = Content.Load<Texture2D>("checkMark");
-            shopFont = Content.Load<SpriteFont>("shopFont1");
             shipSheet = Content.Load<Texture2D>("New Piskel (2)");
             cash = Content.Load<Texture2D>("Cash");
             cometSheet = Content.Load<Texture2D>("CometSheet");
@@ -339,6 +356,9 @@ namespace PlanetDestroyer
             //}
             gT = gameTime;
             time++;
+            //if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released) //this seems like it would be way too annoying
+            //    sounds[1].Play(volume: .03f, pitch: 0f, pan: 0f);
+
             base.Update(gameTime);
         }
 

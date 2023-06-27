@@ -78,20 +78,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="explosions.png">
-      <Name>explosions</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="upscaledExplosions.png">
-      <Name>upscaledExplosions</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="pixel.png">
       <Name>pixel</Name>
       <Importer>TextureImporter</Importer>
@@ -99,48 +85,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="shopFont1.spritefont">
-      <Name>shopFont1</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="shipItem.png">
-      <Name>shipItem</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="whitePixel.png">
       <Name>whitePixel</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="checkMark.png">
-      <Name>checkMark</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="questionMark.png">
-      <Name>questionMark</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="spaceShip.png">
-      <Name>spaceShip</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="New Piskel %281%29.png">
-      <Name>New Piskel %281%29</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -155,18 +101,6 @@
   <ItemGroup>
     <Compile Include="CometSheet.png">
       <Name>CometSheet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ballShip.png">
-      <Name>ballShip</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="spikyShip.png">
-      <Name>spikyShip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -265,13 +199,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="achievements %281%29.png">
-      <Name>achievements %281%29</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="achievements %282%29.png">
       <Name>achievements %282%29</Name>
       <Importer>TextureImporter</Importer>
@@ -312,6 +239,30 @@
       <Name>explosion-6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dystopic-Mayhem.wav">
+      <Name>Dystopic-Mayhem</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Menu-Button-Press-H-www.fesliyanstudios.com.wav">
+      <Name>Menu-Button-Press-H-www.fesliyanstudios.com</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu-Scroll-A-www.fesliyanstudios.com.wav">
+      <Name>Menu-Scroll-A-www.fesliyanstudios.com</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu-Selection-Change-G-www.fesliyanstudios.com.wav">
+      <Name>Menu-Selection-Change-G-www.fesliyanstudios.com</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

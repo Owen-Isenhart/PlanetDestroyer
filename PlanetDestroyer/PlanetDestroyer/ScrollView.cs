@@ -23,7 +23,7 @@ namespace PlanetDestroyer
         public Dictionary<int, Popup> popups;
         public List<string> popupText;
         public bool hoveringBorder, clickingBar;
-        public int hoveringIndex;
+        public int hoveringIndex, oldIndex;
         public int lastRow;
         public int cols;
         public int scrollSpeed;
@@ -50,7 +50,7 @@ namespace PlanetDestroyer
                 popups.Add(i, new Popup());
                 popups[i].text = text[i];
             }
-            hoveringIndex = -1;
+            hoveringIndex = oldIndex = -1;
             hoveringBorder = false;
             clickingBar = false;
             border = new Rectangle(rects[0].X, rects[0].Y, rects[cols-1].X + rects[0].Width - rects[0].X, rects[cols * 3 - 1].Y + rects[0].Height - rects[0].Y);
@@ -112,6 +112,7 @@ namespace PlanetDestroyer
                 }
                 else if (Game1.scrollWheel != Game1.oldScrollWheel) //using scrollwheel to move through grid
                 {
+                    
                     if (Game1.scrollWheel < Game1.oldScrollWheel) //going down
                     {
                         scrollbarRect.Y += scrollSpeed;
@@ -129,6 +130,8 @@ namespace PlanetDestroyer
                     {
                         scrollbarRect.Y = border.Bottom - scrollbarRect.Height;
                     }
+                    else
+                        Game1.sounds[2].Play(volume: .1f, pitch: 0f, pan: 0f);
                 }
 
                 for (int i = lastRow * cols - cols*3, x = 0; i < lastRow*cols; i++, x++)
@@ -137,13 +140,12 @@ namespace PlanetDestroyer
                     {
                         colors = colors.ToDictionary(p => p.Key, p => Color.White * .1f); //weird thing where some boxes retain highlighted colors after mouse moves off of it, not sure how efficient this is but it works
                         colors[i] = Color.White * .3f;
-                        
+
                         hoveringIndex = i;
+                        if (oldIndex != hoveringIndex)
+                            Game1.sounds[0].Play(volume: .1f, pitch: 1f, pan: 0f);
                         break;
-                        //if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released)
-                        //{
-                        //    //clicked
-                        //}
+
                     }
                     else
                     {
@@ -151,6 +153,7 @@ namespace PlanetDestroyer
                         hoveringIndex = -1;
                     }
                 }
+                oldIndex = hoveringIndex;
             }
             
 
