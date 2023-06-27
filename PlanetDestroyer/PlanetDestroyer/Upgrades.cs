@@ -35,8 +35,8 @@ namespace PlanetDestroyer
             hoveringIndex = -1;
             popupText = new List<string> { "a", "b", "c", "d", "e" };
             increases = new List<double> { 1, 1, 1 };
-            prices = new List<int> { 250, 500, 1000, 2000 };
-            ogPrices = new List<int> { 250, 500, 1000, 2000 };
+            prices = new List<int> { (int)(250 * Game1.prestige.costDecrease), (int)(500 * Game1.prestige.costDecrease), (int)(1000 * Game1.prestige.costDecrease), (int)(2000 * Game1.prestige.costDecrease) };
+            ogPrices = new List<int> { (int)(250 * Game1.prestige.costDecrease), (int)(500 * Game1.prestige.costDecrease), (int)(1000 * Game1.prestige.costDecrease), (int)(2000 * Game1.prestige.costDecrease) };
             int x = border.Center.X - border.Width / 5 - border.Width/40;
             int y = border.Center.Y - border.Width / 10;
             for (int i = 0; i < 4; i++)
@@ -86,8 +86,9 @@ namespace PlanetDestroyer
         {
             popupText = new List<string> { "a", "b", "c", "d", "e" };
             increases = new List<double> { 1, 1, 1 };
-            prices = new List<int> { 250, 500, 1000, 2000 };
-            ogPrices = new List<int> { 250, 500, 1000, 2000 };
+            prices = new List<int> { (int)(250 * Game1.prestige.costDecrease), (int)(500 * Game1.prestige.costDecrease), (int)(1000 * Game1.prestige.costDecrease), (int)(2000 * Game1.prestige.costDecrease) };
+            ogPrices = new List<int> { (int)(250 * Game1.prestige.costDecrease), (int)(500 * Game1.prestige.costDecrease), (int)(1000 * Game1.prestige.costDecrease), (int)(2000 * Game1.prestige.costDecrease) };
+
         }
         public void Update()
         {
@@ -104,7 +105,8 @@ namespace PlanetDestroyer
                         Game1.money.runAmount -= prices[i];
                         Money.lifetimeSpent += prices[i];
                         totalUpgrades++;
-                        prices[i] += ogPrices[i];
+                        prices[i] = prices[i] + ogPrices[i];
+
 
                         if (i == 0)
                         {

@@ -59,7 +59,7 @@ namespace PlanetDestroyer
             nonalteredDamages = new List<ulong> { 0, 0, 0 };
             for (int i = 0; i < t.Count; i++)
             {
-                prices.Add((int)Math.Pow((i + 1) * 2, 4));
+                prices.Add((int)(Math.Pow((i + 1) * 2, 4) * Game1.prestige.costDecrease));
                 priceOrLocked.Add("LOCKED");
 
                 if (tex == Game1.ballShip)
@@ -116,7 +116,7 @@ namespace PlanetDestroyer
             //prices = new List<int>();
             for (int i = 0; i < t.Count; i++)
             {
-                prices.Add((int)Math.Pow((i + 1) * 2, 4));
+                //prices.Add((int)(Math.Pow((i + 1) * 2, 4) * Game1.prestige.costDecrease));
                 if (unlocked[i])
                     priceOrLocked.Add("$" + prices[i]);
                 else
@@ -204,7 +204,7 @@ namespace PlanetDestroyer
         }
         public void DamagePlanet()
         {
-            totalDmg = shipDamages[0] + shipDamages[1] + shipDamages[2];
+            totalDmg = (ulong)(Game1.prestige.dmgIncrease * (shipDamages[0] + shipDamages[1] + shipDamages[2]));
             
             Game1.playScreen.planet.Health -= (double)totalDmg/60;
         }
@@ -233,7 +233,7 @@ namespace PlanetDestroyer
             nonalteredDamages = new List<ulong> { 0, 0, 0 };
             for (int i = 0; i < t.Count; i++)
             {
-                prices.Add((int)Math.Pow((i + 1) * 2, 4));
+                prices.Add((int)(Math.Pow((i + 1) * 2, 4) * Game1.prestige.costDecrease));
                 priceOrLocked.Add("LOCKED");
 
                 if (tex == Game1.ballShip)
@@ -340,7 +340,7 @@ namespace PlanetDestroyer
                         }
 
                         string[] text = grid.popups[i].text.Split('\n');
-                        prices[i] += (int)Math.Pow((i + 1) * 2, 3);
+                        prices[i] = (int)(prices[i] + (Math.Pow((i + 1) * 2, 3) * Game1.prestige.costDecrease));
                         text[2] = "$" + prices[i];
                         grid.popups[i].text = text[0] + "\n\n" + text[2];
                         

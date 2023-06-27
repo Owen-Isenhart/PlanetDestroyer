@@ -236,11 +236,12 @@ namespace PlanetDestroyer
             aPlanet = Content.Load<Texture2D>("achievements (2)");
             aMoney = Content.Load<Texture2D>("achievements (3)");
             aShips = Content.Load<Texture2D>("achievements (4)");
+            prestige = new Prestige();
             settings = new Settings();
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             store = new Store();
-            prestige = new Prestige();
+            
             
             money = new Money();
         }
