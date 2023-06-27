@@ -29,7 +29,7 @@ namespace PlanetDestroyer
             cometRect = new Rectangle(border.Right - border.Width / 5, moneyRect.Y - 10, 4 + border.Width / 10, 4 + border.Width / 10);
             popup = new Rectangle(0, moneyRect.Bottom, border.Width / 3, border.Height / 2 + border.Height / 5);
             popupShown = false;
-            runAmount = lifeAmount = lifetimeMoney = 100000;
+            runAmount = lifeAmount = lifetimeMoney = 500;
             comets = 0;
             deltaC = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 2)) - comets;
             comets += deltaC;
@@ -71,7 +71,6 @@ namespace PlanetDestroyer
             }
             else if (Game1.mouseRect.Intersects(cometRect))
             {
-                if (Game1.mouse.LeftButton == ButtonState.Pressed) comets++;
                 popup.X = cometRect.X + cometRect.Width / 2 - popup.Width / 2;
                 popupShown = true;
                 double temp = comets;
@@ -92,9 +91,10 @@ namespace PlanetDestroyer
         }
         public void IncreaseMoney(int i)
         {
-            runAmount += i * 1500;
-            lifeAmount += i * 1500;
-            lifetimeMoney += i * 1500;
+            int value = (int)(i * 1500 * Game1.prestige.moneyIncrease);
+            runAmount += value;
+            lifeAmount += value;
+            lifetimeMoney += value;
 
             deltaC = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 2)) - comets;
             comets += deltaC;
@@ -102,7 +102,7 @@ namespace PlanetDestroyer
         
         public void Prestige()
         {
-            runAmount = lifeAmount = 100000;
+            runAmount = lifeAmount = 500;
             comets = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 2));
             deltaC = 0;
 
