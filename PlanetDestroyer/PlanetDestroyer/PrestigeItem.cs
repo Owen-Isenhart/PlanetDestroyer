@@ -39,6 +39,8 @@ namespace PlanetDestroyer
             {
                 frameIndex = 1;
                 active = true;
+                if (Game1.cursorSound)
+                    Game1.sounds[0].Play(volume: Game1.soundsVolume, pitch: 1f, pan: 0f);
             }
 
             if (active && !Game1.mouseRect.Intersects(rect))

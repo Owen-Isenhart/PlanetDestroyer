@@ -96,10 +96,14 @@ namespace PlanetDestroyer
             {
                 if (Game1.mouseRect.Intersects(rects[i]))
                 {
+                    if (Game1.cursorSound && !Game1.oldMouseRect.Intersects(rects[i]))
+                        Game1.sounds[0].Play(volume: Game1.soundsVolume, pitch: 1f, pan: 0f);
+
                     hoveringIndex = i;
                     popupRect.X = rects[i].X - popupRect.Width - 10;
                     popupRect.Y = Game1.mouse.Y - popupRect.Height / 2;
                     shown = true;
+                    
                     if (Game1.oldMouse.LeftButton == ButtonState.Released && Game1.mouse.LeftButton == ButtonState.Pressed && Game1.money.runAmount >= prices[i])
                     {
                         Game1.money.runAmount -= prices[i];

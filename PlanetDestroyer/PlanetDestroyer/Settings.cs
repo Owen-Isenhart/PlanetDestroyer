@@ -64,7 +64,7 @@ namespace PlanetDestroyer
             popups[0].positions[2] = (new Vector2(popups[0].sliders[1].line.X - popups[0].font.MeasureString("Sounds").X - 15, popups[0].sliders[1].line.Y + popups[0].sliders[1].line.Height / 2 - popups[0].font.MeasureString("Sounds").Y / 2));
             popups[0].positions[3] = (new Vector2(popups[0].buttons[0].Center.X - popups[0].font.MeasureString("Cursor Sounds").X / 2, popups[0].buttons[0].Y - popups[0].font.MeasureString("Cursor Sounds").Y - 10));
             popups[0].positions[4] = (new Vector2(popups[0].buttons[1].Center.X - popups[0].font.MeasureString("Clicking Sound").X / 2, popups[0].buttons[1].Y - popups[0].font.MeasureString("Clicking Sound").Y - 10));
-            popups[0].positions[5] = (new Vector2(popups[0].buttons[2].Center.X - popups[0].font.MeasureString("Explosion Sounds").X / 2, popups[0].buttons[2].Y - popups[0].font.MeasureString("Explosion Sounds").Y - 10));
+            popups[0].positions[5] = (new Vector2(popups[0].buttons[2].Center.X - popups[0].font.MeasureString("Scrolling Sounds").X / 2, popups[0].buttons[2].Y - popups[0].font.MeasureString("Scrolling Sounds").Y - 10));
 
             //video
             List<Rectangle> rects = new List<Rectangle>();
@@ -158,7 +158,7 @@ namespace PlanetDestroyer
             popups[0].text.Add("Sounds"); popups[0].positions.Add(new Vector2(popups[0].sliders[1].line.X - popups[0].font.MeasureString("Sounds").X - 15, popups[0].sliders[1].line.Y + popups[0].sliders[1].line.Height / 2 - popups[0].font.MeasureString("Sounds").Y / 2));
             popups[0].text.Add("Cursor Sounds"); popups[0].positions.Add(new Vector2(popups[0].buttons[0].Center.X - popups[0].font.MeasureString("Cursor Sounds").X / 2, popups[0].buttons[0].Y - popups[0].font.MeasureString("Cursor Sounds").Y - 10));
             popups[0].text.Add("Clicking Sound"); popups[0].positions.Add(new Vector2(popups[0].buttons[1].Center.X - popups[0].font.MeasureString("Clicking Sound").X / 2, popups[0].buttons[1].Y - popups[0].font.MeasureString("Clicking Sound").Y - 10));
-            popups[0].text.Add("Explosion Sounds"); popups[0].positions.Add(new Vector2(popups[0].buttons[2].Center.X - popups[0].font.MeasureString("Explosion Sounds").X / 2, popups[0].buttons[2].Y - popups[0].font.MeasureString("Explosion Sounds").Y - 10));
+            popups[0].text.Add("Scrolling Sounds"); popups[0].positions.Add(new Vector2(popups[0].buttons[2].Center.X - popups[0].font.MeasureString("Scrolling Sounds").X / 2, popups[0].buttons[2].Y - popups[0].font.MeasureString("Scrolling Sounds").Y - 10));
 
             //video
             List<Rectangle> rects = new List<Rectangle>();

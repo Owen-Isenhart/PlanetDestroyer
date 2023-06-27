@@ -130,8 +130,8 @@ namespace PlanetDestroyer
                     {
                         scrollbarRect.Y = border.Bottom - scrollbarRect.Height;
                     }
-                    else
-                        Game1.sounds[2].Play(volume: .1f, pitch: 0f, pan: 0f);
+                    else if (Game1.scrollSound)
+                        Game1.sounds[2].Play(volume: Game1.soundsVolume, pitch: 0f, pan: 0f);
                 }
 
                 for (int i = lastRow * cols - cols*3, x = 0; i < lastRow*cols; i++, x++)
@@ -142,8 +142,8 @@ namespace PlanetDestroyer
                         colors[i] = Color.White * .3f;
 
                         hoveringIndex = i;
-                        if (oldIndex != hoveringIndex)
-                            Game1.sounds[0].Play(volume: .1f, pitch: 1f, pan: 0f);
+                        if (Game1.cursorSound && oldIndex != hoveringIndex)
+                            Game1.sounds[0].Play(volume: Game1.soundsVolume, pitch: 1f, pan: 0f);
                         break;
 
                     }

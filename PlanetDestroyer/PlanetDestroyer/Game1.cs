@@ -50,13 +50,14 @@ namespace PlanetDestroyer
 
         public static SpriteFont healthFont, shopFont;
         public static List<SpriteFont> fonts;
-
+        public static float soundsVolume;
 
         public static bool activeSettingsModal, activePrestigeModal;
         public static SoundEffect backgroundMusic;
         public static SoundEffectInstance backgroundInstance;
         public static List<SoundEffect> sounds;
         public static List<SoundEffectInstance> soundInstances;
+        public static bool cursorSound, clickSound, scrollSound, performanceMode;
         
 
         public static GameTime gT;
@@ -135,6 +136,8 @@ namespace PlanetDestroyer
                     y += 450;
                 }
             }
+            cursorSound = clickSound = scrollSound = true;
+            performanceMode = false;
             cometSources = new List<Rectangle> { new Rectangle(0, 0, 100, 100), new Rectangle(100, 0, 100, 100), new Rectangle(0, 100, 100, 100), new Rectangle(100, 100, 100, 100), new Rectangle(0, 200, 100, 100) };
             explosionRects = new Dictionary<string, List<Rectangle>>();
             explosionTextures = new Dictionary<string, Texture2D>();
@@ -214,10 +217,10 @@ namespace PlanetDestroyer
             backgroundMusic = Content.Load<SoundEffect>("Dystopic-Mayhem");
             backgroundInstance = backgroundMusic.CreateInstance();
             backgroundInstance.IsLooped = true;
-            backgroundInstance.Volume = .05f;
+            backgroundInstance.Volume = .1f;
             backgroundInstance.Play();
 
-            sounds = new List<SoundEffect> { Content.Load<SoundEffect>("Menu-Selection-Change-G-www.fesliyanstudios.com"), Content.Load<SoundEffect>("Menu-Button-Press-H-www.fesliyanstudios.com"), Content.Load<SoundEffect>("Menu-Scroll-A-www.fesliyanstudios.com") };
+            sounds = new List<SoundEffect> { Content.Load<SoundEffect>("Menu-Selection-Change-G-www.fesliyanstudios.com"), Content.Load<SoundEffect>("menu-button-press-h-wwwfesliyanstudioscom_kXBDSQWh"), Content.Load<SoundEffect>("Menu-Scroll-A-www.fesliyanstudios.com") };
             //soundInstances = new List<SoundEffectInstance> { sounds[0].CreateInstance(), sounds[1].CreateInstance(), sounds[2].CreateInstance() };
             //for (int i = 0; i < 3; i++)
             //{
@@ -345,20 +348,37 @@ namespace PlanetDestroyer
             store.DamagePlanet();
             if (settings.resize)
                 updateScreen(settings.w, settings.h);
-            if (time % 2 == 0)
+            if (time % 2 == 0 && !performanceMode)
                 planetTexture = playScreen.planet.UpdatePlanetTexture();
-            //if (kb.IsKeyDown(Keys.Space) && oldKB.IsKeyUp(Keys.Space))
-            //{
-            //    planetGrit = rnd.Next(5, 100);
-            //    temp = new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
 
-            //    planetTexture = planet.PlanetTextureGeneration();
-            //}
             gT = gameTime;
             time++;
-            //if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released) //this seems like it would be way too annoying
-            //    sounds[1].Play(volume: .03f, pitch: 0f, pan: 0f);
 
+            backgroundInstance.Volume = (float)settings.popups[0].sliders[0].sliderValue / 150;
+            soundsVolume = (float)settings.popups[0].sliders[1].sliderValue / 200;
+
+            if (settings.popups[0].buttonStates[0])
+                cursorSound = true;
+            else
+                cursorSound = false;
+
+            if (settings.popups[0].buttonStates[1])
+                clickSound = true;
+            else
+                clickSound = false;
+
+            if (settings.popups[0].buttonStates[2])
+                scrollSound = true;
+            else
+                scrollSound = false;
+
+            if (settings.popups[1].buttonStates[0])
+                performanceMode = true;
+            else
+                performanceMode = false;
+
+            if (clickSound && mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released)
+                sounds[1].Play(volume: soundsVolume / 3f, pitch: .05f, pan: 0f);
             base.Update(gameTime);
         }
 
