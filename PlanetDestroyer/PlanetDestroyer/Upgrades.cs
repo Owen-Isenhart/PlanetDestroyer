@@ -82,6 +82,13 @@ namespace PlanetDestroyer
             popupRect.Width = Game1.screenW / 5;
             popupRect.Height = Game1.screenH / 7;
         }
+        public void Prestige()
+        {
+            popupText = new List<string> { "a", "b", "c", "d", "e" };
+            increases = new List<double> { 1, 1, 1 };
+            prices = new List<int> { 250, 500, 1000, 2000 };
+            ogPrices = new List<int> { 250, 500, 1000, 2000 };
+        }
         public void Update()
         {
             for (int i = 0; i < rects.Count; i++)

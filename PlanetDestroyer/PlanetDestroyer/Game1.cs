@@ -120,17 +120,7 @@ namespace PlanetDestroyer
             gd = GraphicsDevice;
             shipRects = new List<Rectangle>();
             int y = 0;
-            //for (int i = 0, x= 0; i < 7; i ++, x++)
-            //{
-            //    if (i != 0 && i != 6)
-            //        shipRects.Add(new Rectangle(x * 450, y, 450, 450));
-            //    if (x == 2)
-            //    {
-            //        x = -1;
-            //        y += 450;
-            //    }
-            //}
-            //y = 0;
+            
             for (int i = 0, x = 0; i < 5; i ++, x++)
             {
                 shipRects.Add(new Rectangle(x * 450, y, 450, 450));
@@ -278,6 +268,21 @@ namespace PlanetDestroyer
             if (result + size >= fonts.Count) return fonts[fonts.Count - 1];
             return fonts[result + size];
 
+        }
+
+        public static void Prestige()
+        {
+            //money prestige
+            money.Prestige();
+
+            //planet + playscreen prestige
+            playScreen.Prestige();
+
+            //store prestige
+            store.Prestige();
+
+            //upgrades prestige
+            upgrades.Prestige();
         }
         /// <summary>
         /// Allows the game to run logic such as updating the world,

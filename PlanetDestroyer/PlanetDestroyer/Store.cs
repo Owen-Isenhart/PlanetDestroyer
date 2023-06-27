@@ -95,8 +95,10 @@ namespace PlanetDestroyer
             string[] text = grid.popups[0].text.Split('\n');
             grid.popups[0].text = text[0] + "\n\n$" + prices[0];
             totalShips = 0;
-            widths = new List<int> { Game1.screenW, 1600, 1366, 1280, 1024 };
-            heights = new List<int> { Game1.screenH, 900, 768, 720, 576 };
+
+            widths = new List<int> { GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 5, 1600, 1400, 1200, 1000 };
+            heights = new List<int> { GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 80, 900, 750, 600, 550 };
+
         }
         public void resizeComponents()
         {
@@ -206,6 +208,66 @@ namespace PlanetDestroyer
             
             Game1.playScreen.planet.Health -= (double)totalDmg/60;
         }
+        public void Prestige()
+        {
+            items = new List<List<StoreItem>>();
+
+            for (int j = 0; j < 5; j++)
+            {
+                items.Add(new List<StoreItem>());
+            }
+            totalDmg = 0;
+            indexes = new List<int>();
+            textures = new Texture2D[] { Game1.shipSheet, Game1.ballShip, Game1.spikyShip };
+            int diff = (int)(storeBorder.Width - font.MeasureString("STORE").X);
+            titlePos = new Vector2(storeBorder.X + diff / 2, storeBorder.Y + font.MeasureString("STORE").Y / 4);
+            List<string> sTemp = new List<string>();
+            List<Rectangle> t = organizeRects(12);
+            List<Texture2D> temp = new List<Texture2D>();
+            colors = new List<Color>();
+            Texture2D tex = Game1.spikyShip;
+            unlocked = new List<bool>();
+            priceOrLocked = new List<string>();
+            prices = new List<int>();
+            shipDamages = new List<ulong> { 0, 0, 0 };
+            nonalteredDamages = new List<ulong> { 0, 0, 0 };
+            for (int i = 0; i < t.Count; i++)
+            {
+                prices.Add((int)Math.Pow((i + 1) * 2, 4));
+                priceOrLocked.Add("LOCKED");
+
+                if (tex == Game1.ballShip)
+                {
+                    tex = Game1.spikyShip;
+                    colors.Add(new Color(255 - (i / 3) * 65, 255 - (i / 3) * 65, 255 - (i / 3) * 30));
+                    int index = 1 + (i / 3);
+                    sTemp.Add("Laser Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
+                }
+                else if (tex == Game1.shipSheet)
+                {
+                    tex = Game1.ballShip;
+                    colors.Add(new Color(255 - (i / 3) * 10, 255 - (i / 3) * 70, 255 - (i / 3) * 70));
+                    int index = 1 + (i / 3);
+                    sTemp.Add("Gunner Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
+                }
+                else
+                {
+                    tex = Game1.shipSheet;
+                    colors.Add(new Color(255, 255 - (i / 3) * 55, 255 - (i / 3) * 65));
+                    int index = 1 + (i / 3);
+                    sTemp.Add("Missile Ship " + index + ": " + (int)Math.Pow(i + 1, 2) + " dps\n\n" + priceOrLocked[i]);
+                }
+                unlocked.Add(false);
+
+                temp.Add(tex);
+            }
+            unlocked[0] = true; 
+            texs = temp;
+            grid = new ScrollView(storeBorder, Game1.shipRects[0], t, temp, colors, sTemp, 3, 0);
+            string[] text = grid.popups[0].text.Split('\n');
+            grid.popups[0].text = text[0] + "\n\n$" + prices[0];
+            
+        }
 
         public void Update()
         {
@@ -218,7 +280,7 @@ namespace PlanetDestroyer
                     grid.popups[i].shown = true;
                     grid.calculatePopup("left", x);
 
-                    if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && unlocked[i])
+                    if (Game1.mouse.LeftButton == ButtonState.Pressed && Game1.oldMouse.LeftButton == ButtonState.Released && unlocked[i] && Game1.money.runAmount >= prices[i])
                     {
                         Game1.money.runAmount -= prices[i];
                         Money.lifetimeSpent += prices[i];

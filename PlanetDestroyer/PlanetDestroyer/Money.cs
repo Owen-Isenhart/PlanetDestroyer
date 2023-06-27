@@ -48,6 +48,8 @@ namespace PlanetDestroyer
             popup = new Rectangle(0, moneyRect.Bottom, border.Width / 3, border.Height / 2 + border.Height / 5);
             font = Game1.getFont(7);
         }
+
+        
         public void Update()
         {
             base.Update();
@@ -90,22 +92,22 @@ namespace PlanetDestroyer
         {
             runAmount += i * 1500;
             lifeAmount += i * 1500;
-            lifetimeMoney = lifeAmount;
+            lifetimeMoney += i * 1500;
+
+            deltaC = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 4)) - comets;
+            comets += deltaC;
         }
         
         public void Prestige()
         {
-            runAmount = 0;
+            runAmount = lifeAmount = 0;
             comets = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 3));
-            multiplier = 1 + (double)comets / 5;
+            deltaC = 0;
 
-            deltaC = comets - (int)Math.Sqrt(lifeAmount / Math.Pow(10, 3)); 
-            deltaM = 1 + (double)deltaC / 5;
         }
         
         public void Draw(SpriteBatch spriteBatch)
         {
-            //money icon or something
             spriteBatch.Draw(Game1.pixel, border, Color.White);
             spriteBatch.Draw(Game1.logo, new Rectangle(border.Center.X - border.Width / 8, border.Y + 5, border.Width / 4, border.Width / 5), Color.White);
             spriteBatch.Draw(Game1.cash, moneyRect, Color.White);

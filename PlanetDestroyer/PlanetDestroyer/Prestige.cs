@@ -21,6 +21,7 @@ namespace PlanetDestroyer
         public SpriteFont font;
         public static int totalPrestiges;
         public int confirmationIndex;
+        public double dmgIncrease, moneyIncrease, costDecrease;
         public Prestige()
         {
             prestigeBorder = new Rectangle(0, Game1.store.storeBorder.Bottom + 1, (Game1.screenW / 2) - (int)(Game1.screenW / 2.5) / 2 - 1, Game1.screenH - Game1.store.storeBorder.Bottom);
@@ -42,6 +43,7 @@ namespace PlanetDestroyer
             font = Game1.getFont(2);
             totalPrestiges = 0;
             confirmationIndex = 0;
+            dmgIncrease = moneyIncrease = costDecrease = 1;
             setupPopups();
         }
         public void setupPopups()
@@ -126,10 +128,17 @@ namespace PlanetDestroyer
 
                 if (!confirmations[i].buttonStates[0])
                 {
-                    //do the actual prestige thing
+                    Game1.Prestige();
                     totalPrestiges++;
                     confirmations[i].active = false;
                     confirmations[i].buttonStates[0] = true;
+
+                    //update variables depending on value of i
+                    //dmg
+
+                    //mony
+
+                    //cost
                 }
             }
             if (count > 0)
@@ -137,7 +146,12 @@ namespace PlanetDestroyer
             else
                 Game1.activePrestigeModal = false;
 
-            
+            //Update text if confirmation
+            //dmg
+
+            //mony
+
+            //cost
             
         }
         public void Draw(SpriteBatch spriteBatch)
