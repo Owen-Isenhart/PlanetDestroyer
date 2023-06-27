@@ -53,7 +53,7 @@ namespace PlanetDestroyer
             //dmg
             confirmations[0].text.Add("Damage Prestige"); confirmations[0].positions.Add(new Vector2(confirmations[0].window.Center.X - confirmations[0].font.MeasureString(confirmations[0].text[0]).X / 2, confirmations[0].window.Y + 10));
             confirmations[0].text.Add("Prestiging will reset your game for an added benefit"); 
-            confirmations[0].text.Add("The percentage of increase is proportional to your comets"); 
+            confirmations[0].text.Add("Your comets and past prestiges determine the percentage"); 
             confirmations[0].text.Add("This prestige will increase all damage done by _%"); 
             confirmations[0].text.Add("Are you sure you want to prestige?"); 
             for (int i = 1; i < 5; i++)
@@ -69,7 +69,7 @@ namespace PlanetDestroyer
             //money
             confirmations[1].text.Add("Money Prestige"); confirmations[1].positions.Add(new Vector2(confirmations[1].window.Center.X - confirmations[1].font.MeasureString(confirmations[1].text[0]).X / 2, confirmations[1].window.Y + 10));
             confirmations[1].text.Add("Prestiging will reset your game for an added benefit");
-            confirmations[1].text.Add("The percentage of increase is proportional to your comets");
+            confirmations[1].text.Add("Your comets and past prestiges determine the percentage");
             confirmations[1].text.Add("This prestige will increase money gained by _%");
             confirmations[1].text.Add("Are you sure you want to prestige?");
             for (int i = 1; i < 5; i++)
@@ -84,7 +84,7 @@ namespace PlanetDestroyer
             //sale
             confirmations[2].text.Add("Price Prestige"); confirmations[2].positions.Add(new Vector2(confirmations[2].window.Center.X - confirmations[2].font.MeasureString(confirmations[2].text[0]).X / 2, confirmations[2].window.Y + 10));
             confirmations[2].text.Add("Prestiging will reset your game for an added benefit");
-            confirmations[2].text.Add("The percentage of increase is proportional to your comets");
+            confirmations[2].text.Add("Your comets and past prestiges determine the percentage");
             confirmations[2].text.Add("This prestige will decrease all prices by _%");
             confirmations[2].text.Add("Are you sure you want to prestige?");
             for (int i = 1; i < 5; i++)
