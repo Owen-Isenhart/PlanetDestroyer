@@ -50,7 +50,7 @@ namespace PlanetDestroyer
                 }
                 
             }
-            popupRect.Width = Game1.screenW / 5;
+            popupRect.Width = (int)(Game1.screenW / 4.5);
             popupRect.Height = Game1.screenH / 7;
             totalUpgrades = 0;
         }
@@ -79,7 +79,7 @@ namespace PlanetDestroyer
 
             }
             //popupRect.Y = rects[0].Bottom + 10;
-            popupRect.Width = Game1.screenW / 5;
+            popupRect.Width = (int)(Game1.screenW / 4.5);
             popupRect.Height = Game1.screenH / 7;
         }
         public void Prestige()

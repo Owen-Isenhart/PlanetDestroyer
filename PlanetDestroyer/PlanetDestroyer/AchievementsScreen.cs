@@ -47,7 +47,7 @@ namespace PlanetDestroyer
                 else if (i % 3 == 0)
                 {
                     tex = Game1.aPlanet;
-                    int d = (i + 1) * 50;
+                    int d = (i + 1) * 20;
                     s = "Achievement " + (i + 1) + "\n\nDestroy " + d + " planets";
                     colors.Add(new Color(255 - i, 255, 255 - i * 2));
                 }
@@ -89,7 +89,7 @@ namespace PlanetDestroyer
                 else if (i % 3 == 0)
                 {
                     tex = Game1.aPlanet;
-                    int d = (i + 1) * 50;
+                    int d = (i + 1) * 20;
                     s = "Achievement " + (i + 1) + "\n\nDestroy " + d + " planets";
                     colors.Add(new Color(255 - i, 255, 255 - i * 2));
                 }

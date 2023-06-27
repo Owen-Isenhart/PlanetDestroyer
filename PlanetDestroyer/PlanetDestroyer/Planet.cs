@@ -14,7 +14,7 @@ namespace PlanetDestroyer
     public class Planet
     {
         public double Health;
-        public int index, time, buffer;
+        public int index, time, buffer, fontSize;
         public Rectangle rect;
         public List<Explosion> explosions; //from clicking
         public string text;
@@ -32,7 +32,8 @@ namespace PlanetDestroyer
             explosions = new List<Explosion>();
             time = 80;
             text = Health + " Hits";
-            font = Game1.getFont(0);
+            fontSize = 0;
+            font = Game1.getFont(fontSize);
             smallFont = Game1.getFont(7);
             textSize = font.MeasureString(text);
             smallTextSize = smallFont.MeasureString("dps: 0 hits/sec");
@@ -45,11 +46,12 @@ namespace PlanetDestroyer
             Game1.planetTexture = PlanetTextureGeneration();
             totalDestroyed = 0;
             totalClicks = 0;
+
         }
         public void resizeComponents()
         {
             rect = new Rectangle(Game1.screenW / 2 - Game1.screenW / 5 / 2, Game1.screenH / 2 - Game1.screenW / 5 / 3, Game1.screenW / 5, Game1.screenW / 5);
-            font = Game1.getFont(0);
+            font = Game1.getFont(fontSize);
             textSize = font.MeasureString(text);
             smallFont = Game1.getFont(7);
             smallTextSize = smallFont.MeasureString("dps: 0 hits/sec");
@@ -63,6 +65,12 @@ namespace PlanetDestroyer
             //explosions.Clear();
             text = Math.Round(Health) + " Hits";
             textSize = font.MeasureString(text);
+            if (textSize.X >= (int)(Game1.screenW / 2.5))
+            {
+                fontSize++;
+                font = Game1.getFont(fontSize);
+                textSize = font.MeasureString(text);
+            }
             Game1.planetGrit = Game1.rnd.Next(5, 50);
             Game1.temp = new Color(Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255), Game1.rnd.Next(0, 255));
             while (Darken(Game1.temp) == Color.Black || Darken(Darken(Game1.temp)) == Color.Black)
