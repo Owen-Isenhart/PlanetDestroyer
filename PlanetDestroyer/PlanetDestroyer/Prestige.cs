@@ -142,7 +142,7 @@ namespace PlanetDestroyer
                         dmgPercent = 0;
                         moneyPercent = 0;
                         costPercent = 0;
-                        Game1.Prestige();
+                        Game1.PrestigeGame();
                         break;
                     }
 
@@ -153,7 +153,7 @@ namespace PlanetDestroyer
                         dmgPercent = 0;
                         moneyPercent = 0;
                         costPercent = 0;
-                        Game1.Prestige();
+                        Game1.PrestigeGame();
                         break;
                     }
 
@@ -164,7 +164,7 @@ namespace PlanetDestroyer
                         dmgPercent = 0;
                         moneyPercent = 0;
                         costPercent = 0;
-                        Game1.Prestige();
+                        Game1.PrestigeGame();
                         break;
                     }
 

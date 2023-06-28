@@ -14,7 +14,6 @@ namespace PlanetDestroyer
     public class Money : Animation
     {
         public int runAmount, lifeAmount, index, comets, deltaC;
-        public double multiplier, deltaM;
    
         public Rectangle border, moneyRect, cometRect, popup; //C# can't inherit more than 1 class so i can't just use my popup class :(
         public bool popupShown;
@@ -34,8 +33,7 @@ namespace PlanetDestroyer
             deltaC = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 2)) - comets;
             comets += deltaC;
             index = 1;
-            multiplier = 1;
-            deltaM = 0;
+
             repeat = true;
             lifetimeSpent = 0;
             popupText = new string[] { "a", "b", "c" };

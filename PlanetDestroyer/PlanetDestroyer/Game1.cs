@@ -293,7 +293,7 @@ namespace PlanetDestroyer
 
         }
 
-        public static void Prestige()
+        public static void PrestigeGame()
         {
             //money prestige
             money.Prestige();
@@ -402,6 +402,230 @@ namespace PlanetDestroyer
             settings.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        public void Save() //i dont want to use a serializer or something like that so i'm stuck writing like 50 for loops and manually writing to a file
+        {
+
+            //Game1
+            string str = screenW + " " + screenH + " " + clickDamage + "\n";
+
+            //achievements
+            for (int i = 0; i < achievements.completed.Count; i++)
+            {
+                str += achievements.completed[i] + " " + achievements.grid.popups[i].text + " ";
+            }
+            str += "\n";
+            
+            //money
+            str += money.runAmount + " " + money.lifeAmount + " " + money.comets + " " + money.deltaC + " " + Money.lifetimeMoney + " " + Money.lifetimeSpent + "\n";
+            
+            //planet
+            str += playScreen.planet.index + " " + Planet.totalDestroyed + " " + Planet.totalClicks + "\n";
+            
+            //prestige
+            str += Prestige.totalPrestiges + " " + prestige.dmgIncrease + " " + prestige.moneyIncrease + " " + prestige.costDecrease + " " + prestige.dmgPercent + " " +  prestige.moneyPercent + " " + prestige.costPercent + "\n";
+            
+            //settings
+            str += settings.popups[0].sliders[0].sliderValue + " " + settings.popups[0].sliders[1].sliderValue + " "; //slider values
+            for (int i = 0; i < settings.popups.Count; i ++)
+            {
+                for (int j = 0; j < settings.popups[i].buttonStates.Count; j++)
+                {
+                    str += settings.popups[i].buttonStates[j] + " "; //all button states
+                }
+            }
+            str += settings.popups[1].dropdowns[0].selectedIndex + "\n"; //dropdown
+
+            //store
+            str += store.items.Count + " " + store.items[0].Count + " ";
+            for (int i = 0; i < store.items.Count; i++)
+            {
+                for (int j = 0; j < store.items[i].Count; j++)
+                {
+                    str += store.items[i][j].dps + " " + store.items[i][j].index + " " + store.items[i][j].dist + " " + store.items[i][j].angleX + " " + store.items[i][j].angleY + " " + store.items[i][j].subX + " " + store.items[i][j].subY + " " + store.items[i][j].rect.X + " " + store.items[i][j].rect.Y + " " + store.items[i][j].rect.Width + " " + store.items[i][j].rect.Height + " " + store.items[i][j].frameIndex + " " + store.items[i][j].color.R + " " + store.items[i][j].color.G + " " + store.items[i][j].color.B;
+                }
+            }
+            for (int i = 0; i < store.nonalteredDamages.Count; i++)
+            {
+                str += store.shipDamages[i] + " " + store.nonalteredDamages[i] + " ";
+            }
+            for (int i = 0; i < store.grid.popups.Count; i++)
+            {
+                str += store.grid.popups[i].text + " " + store.prices[i] + " " + store.unlocked[i] + " ";
+            }
+            str += store.totalDmg + " " + Store.totalShips + "\n";
+
+            //upgrades
+            str += Upgrades.totalUpgrades + " ";
+            for (int i = 0; i < upgrades.prices.Count; i++)
+            {
+                str += upgrades.prices[i] + " " + upgrades.ogPrices[i] + " ";
+            }
+            for (int i = 0; i < upgrades.increases.Count; i++)
+            {
+                str += upgrades.increases[i] + " ";
+            }
+
+
+            SaveAndLoad.Save(str, "saveFile.txt");
+        }
+        public void Load()
+        {
+            string str = SaveAndLoad.Load("saveFile.txt");
+            List<string> strings = str.Split('\n').ToList();
+
+            List<string> g1 = strings[0].Split(' ').ToList();
+            Int32.TryParse(g1[0], out screenW); Int32.TryParse(g1[1], out screenH); Int32.TryParse(g1[2], out clickDamage);
+
+            List<string> ach = strings[1].Split(' ').ToList();
+            for (int i = 0; i < ach.Count / 2; i += 2) //no idea if this will work
+            {
+                bool temp;
+                bool worked = bool.TryParse(ach[i], out temp);
+                if (worked)
+                    achievements.completed[i] = temp;
+
+                achievements.grid.popups[i].text = ach[i + 1];
+                
+            }
+
+            List<string> mny = strings[2].Split(' ').ToList();
+            Int32.TryParse(mny[0], out money.runAmount); Int32.TryParse(mny[1], out money.lifeAmount); Int32.TryParse(mny[2], out money.comets); Int32.TryParse(mny[3], out money.deltaC); Int32.TryParse(mny[4], out Money.lifetimeMoney); Int32.TryParse(mny[5], out Money.lifetimeSpent);
+
+            List<string> plan = strings[3].Split(' ').ToList();
+            Int32.TryParse(plan[0], out playScreen.planet.index); Int32.TryParse(plan[1], out Planet.totalDestroyed); Int32.TryParse(plan[2], out Planet.totalClicks);
+
+            List<string> prest = strings[4].Split(' ').ToList();
+            Int32.TryParse(prest[0], out Prestige.totalPrestiges); double.TryParse(prest[1], out prestige.dmgIncrease); double.TryParse(prest[2], out prestige.moneyIncrease); double.TryParse(prest[3], out prestige.costDecrease); double.TryParse(prest[4], out prestige.dmgPercent); double.TryParse(prest[5], out prestige.moneyPercent); double.TryParse(prest[6], out prestige.costPercent);
+
+            List<string> sett = strings[5].Split(' ').ToList();
+            Int32.TryParse(sett[0], out settings.popups[0].sliders[0].sliderValue); Int32.TryParse(sett[1], out settings.popups[0].sliders[1].sliderValue);
+            int index = 2;
+            for (int i = 0; i < settings.popups.Count; i ++)
+            {
+                for (int j = 0; j < settings.popups[i].buttonStates.Count; j++)
+                {
+                    bool temp;
+                    bool worked = bool.TryParse(sett[index], out temp);
+                    if (worked)
+                        settings.popups[i].buttonStates[j] = temp;
+                    index++;
+                }
+            }
+            Int32.TryParse(sett[index], out settings.popups[1].dropdowns[0].selectedIndex);
+
+            List<string> sto = strings[6].Split(' ').ToList();
+
+            
+            int row;
+            int col;
+            bool allowed = Int32.TryParse(sto[0], out row); Int32.TryParse(sto[1], out col);
+            int stoIndex = 2;
+            if (allowed)
+            {
+                store.items = new List<List<StoreItem>>();
+                
+                for (int i = 0; i < row; i++)
+                {
+                    store.items.Add(new List<StoreItem>());
+                    for (int j = 0; j < col; j++)
+                    {
+                        int dps, ind, dist, x, y, w, h, r, g, b;
+                        bool sX, sY;
+                        float aX, aY;
+                        //int, int, int, float, float, bool, bool, int, int, int, int, int
+                        Int32.TryParse(sto[stoIndex], out dps);
+                        stoIndex++;
+                        Int32.TryParse(sto[stoIndex], out ind);
+                        stoIndex++; 
+                        Int32.TryParse(sto[stoIndex], out dist);
+                        stoIndex++;
+                        float.TryParse(sto[stoIndex], out aX);
+                        stoIndex++;
+                        float.TryParse(sto[stoIndex], out aY);
+                        stoIndex++;
+                        bool.TryParse(sto[stoIndex], out sX);
+                        stoIndex++;
+                        bool.TryParse(sto[stoIndex], out sY);
+                        stoIndex++;
+                        Int32.TryParse(sto[stoIndex], out x);
+                        stoIndex++; 
+                        Int32.TryParse(sto[stoIndex], out y);
+                        stoIndex++; 
+                        Int32.TryParse(sto[stoIndex], out w);
+                        stoIndex++; 
+                        Int32.TryParse(sto[stoIndex], out h);
+                        stoIndex++; 
+                        Int32.TryParse(sto[stoIndex], out r);
+                        stoIndex++;
+                        Int32.TryParse(sto[stoIndex], out g);
+                        stoIndex++;
+                        Int32.TryParse(sto[stoIndex], out b);
+                        stoIndex++;
+
+                        
+                        store.items[i].Add(new StoreItem("ship", ind, 0, new Rectangle(x, y, w, h), store.textures[ind % 3], new Color(r, g, b)));
+                        store.items[i][j].angleX = aX;
+                        store.items[i][j].angleY = aY;
+                        store.items[i][j].dps = dps;
+                        store.items[i][j].subX = sX;
+                        store.items[i][j].subY = sY;
+                        store.items[i][j].dist = dist;
+                    }
+                }
+                for (int i = 0; i < store.nonalteredDamages.Count; i++) //dk if this works
+                {
+                    ulong dmg;
+                    ulong.TryParse(sto[stoIndex], out dmg);
+                    store.shipDamages[i] = dmg;
+                    stoIndex++;
+                    ulong.TryParse(sto[stoIndex], out dmg);
+                    store.nonalteredDamages[i] = dmg;
+                    stoIndex++;
+                }
+                for (int i = 0; i < store.grid.popups.Count; i++)
+                {
+                    store.grid.popups[i].text = sto[stoIndex];
+                    stoIndex++;
+                    int temp;
+                    Int32.TryParse(sto[stoIndex], out temp);
+                    store.prices[i] = temp;
+                    stoIndex++;
+                    bool l;
+                    bool.TryParse(sto[stoIndex], out l);
+                    store.unlocked[i] = l;
+                    stoIndex++;
+                }
+                ulong.TryParse(sto[stoIndex], out store.totalDmg);
+                Int32.TryParse(sto[stoIndex + 1], out Store.totalShips);
+            }
+
+            List<string> upg = strings[7].Split(' ').ToList();
+            bool wo = Int32.TryParse(upg[0], out Upgrades.totalUpgrades);
+            if (wo)
+            {
+                int upIndex = 1;
+                for (int i = 0; i < upgrades.prices.Count; i++)
+                {
+                    int temp;
+                    Int32.TryParse(upg[upIndex], out temp);
+                    upgrades.prices[i] = temp;
+                    upIndex++;
+                    Int32.TryParse(upg[upIndex], out temp);
+                    upgrades.ogPrices[i] = temp;
+                    upIndex++;
+                        
+                }
+                for (int i = 0; i < upgrades.increases.Count; i++)
+                {
+                    int temp;
+                    Int32.TryParse(upg[upIndex], out temp);
+                    upgrades.increases[i] = temp;
+                    upIndex++;
+                }
+            }
+
         }
     }
 }

@@ -15,7 +15,7 @@ namespace PlanetDestroyer
     {
         public Rectangle storeBorder;
         public List<List<StoreItem>> items;
-        public List<int> indexes;
+        //public List<int> indexes;
         public List<ulong> shipDamages, nonalteredDamages;
         public List<Color> colors;
         public ScrollView grid;
@@ -41,7 +41,7 @@ namespace PlanetDestroyer
             {
                 items.Add(new List<StoreItem>());
             }
-            indexes = new List<int>();
+            //indexes = new List<int>();
             totalDmg = 0;
             font = Game1.getFont(1);
             textures = new Texture2D[] { Game1.shipSheet, Game1.ballShip, Game1.spikyShip };
@@ -217,7 +217,7 @@ namespace PlanetDestroyer
                 items.Add(new List<StoreItem>());
             }
             totalDmg = 0;
-            indexes = new List<int>();
+            //indexes = new List<int>();
             textures = new Texture2D[] { Game1.shipSheet, Game1.ballShip, Game1.spikyShip };
             int diff = (int)(storeBorder.Width - font.MeasureString("STORE").X);
             titlePos = new Vector2(storeBorder.X + diff / 2, storeBorder.Y + font.MeasureString("STORE").Y / 4);
