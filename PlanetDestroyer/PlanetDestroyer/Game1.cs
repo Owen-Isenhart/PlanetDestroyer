@@ -263,12 +263,16 @@ namespace PlanetDestroyer
             upgrades = new Upgrades();
             achievements = new AchievementsScreen();
             store = new Store();
-            
-            
             money = new Money();
+
+            Load();
         }
 
-        
+        protected override void OnExiting(object sender, EventArgs args)
+        {
+            Save();
+            base.OnExiting(sender, args);
+        }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
@@ -408,114 +412,123 @@ namespace PlanetDestroyer
         {
 
             //Game1
-            string str = screenW + " " + screenH + " " + clickDamage + "\n";
+            string str = screenW + "+" + screenH + "+" + clickDamage + "_";
+
 
             //achievements
             for (int i = 0; i < achievements.completed.Count; i++)
             {
-                str += achievements.completed[i] + " " + achievements.grid.popups[i].text + " ";
+                str += achievements.completed[i] + "+" + achievements.grid.popups[i].text + "+";
             }
-            str += "\n";
+            str += "_";
             
             //money
-            str += money.runAmount + " " + money.lifeAmount + " " + money.comets + " " + money.deltaC + " " + Money.lifetimeMoney + " " + Money.lifetimeSpent + "\n";
+            str += money.runAmount + "+" + money.lifeAmount + "+" + money.comets + "+" + money.deltaC + "+" + Money.lifetimeMoney + "+" + Money.lifetimeSpent + "_";
             
             //planet
-            str += playScreen.planet.index + " " + Planet.totalDestroyed + " " + Planet.totalClicks + "\n";
+            str += playScreen.planet.index + "+" + Planet.totalDestroyed + "+" + Planet.totalClicks + "_";
             
             //prestige
-            str += Prestige.totalPrestiges + " " + prestige.dmgIncrease + " " + prestige.moneyIncrease + " " + prestige.costDecrease + " " + prestige.dmgPercent + " " +  prestige.moneyPercent + " " + prestige.costPercent + "\n";
+            str += Prestige.totalPrestiges + "+" + prestige.dmgIncrease + "+" + prestige.moneyIncrease + "+" + prestige.costDecrease + "+" + prestige.dmgPercent + "+" +  prestige.moneyPercent + "+" + prestige.costPercent + "_";
             
             //settings
-            str += settings.popups[0].sliders[0].sliderValue + " " + settings.popups[0].sliders[1].sliderValue + " "; //slider values
+            str += settings.popups[0].sliders[0].sliderValue + "+" + settings.popups[0].sliders[1].sliderValue + "+"; //slider values
             for (int i = 0; i < settings.popups.Count; i ++)
             {
                 for (int j = 0; j < settings.popups[i].buttonStates.Count; j++)
                 {
-                    str += settings.popups[i].buttonStates[j] + " "; //all button states
+                    str += settings.popups[i].buttonStates[j] + "+"; //all button states
                 }
             }
-            str += settings.popups[1].dropdowns[0].selectedIndex + "\n"; //dropdown
+            str += settings.popups[1].dropdowns[0].selectedIndex + "_"; //dropdown
 
             //store
-            str += store.items.Count + " " + store.items[0].Count + " ";
-            for (int i = 0; i < store.items.Count; i++)
+            str += store.items.Count + "+" + store.items[0].Count + "+";
+            for (int i = store.items[0].Count - 1; i > -1; i--)
             {
-                for (int j = 0; j < store.items[i].Count; j++)
-                {
-                    str += store.items[i][j].dps + " " + store.items[i][j].index + " " + store.items[i][j].dist + " " + store.items[i][j].angleX + " " + store.items[i][j].angleY + " " + store.items[i][j].subX + " " + store.items[i][j].subY + " " + store.items[i][j].rect.X + " " + store.items[i][j].rect.Y + " " + store.items[i][j].rect.Width + " " + store.items[i][j].rect.Height + " " + store.items[i][j].frameIndex + " " + store.items[i][j].color.R + " " + store.items[i][j].color.G + " " + store.items[i][j].color.B;
-                }
+                str += store.items[0][i].index + "+";
+                //for (int j = 0; j < store.items[i].Count; j++)
+                //{
+                //    //str += store.items[i][j].dps + "+" + store.items[i][j].index + "+" + store.items[i][j].dist + "+" + store.items[i][j].angleX + "+" + store.items[i][j].angleY + "+" + store.items[i][j].subX + "+" + store.items[i][j].subY + "+" + store.items[i][j].rect.X + "+" + store.items[i][j].rect.Y + "+" + store.items[i][j].rect.Width + "+" + store.items[i][j].rect.Height + "+" + store.items[i][j].frameIndex + "+" + store.items[i][j].color.R + "+" + store.items[i][j].color.G + "+" + store.items[i][j].color.B + "+";
+                //}
             }
             for (int i = 0; i < store.nonalteredDamages.Count; i++)
             {
-                str += store.shipDamages[i] + " " + store.nonalteredDamages[i] + " ";
+                str += store.shipDamages[i] + "+" + store.nonalteredDamages[i] + "+";
             }
             for (int i = 0; i < store.grid.popups.Count; i++)
             {
-                str += store.grid.popups[i].text + " " + store.prices[i] + " " + store.unlocked[i] + " ";
+                str += store.grid.popups[i].text + "+" + store.prices[i] + "+" + store.unlocked[i] + "+";
             }
-            str += store.totalDmg + " " + Store.totalShips + "\n";
+            str += store.totalDmg + "+" + Store.totalShips + "_";
 
             //upgrades
-            str += Upgrades.totalUpgrades + " ";
+            str += Upgrades.totalUpgrades + "+";
             for (int i = 0; i < upgrades.prices.Count; i++)
             {
-                str += upgrades.prices[i] + " " + upgrades.ogPrices[i] + " ";
+                str += upgrades.prices[i] + "+" + upgrades.ogPrices[i] + "+";
             }
             for (int i = 0; i < upgrades.increases.Count; i++)
             {
-                str += upgrades.increases[i] + " ";
+                str += upgrades.increases[i] + "+";
             }
 
-
-            SaveAndLoad.Save(str, "saveFile.txt");
+            string path = System.Windows.Forms.Application.StartupPath + "\\" + Content.RootDirectory + "\\saveFile.txt";
+            SaveAndLoad.Save(str, path);
         }
         public void Load()
         {
-            string str = SaveAndLoad.Load("saveFile.txt");
-            List<string> strings = str.Split('\n').ToList();
+            string path = System.Windows.Forms.Application.StartupPath + "\\" + Content.RootDirectory + "\\saveFile.txt";
+            string str = SaveAndLoad.Load(path);
+            List<string> strings = str.Split('_').ToList();
 
-            List<string> g1 = strings[0].Split(' ').ToList();
+            List<string> g1 = strings[0].Split('+').ToList();
             Int32.TryParse(g1[0], out screenW); Int32.TryParse(g1[1], out screenH); Int32.TryParse(g1[2], out clickDamage);
+            
 
-            List<string> ach = strings[1].Split(' ').ToList();
-            for (int i = 0; i < ach.Count / 2; i += 2) //no idea if this will work
+            List<string> ach = strings[1].Split('+').ToList();
+            int achIndex = 0;
+            for (int i = 0; i < achievements.completed.Count; i ++) //no idea if this will work
             {
                 bool temp;
-                bool worked = bool.TryParse(ach[i], out temp);
+                bool worked = bool.TryParse(ach[achIndex], out temp);
                 if (worked)
                     achievements.completed[i] = temp;
-
-                achievements.grid.popups[i].text = ach[i + 1];
+                achIndex++;
+                achievements.grid.popups[i].text = ach[achIndex];
+                achIndex++;
                 
             }
 
-            List<string> mny = strings[2].Split(' ').ToList();
+            List<string> mny = strings[2].Split('+').ToList();
             Int32.TryParse(mny[0], out money.runAmount); Int32.TryParse(mny[1], out money.lifeAmount); Int32.TryParse(mny[2], out money.comets); Int32.TryParse(mny[3], out money.deltaC); Int32.TryParse(mny[4], out Money.lifetimeMoney); Int32.TryParse(mny[5], out Money.lifetimeSpent);
 
-            List<string> plan = strings[3].Split(' ').ToList();
-            Int32.TryParse(plan[0], out playScreen.planet.index); Int32.TryParse(plan[1], out Planet.totalDestroyed); Int32.TryParse(plan[2], out Planet.totalClicks);
+            List<string> plan = strings[3].Split('+').ToList();
+            Int32.TryParse(plan[0], out playScreen.planet.index); 
+            playScreen.planet = new Planet(playScreen.planet.index);
+            Int32.TryParse(plan[1], out Planet.totalDestroyed); Int32.TryParse(plan[2], out Planet.totalClicks);
 
-            List<string> prest = strings[4].Split(' ').ToList();
+            List<string> prest = strings[4].Split('+').ToList();
             Int32.TryParse(prest[0], out Prestige.totalPrestiges); double.TryParse(prest[1], out prestige.dmgIncrease); double.TryParse(prest[2], out prestige.moneyIncrease); double.TryParse(prest[3], out prestige.costDecrease); double.TryParse(prest[4], out prestige.dmgPercent); double.TryParse(prest[5], out prestige.moneyPercent); double.TryParse(prest[6], out prestige.costPercent);
 
-            List<string> sett = strings[5].Split(' ').ToList();
+            List<string> sett = strings[5].Split('+').ToList();
             Int32.TryParse(sett[0], out settings.popups[0].sliders[0].sliderValue); Int32.TryParse(sett[1], out settings.popups[0].sliders[1].sliderValue);
-            int index = 2;
+            settings.popups[0].sliders[0].setByPercent(settings.popups[0].sliders[0].sliderValue); settings.popups[0].sliders[1].setByPercent(settings.popups[0].sliders[1].sliderValue);
+            int sindex = 2;
             for (int i = 0; i < settings.popups.Count; i ++)
             {
                 for (int j = 0; j < settings.popups[i].buttonStates.Count; j++)
                 {
                     bool temp;
-                    bool worked = bool.TryParse(sett[index], out temp);
+                    bool worked = bool.TryParse(sett[sindex], out temp);
                     if (worked)
                         settings.popups[i].buttonStates[j] = temp;
-                    index++;
+                    sindex++;
                 }
             }
-            Int32.TryParse(sett[index], out settings.popups[1].dropdowns[0].selectedIndex);
+            Int32.TryParse(sett[sindex], out settings.popups[1].dropdowns[0].selectedIndex);
 
-            List<string> sto = strings[6].Split(' ').ToList();
+            List<string> sto = strings[6].Split('+').ToList();
 
             
             int row;
@@ -524,56 +537,119 @@ namespace PlanetDestroyer
             int stoIndex = 2;
             if (allowed)
             {
-                store.items = new List<List<StoreItem>>();
-                
-                for (int i = 0; i < row; i++)
+                for (int e = stoIndex; e < col + 2; e++)
                 {
-                    store.items.Add(new List<StoreItem>());
-                    for (int j = 0; j < col; j++)
-                    {
-                        int dps, ind, dist, x, y, w, h, r, g, b;
-                        bool sX, sY;
-                        float aX, aY;
-                        //int, int, int, float, float, bool, bool, int, int, int, int, int
-                        Int32.TryParse(sto[stoIndex], out dps);
-                        stoIndex++;
-                        Int32.TryParse(sto[stoIndex], out ind);
-                        stoIndex++; 
-                        Int32.TryParse(sto[stoIndex], out dist);
-                        stoIndex++;
-                        float.TryParse(sto[stoIndex], out aX);
-                        stoIndex++;
-                        float.TryParse(sto[stoIndex], out aY);
-                        stoIndex++;
-                        bool.TryParse(sto[stoIndex], out sX);
-                        stoIndex++;
-                        bool.TryParse(sto[stoIndex], out sY);
-                        stoIndex++;
-                        Int32.TryParse(sto[stoIndex], out x);
-                        stoIndex++; 
-                        Int32.TryParse(sto[stoIndex], out y);
-                        stoIndex++; 
-                        Int32.TryParse(sto[stoIndex], out w);
-                        stoIndex++; 
-                        Int32.TryParse(sto[stoIndex], out h);
-                        stoIndex++; 
-                        Int32.TryParse(sto[stoIndex], out r);
-                        stoIndex++;
-                        Int32.TryParse(sto[stoIndex], out g);
-                        stoIndex++;
-                        Int32.TryParse(sto[stoIndex], out b);
-                        stoIndex++;
+                    stoIndex++;
+                    int i;
+                    Int32.TryParse(sto[e], out i);
+                    int temp = i / 3;
 
-                        
-                        store.items[i].Add(new StoreItem("ship", ind, 0, new Rectangle(x, y, w, h), store.textures[ind % 3], new Color(r, g, b)));
-                        store.items[i][j].angleX = aX;
-                        store.items[i][j].angleY = aY;
-                        store.items[i][j].dps = dps;
-                        store.items[i][j].subX = sX;
-                        store.items[i][j].subY = sY;
-                        store.items[i][j].dist = dist;
+                    Texture2D tex = store.textures[i % 3];
+                    int index = store.indexByTexture(tex, temp);
+                    
+
+                    if (index != -1)
+                    {
+                        for (int j = 0; j < 5; j++)
+                        {
+                            StoreItem item = store.items[j][index].getClone(); //might need to switch
+                            store.items[j].Insert(index + 1, item);
+                            store.items[j][index + 1].rect = store.items[j][index].positionNext();
+                            store.items[j][index + 1].angleNext();
+
+                        }
+
                     }
+                    else
+                    {
+                        if (store.items[0].Count == 0)
+                        {
+                            for (int j = 0; j < 5; j++)
+                                store.items[j].Add(new StoreItem("ship", i, store.widths[j], store.calculateInitRect(i, store.widths[j], store.heights[j]), tex, store.colors[i]));
+                        }
+
+                        else
+                        {
+                            for (int j = 0; j < 5; j++)
+                            {
+                                StoreItem item = store.items[j][0].getClone();
+
+                                item.texture = tex;
+                                item.rect.Y += store.heights[j] / 41;
+                                item.index = i;
+                                item.color = store.colors[i];
+                                item.dps = (int)Math.Pow(i + 1, 2);
+                                store.items[j].Add(item);
+                            }
+
+                        }
+                        
+
+                    }
+                    
+
+                    for (int j = 0; j < 5; j++)
+                        store.items[j] = store.items[j].OrderByDescending(o => o.index).ToList(); //to get correct overlapping when drawn
                 }
+                //store.items = new List<List<StoreItem>>();
+                //for (int i = 0; i < row; i++)
+                //    store.items.Add(new List<StoreItem>());
+                //for (int i = 0; i < row; i++)
+                //{
+                //    int dps, ind;
+                //    Int32.TryParse(sto[stoIndex], out dps);
+                //    stoIndex++;
+                //    Int32.TryParse(sto[stoIndex], out ind);
+                //    stoIndex++;
+
+                //    int temp = ind / 3;
+
+                //    Texture2D tex = store.textures[ind % 3];
+                //    int index = store.indexByTexture(tex, temp);
+
+                //    if (index != -1)
+                //    {
+                //        for (int j = 0; j < 5; j++)
+                //        {
+                //            StoreItem item = store.items[j][index].getClone(); //might need to switch
+                //            items[j].Insert(index + 1, item);
+                //            items[j][index + 1].rect = items[j][index].positionNext();
+                //            items[j][index + 1].angleNext();
+
+                //        }
+
+                //    }
+                //    else
+                //    {
+                //        if (items[0].Count == 0)
+                //        {
+                //            for (int j = 0; j < 5; j++)
+                //                items[j].Add(new StoreItem("ship", i, widths[j], calculateInitRect(i, widths[j], heights[j]), tex, colors[i]));
+                //        }
+
+                //        else
+                //        {
+                //            for (int j = 0; j < 5; j++)
+                //            {
+                //                StoreItem item = items[j][0].getClone();
+
+                //                item.texture = tex;
+                //                item.rect.Y += heights[j] / 41;
+                //                item.index = i;
+                //                item.color = colors[i];
+                //                item.dps = (int)Math.Pow(i + 1, 2);
+                //                items[j].Add(item);
+                //            }
+
+                //        }
+
+
+                //    }
+
+                //    for (int j = 0; j < 5; j++)
+                //        items[j] = items[j].OrderByDescending(o => o.index).ToList();
+                    
+                //    }
                 for (int i = 0; i < store.nonalteredDamages.Count; i++) //dk if this works
                 {
                     ulong dmg;
@@ -601,7 +677,7 @@ namespace PlanetDestroyer
                 Int32.TryParse(sto[stoIndex + 1], out Store.totalShips);
             }
 
-            List<string> upg = strings[7].Split(' ').ToList();
+            List<string> upg = strings[7].Split('+').ToList();
             bool wo = Int32.TryParse(upg[0], out Upgrades.totalUpgrades);
             if (wo)
             {
@@ -626,6 +702,7 @@ namespace PlanetDestroyer
                 }
             }
 
+            updateScreen(screenW, screenH);
         }
     }
 }

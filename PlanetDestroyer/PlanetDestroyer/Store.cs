@@ -96,7 +96,7 @@ namespace PlanetDestroyer
             grid.popups[0].text = text[0] + "\n\n$" + prices[0];
             totalShips = 0;
 
-            widths = new List<int> { GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 5, 1600, 1400, 1200, 1000 };
+            widths = new List<int> { GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 5, 1600, 1410, 1220, 1030 };
             heights = new List<int> { GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 80, 900, 750, 600, 550 };
 
         }
@@ -157,7 +157,7 @@ namespace PlanetDestroyer
         }
         public Rectangle calculateInitRect(int i, int w, int h)
         {
-            return new Rectangle(w / 2 - 40, (int)(h / 1.7) + (i * (h / 30)) - Game1.playScreen.planet.rect.Height / 8, w / 28, w / 28);
+            return new Rectangle(w / 2 - 40, (int)(h / 1.68) + (i * (h / 30)) - Game1.playScreen.planet.rect.Height / 8, w / 28, w / 28);
 
         }
 
@@ -382,9 +382,17 @@ namespace PlanetDestroyer
             spriteBatch.DrawString(font, "STORE", titlePos, Color.White);
             grid.Draw(spriteBatch);
             //int i = 0;
+            for (int i = 0; i < items.Count; i++)
+            {
+                for (int j = 0; j < items[i].Count; j++)
+                {
+                    items[i][j].Update();
+                }
+            }
+
             foreach (StoreItem item in items[Game1.settings.popups[1].dropdowns[0].selectedIndex])
             {
-                item.Update();
+                //item.Update();
                 item.Draw(spriteBatch);
                 //spriteBatch.DrawString(Game1.fonts[7], i + "", new Vector2(item.rect.X, item.rect.Y), Color.White);
                // i++;

@@ -35,7 +35,7 @@ namespace PlanetDestroyer
             subX = true;
             subY = true;
             //dist = (int)(Game1.playScreen.planet.rect.Width*1.3);
-            dist = w / 4;
+            dist = (int)(w / 3.8);
             //dist = Game1.playScreen.planet.rect.Center.X - rect.Right;
             frameIndex = 2;
             framesInbetween = 13;
