@@ -183,7 +183,7 @@ namespace PlanetDestroyer
             {
                 
                 if ((double)Math.Round((double)Game1.money.comets / 35 / 100, 5) > Math.Round(dmgIncrease - 1, 5))
-                    dmgPercent = (double)Game1.money.comets / 45 - (dmgIncrease - 1) * 100;
+                    dmgPercent = (double)Game1.money.comets / 35 - (dmgIncrease - 1) * 100;
 
                 confirmations[0].text[3] = "This prestige will increase all damage done by " + Math.Round(dmgPercent, 1) + "%";
                 confirmations[0].positions[3] = new Vector2(confirmations[0].window.Center.X - confirmations[0].font.MeasureString(confirmations[0].text[3]).X / 2, (int)(confirmations[0].window.Y + (4.5) * confirmations[0].font.MeasureString(confirmations[0].text[3]).Y + 10 * 3));
@@ -192,8 +192,8 @@ namespace PlanetDestroyer
             //mony
             else if (confirmations[1].active)
             {
-                if ((double)Math.Round((double)Game1.money.comets / 30 / 100, 5) > Math.Round(moneyIncrease - 1, 5))
-                    moneyPercent = (double)Game1.money.comets / 40 - (moneyIncrease - 1) * 100;
+                if ((double)Math.Round((double)Game1.money.comets / 35 / 100, 5) > Math.Round(moneyIncrease - 1, 5))
+                    moneyPercent = (double)Game1.money.comets / 35 - (moneyIncrease - 1) * 100;
 
                 confirmations[1].text[3] = "This prestige will increase money gained by " + Math.Round(moneyPercent, 1) + "%";
                 confirmations[1].positions[3] = new Vector2(confirmations[0].window.Center.X - confirmations[0].font.MeasureString(confirmations[0].text[3]).X / 2, (int)(confirmations[0].window.Y + (4.5) * confirmations[0].font.MeasureString(confirmations[0].text[3]).Y + 10 * 3));
@@ -202,8 +202,8 @@ namespace PlanetDestroyer
             //cost
             else if (confirmations[2].active)
             {
-                if ((double)-Math.Round((double)Game1.money.comets / 40 / 100, 5) < Math.Round(costDecrease - 1, 5))
-                    costPercent = (double)Game1.money.comets / 50 - (1 - costDecrease) * 100;
+                if ((double)-Math.Round((double)Game1.money.comets / 45 / 100, 5) < Math.Round(costDecrease - 1, 5))
+                    costPercent = (double)Game1.money.comets / 45 - (1 - costDecrease) * 100;
 
                 confirmations[2].text[3] = "This prestige will decrease all prices by " + Math.Round(costPercent, 1) + "%";
                 confirmations[2].positions[3] = new Vector2(confirmations[0].window.Center.X - confirmations[0].font.MeasureString(confirmations[0].text[3]).X / 2, (int)(confirmations[0].window.Y + (4.5) * confirmations[0].font.MeasureString(confirmations[0].text[3]).Y + 10 * 3));

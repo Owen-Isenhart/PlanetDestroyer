@@ -284,7 +284,7 @@ namespace PlanetDestroyer
         }
         public void UpdateStats()
         {
-            double hours = Math.Round(Game1.gT.TotalGameTime.TotalMinutes / 60, 1);
+            double hours = Math.Round((Game1.totalMins + Game1.currentMins) / 60, 1);
             string hrs = hours.ToString();
             if (hours > 999)
             {

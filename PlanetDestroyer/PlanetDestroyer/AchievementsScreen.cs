@@ -41,14 +41,14 @@ namespace PlanetDestroyer
                 {
                     tex = Game1.aMoney;
                     int d = i * 15000;
-                    s = "Achievement " + (i + 1) + "\n\nCollect $" + d;
+                    s = "Achievement " + (i + 1) + "\n\nEarn $" + d;
                     colors.Add(new Color(255, 255 - i * 2, 255 - i));
                 }
                 else if (i % 3 == 0)
                 {
                     tex = Game1.aPlanet;
                     int d = (i + 1) * 20;
-                    s = "Achievement " + (i + 1) + "\n\nDestroy " + d + " planets";
+                    s = "Achievement " + (i + 1) + "\n\n" + d + " Planets";
                     colors.Add(new Color(255 - i, 255, 255 - i * 2));
                 }
                 else
@@ -77,31 +77,33 @@ namespace PlanetDestroyer
             string s;
             List<Color> colors = new List<Color>();
             List<string> sTemp = new List<string>();
+
             for (int i = 0; i < rects.Count; i++)
             {
+                s = grid.popups[i].text;
                 if (i % 3 == 1)
                 {
                     tex = Game1.aMoney;
                     int d = i * 15000;
-                    s = "Achievement " + (i + 1) + "\n\nCollect $" + d;
+                    //s = "Achievement " + (i + 1) + "\n\nEarn $" + d;
                     colors.Add(new Color(255, 255 - i * 2, 255 - i));
                 }
                 else if (i % 3 == 0)
                 {
                     tex = Game1.aPlanet;
                     int d = (i + 1) * 20;
-                    s = "Achievement " + (i + 1) + "\n\nDestroy " + d + " planets";
+                    //s = "Achievement " + (i + 1) + "\n\n" + d + " Planets";
                     colors.Add(new Color(255 - i, 255, 255 - i * 2));
                 }
                 else
                 {
                     tex = Game1.aShips;
                     int d = i * 15;
-                    s = "Achievement " + (i + 1) + "\n\nBuy " + d + " ships";
+                    //s = "Achievement " + (i + 1) + "\n\nBuy " + d + " ships";
                     colors.Add(new Color(255 - i * 2, 255 - i, 255));
                 }
-                if (completed[i])
-                    s += " - CLAIMED";
+                //if (completed[i])
+                    //s += " - CLAIMED";
 
                 sTemp.Add(s);
                 temp.Add(tex);
@@ -163,7 +165,7 @@ namespace PlanetDestroyer
                 {
                     if (i % 3 == 0) //planet
                     {
-                        if (Planet.totalDestroyed >= (i + 1) * 50)
+                        if (Planet.totalDestroyed >= (i + 1) * 20)
                         {
                             completed[i] = true;
                             grid.popups[i].text += " - CLAIM";

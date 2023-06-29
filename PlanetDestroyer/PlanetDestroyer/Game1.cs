@@ -24,20 +24,13 @@ namespace PlanetDestroyer
         public static MouseState mouse, oldMouse;
         public static Rectangle mouseRect, oldMouseRect;
         public static int scrollWheel, oldScrollWheel, clickDamage;
-
-        //public static List<Rectangle> planetRects;
-        //public static List<Texture2D> planetTextures;
-
         public static Dictionary<string, List<Rectangle>> explosionRects;
         public static Dictionary<string, Texture2D> explosionTextures;
         public static List<Rectangle> shipRects, cometSources;
-
         public static Texture2D planetTemplate, planetTexture, pixel, ship, ballShip, spikyShip, whitePixel, questionMark, checkMark, shipSheet, cash, cometSheet, logo, prestigeDmg, prestigeCost, prestigeMoney, shipUpgrade, ballUpgrade, spikyUpgrade, clickUpgrade, aPlanet, aMoney, aShips;
         public static Color temp;
         public static Random rnd;
         public static GraphicsDevice gd;
-
-        //public Planet planet;
         public static PlayScreen playScreen;
         public static Store store;
         public static Prestige prestige;
@@ -45,13 +38,11 @@ namespace PlanetDestroyer
         public static AchievementsScreen achievements;
         public static Money money;
         public static Settings settings;
-
         public static int time, planetGrit;
-
+        public static double totalMins, currentMins;
         public static SpriteFont healthFont, shopFont;
         public static List<SpriteFont> fonts;
         public static float soundsVolume;
-
         public static bool activeSettingsModal, activePrestigeModal;
         public static SoundEffect backgroundMusic;
         public static SoundEffectInstance backgroundInstance;
@@ -148,6 +139,7 @@ namespace PlanetDestroyer
             activePrestigeModal = false;
             gT = new GameTime();
             clickDamage = 1;
+            totalMins = currentMins = 0;
             base.Initialize();
         }
 
@@ -270,6 +262,7 @@ namespace PlanetDestroyer
 
         protected override void OnExiting(object sender, EventArgs args)
         {
+            totalMins += currentMins;
             Save();
             base.OnExiting(sender, args);
         }
@@ -358,7 +351,7 @@ namespace PlanetDestroyer
             gT = gameTime;
             time++;
 
-            backgroundInstance.Volume = (float)settings.popups[0].sliders[0].sliderValue / 150;
+            backgroundInstance.Volume = (float)settings.popups[0].sliders[0].sliderValue / 11111;
             soundsVolume = (float)settings.popups[0].sliders[1].sliderValue / 200;
 
             if (settings.popups[0].buttonStates[0])
@@ -383,6 +376,9 @@ namespace PlanetDestroyer
 
             if (clickSound && mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released)
                 sounds[1].Play(volume: soundsVolume / 3f, pitch: .05f, pan: 0f);
+
+            currentMins = gT.TotalGameTime.TotalSeconds;
+
             base.Update(gameTime);
         }
 
@@ -472,6 +468,10 @@ namespace PlanetDestroyer
             {
                 str += upgrades.increases[i] + "+";
             }
+            str += "_";
+
+            //playtime
+            str += totalMins;
 
             string path = System.Windows.Forms.Application.StartupPath + "\\" + Content.RootDirectory + "\\saveFile.txt";
             SaveAndLoad.Save(str, path);
@@ -695,12 +695,14 @@ namespace PlanetDestroyer
                 }
                 for (int i = 0; i < upgrades.increases.Count; i++)
                 {
-                    int temp;
-                    Int32.TryParse(upg[upIndex], out temp);
+                    double temp;
+                    double.TryParse(upg[upIndex], out temp);
                     upgrades.increases[i] = temp;
                     upIndex++;
                 }
             }
+
+            double.TryParse(strings[8], out totalMins);
 
             updateScreen(screenW, screenH);
         }
