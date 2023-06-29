@@ -505,7 +505,7 @@ namespace PlanetDestroyer
             }
 
             List<string> mny = strings[2].Split('+').ToList();
-            Int32.TryParse(mny[0], out money.runAmount); Int32.TryParse(mny[1], out money.lifeAmount); Int32.TryParse(mny[2], out money.comets); Int32.TryParse(mny[3], out money.deltaC); Int32.TryParse(mny[4], out Money.lifetimeMoney); Int32.TryParse(mny[5], out Money.lifetimeSpent);
+            long.TryParse(mny[0], out money.runAmount); long.TryParse(mny[1], out money.lifeAmount); Int32.TryParse(mny[2], out money.comets); Int32.TryParse(mny[3], out money.deltaC); long.TryParse(mny[4], out Money.lifetimeMoney); long.TryParse(mny[5], out Money.lifetimeSpent);
 
             List<string> plan = strings[3].Split('+').ToList();
             Int32.TryParse(plan[0], out playScreen.planet.index); 

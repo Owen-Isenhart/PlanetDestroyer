@@ -13,12 +13,12 @@ namespace PlanetDestroyer
 {
     public class Money : Animation
     {
-        public int runAmount, lifeAmount, index, comets, deltaC;
-   
+        public int index, comets, deltaC;
+        public long runAmount, lifeAmount;
         public Rectangle border, moneyRect, cometRect, popup; //C# can't inherit more than 1 class so i can't just use my popup class :(
         public bool popupShown;
         public string[] popupText;
-        public static int lifetimeMoney, lifetimeSpent;
+        public static long lifetimeMoney, lifetimeSpent;
         SpriteFont font;
         
         public Money() : base("linear", 9, Game1.cometSources)
@@ -89,7 +89,7 @@ namespace PlanetDestroyer
         }
         public void IncreaseMoney(int i)
         {
-            int value = (int)(i * 500 * Game1.prestige.moneyIncrease);
+            long value = (long)(i * 500 * Game1.prestige.moneyIncrease);
             runAmount += value;
             lifeAmount += value;
             lifetimeMoney += value;
