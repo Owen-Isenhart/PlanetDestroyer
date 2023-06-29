@@ -5,11 +5,13 @@ Using the game's special currency, comets, that you aqcuire from the money you'v
 
 ## Installation
 
-To install the game, go to the releases on the right side of your screen, click the latest tag/release, and follow the instructions listed there.
+To install the game, go to https://oxef.itch.io/planet-destroyer and follow the instructions there OR
+you can go to the releases on the right side of your screen, click the latest tag/release, and follow the instructions listed there.
+
 
 ## Credit
 
-All code is mine. This project was made in C# using the XNA framework. <br>
+All code is mine and was built from scratch using C# in the XNA framework. <br>
 All art is mine with a few exceptions:
 <ul>
   <li>
