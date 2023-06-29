@@ -12,7 +12,7 @@ using System.Linq;
 namespace PlanetDestroyer
 {
     /// <summary>
-    /// This is the main type for your game
+    /// june 28 - v1 completed
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
