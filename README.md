@@ -11,7 +11,7 @@ Using the game's special currency, comets, that you aqcuire from the money you'v
 
 ## Installation
 
-To install the game, go to https://oxef.itch.io/planet-destroyer and follow the instructions there OR
+This is a Windows-only game. To install the game, go to https://oxef.itch.io/planet-destroyer and follow the instructions there OR
 you can go to the releases on the right side of your screen, click the latest tag/release, and follow the instructions listed there.
 
 
