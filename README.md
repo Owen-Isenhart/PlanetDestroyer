@@ -1,12 +1,18 @@
-# <p align="center"> Planet Destroyer <br><br> <img width=300 src="https://github.com/Owen-Isenhart/PlanetDestroyer/assets/112519614/cda71ee0-227e-493d-b256-ec1701ed6f5b">
+# <p align="center"> Planet Destroyer <br><br> <img width=300 src="https://github.com/Owen-Isenhart/PlanetDestroyer/assets/112519614/0c17d778-8d82-42d3-990e-0c7173748ff1">
 
 Planet Destroyer is an incremental game in which you and your ships destroy progressively harder planets, collecting money, achievements, and upgrades along the way.
 Using the game's special currency, comets, that you aqcuire from the money you've earned, you can prestige, resetting your progress (except for your achievements), in return for a benefit in one of three aspects of the game.
+
+## <div align="center"> <video src="https://github.com/Owen-Isenhart/PlanetDestroyer/assets/112519614/38e39fd1-0676-4417-bcb1-3840271b6fd8">
 
 ## Installation
 
 To install the game, go to https://oxef.itch.io/planet-destroyer and follow the instructions there OR
 you can go to the releases on the right side of your screen, click the latest tag/release, and follow the instructions listed there.
+
+
+
+
 
 
 ## Credit
