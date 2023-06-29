@@ -3,7 +3,11 @@
 Planet Destroyer is an incremental game in which you and your ships destroy progressively harder planets, collecting money, achievements, and upgrades along the way.
 Using the game's special currency, comets, that you aqcuire from the money you've earned, you can prestige, resetting your progress (except for your achievements), in return for a benefit in one of three aspects of the game.
 
-## <div align="center"> <video src="https://github.com/Owen-Isenhart/PlanetDestroyer/assets/112519614/38e39fd1-0676-4417-bcb1-3840271b6fd8">
+## <div align="center"> <video src="https://github.com/Owen-Isenhart/PlanetDestroyer/assets/112519614/722bbf4f-f4df-4059-9127-923e0d0623a8">
+
+
+
+
 
 ## Installation
 
