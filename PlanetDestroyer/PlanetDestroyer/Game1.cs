@@ -378,7 +378,7 @@ namespace PlanetDestroyer
             if (clickSound && mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released)
                 sounds[1].Play(volume: soundsVolume / 3f, pitch: .05f, pan: 0f);
 
-            currentMins = gT.TotalGameTime.TotalSeconds;
+            currentMins = gT.TotalGameTime.TotalMinutes;
 
             base.Update(gameTime);
         }
