@@ -28,7 +28,7 @@ namespace PlanetDestroyer
             cometRect = new Rectangle(border.Right - border.Width / 5, moneyRect.Y - 10, 4 + border.Width / 10, 4 + border.Width / 10);
             popup = new Rectangle(0, moneyRect.Bottom, border.Width / 3, border.Height / 2 + border.Height / 5);
             popupShown = false;
-            runAmount = lifeAmount = 1000000;
+            runAmount = lifeAmount = 40;
             comets = 0;
             deltaC = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 2)) - comets;
             comets += deltaC;
@@ -89,7 +89,7 @@ namespace PlanetDestroyer
         }
         public void IncreaseMoney(int i)
         {
-            int value = (int)(i * 1000 * Game1.prestige.moneyIncrease);
+            int value = (int)(i * 500 * Game1.prestige.moneyIncrease);
             runAmount += value;
             lifeAmount += value;
             lifetimeMoney += value;
@@ -100,7 +100,7 @@ namespace PlanetDestroyer
         
         public void Prestige()
         {
-            runAmount = lifeAmount = 1000000;
+            runAmount = lifeAmount = 40;
             comets = (int)Math.Sqrt(lifeAmount / Math.Pow(10, 2));
             deltaC = 0;
 

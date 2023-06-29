@@ -101,6 +101,7 @@ namespace PlanetDestroyer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            InactiveSleepTime = new TimeSpan(0); //makes game continue at full speed when out of focus
             mouse = oldMouse = Mouse.GetState();
             kb = oldKB = Keyboard.GetState();
             mouseRect = new Rectangle(mouse.X - 1, mouse.Y - 1, 2, 2);
@@ -351,7 +352,7 @@ namespace PlanetDestroyer
             gT = gameTime;
             time++;
 
-            backgroundInstance.Volume = (float)settings.popups[0].sliders[0].sliderValue / 11111;
+            backgroundInstance.Volume = (float)settings.popups[0].sliders[0].sliderValue / 150;
             soundsVolume = (float)settings.popups[0].sliders[1].sliderValue / 200;
 
             if (settings.popups[0].buttonStates[0])
@@ -482,6 +483,9 @@ namespace PlanetDestroyer
             string str = SaveAndLoad.Load(path);
             List<string> strings = str.Split('_').ToList();
 
+            if (strings.Count < 8)
+                return;
+
             List<string> g1 = strings[0].Split('+').ToList();
             Int32.TryParse(g1[0], out screenW); Int32.TryParse(g1[1], out screenH); Int32.TryParse(g1[2], out clickDamage);
             
@@ -591,65 +595,7 @@ namespace PlanetDestroyer
                     for (int j = 0; j < 5; j++)
                         store.items[j] = store.items[j].OrderByDescending(o => o.index).ToList(); //to get correct overlapping when drawn
                 }
-                //store.items = new List<List<StoreItem>>();
-                //for (int i = 0; i < row; i++)
-                //    store.items.Add(new List<StoreItem>());
-                //for (int i = 0; i < row; i++)
-                //{
-                //    int dps, ind;
-                //    Int32.TryParse(sto[stoIndex], out dps);
-                //    stoIndex++;
-                //    Int32.TryParse(sto[stoIndex], out ind);
-                //    stoIndex++;
-
-                //    int temp = ind / 3;
-
-                //    Texture2D tex = store.textures[ind % 3];
-                //    int index = store.indexByTexture(tex, temp);
-
-                //    if (index != -1)
-                //    {
-                //        for (int j = 0; j < 5; j++)
-                //        {
-                //            StoreItem item = store.items[j][index].getClone(); //might need to switch
-                //            items[j].Insert(index + 1, item);
-                //            items[j][index + 1].rect = items[j][index].positionNext();
-                //            items[j][index + 1].angleNext();
-
-                //        }
-
-                //    }
-                //    else
-                //    {
-                //        if (items[0].Count == 0)
-                //        {
-                //            for (int j = 0; j < 5; j++)
-                //                items[j].Add(new StoreItem("ship", i, widths[j], calculateInitRect(i, widths[j], heights[j]), tex, colors[i]));
-                //        }
-
-                //        else
-                //        {
-                //            for (int j = 0; j < 5; j++)
-                //            {
-                //                StoreItem item = items[j][0].getClone();
-
-                //                item.texture = tex;
-                //                item.rect.Y += heights[j] / 41;
-                //                item.index = i;
-                //                item.color = colors[i];
-                //                item.dps = (int)Math.Pow(i + 1, 2);
-                //                items[j].Add(item);
-                //            }
-
-                //        }
-
-
-                //    }
-
-                //    for (int j = 0; j < 5; j++)
-                //        items[j] = items[j].OrderByDescending(o => o.index).ToList();
-                    
-                //    }
+                
                 for (int i = 0; i < store.nonalteredDamages.Count; i++) //dk if this works
                 {
                     ulong dmg;
